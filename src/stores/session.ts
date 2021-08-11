@@ -2,21 +2,19 @@ import create from 'zustand';
 
 import { User } from '../types/user';
 
-type UseSessionStore = {
-	isInitialized: boolean;
-	isLoading: boolean;
-	user: User;
-	setIsInitialized: (isInitialized: boolean) => void;
-	setIsLoading: (isLoading: boolean) => void;
-	setUser: (user: User) => void;
-}
+type SessionState = 'waiting' | 'initializing' | 'done';
 
-const useSessionStore = create<UseSessionStore>(set => ({
-	isInitialized: true,
-	isLoading: false,
+type UseSessionStore = {
+	state: SessionState;
+	user: User;
+	setState: (state: SessionState) => void;
+	setUser: (user: User) => void;
+};
+
+const useSessionStore = create<UseSessionStore>((set) => ({
+	state: 'waiting',
 	user: null,
-	setIsInitialized: (isInitialized: boolean) => set({ isInitialized }),
-	setIsLoading: (isLoading: boolean) => set({ isLoading }),
+	setState: (state: SessionState) => set({ state }),
 	setUser: (user: User) => set({ user }),
 }));
 

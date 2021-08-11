@@ -5,32 +5,31 @@ import Profile from './Profile';
 import ProtectedRoute from '../components/ProtectedRoute';
 import useSession from '../hooks/useSession';
 
-
 function App() {
-  const { isLoadingUser } = useSession();
+	const { isLoading } = useSession();
 
-  if (isLoadingUser) {
-    return <h1>LOADING DATA</h1>
-  }
+	if (isLoading) {
+		return <h1>LOADING DATA</h1>;
+	}
 
-  return (
-    <>
-      <Router>
-        <h1>Heirloom</h1>
-        <Link to="/profile">Profile</Link>
-        <br />
-        <Link to="/login">Login</Link>
+	return (
+		<>
+			<Router>
+				<h1>Heirloom</h1>
+				<Link to="/profile">Profile</Link>
+				<br />
+				<Link to="/login">Login</Link>
 
-        <ProtectedRoute path="/profile">
-          <Profile />
-        </ProtectedRoute>
+				<ProtectedRoute path="/profile">
+					<Profile />
+				</ProtectedRoute>
 
-        <Route path="/login">
-          <Login />
-        </Route>
-      </Router>
-    </>
-  );
+				<Route path="/login">
+					<Login />
+				</Route>
+			</Router>
+		</>
+	);
 }
 
 export default App;

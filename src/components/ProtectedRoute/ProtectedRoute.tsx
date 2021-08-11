@@ -6,7 +6,7 @@ import useSession from '../../hooks/useSession';
 type Props = {
 	children: ReactNode;
 	path: string;
-}
+};
 
 function ProtectedRoute({ children, ...props }: Props) {
 	const { isAuthenticated } = useSession();
@@ -14,7 +14,8 @@ function ProtectedRoute({ children, ...props }: Props) {
 	return (
 		<Route {...props}>
 			{isAuthenticated ? children : <Redirect to="/login" />}
-		</Route>)
+		</Route>
+	);
 }
 
 export default ProtectedRoute;
