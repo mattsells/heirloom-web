@@ -1,11 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import Login from './Login';
-import Profile from './Profile';
-import ProtectedRoute from '../components/ProtectedRoute';
-import useSession from '../hooks/useSession';
-
-import { HttpClient } from '@/lib/http';
+import useSession from '@/hooks/useSession';
+import Router from '@/router';
 
 function App() {
 	const { isLoading } = useSession();
@@ -14,24 +8,7 @@ function App() {
 		return <h1>LOADING DATA</h1>;
 	}
 
-	return (
-		<>
-			<Router>
-				<h1>Heirloom</h1>
-				<Link to="/profile">Profile</Link>
-				<br />
-				<Link to="/login">Login</Link>
-
-				<ProtectedRoute path="/profile">
-					<Profile />
-				</ProtectedRoute>
-
-				<Route path="/login">
-					<Login />
-				</Route>
-			</Router>
-		</>
-	);
+	return <Router />;
 }
 
 export default App;

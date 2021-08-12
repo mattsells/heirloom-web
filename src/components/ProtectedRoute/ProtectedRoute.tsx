@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 import useSession from '../../hooks/useSession';

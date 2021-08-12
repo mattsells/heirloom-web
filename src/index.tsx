@@ -1,17 +1,25 @@
 import dotenv from 'dotenv';
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './pages/App';
+import { HttpClient } from '@/lib/http';
+import App from '@/pages/App';
+import { ApiContext } from '@/context';
+
 import reportWebVitals from './reportWebVitals';
+
+// Create a new client instance and add to context
+const api = new HttpClient();
 
 // Import env variables from file
 dotenv.config();
 
 ReactDOM.render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
+	<StrictMode>
+		<ApiContext.Provider value={api}>
+			<App />
+		</ApiContext.Provider>
+	</StrictMode>,
 	document.getElementById('root')
 );
 
