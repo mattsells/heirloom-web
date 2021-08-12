@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -10,9 +9,6 @@ import reportWebVitals from './reportWebVitals';
 
 // Create a new client instance and add to context
 const api = new HttpClient();
-
-// Import env variables from file
-dotenv.config();
 
 ReactDOM.render(
 	<StrictMode>

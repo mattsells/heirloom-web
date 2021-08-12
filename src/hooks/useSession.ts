@@ -25,6 +25,15 @@ function useSession(): UseSession {
 		shallow
 	);
 
+	const handleClearSession = useCallback(() => {
+		api.clearToken();
+
+		localStorage.removeItem('auth-token');
+		localStorage.removeItem('user-id');
+
+		setUser(null);
+	}, [api, setUser]);
+
 	const checkForLocalUserData = useCallback(async () => {
 		setState('initializing');
 
@@ -32,7 +41,8 @@ function useSession(): UseSession {
 		const userId = localStorage.getItem('user-id');
 
 		if (!authToken || !userId) {
-			// User does not exist. Will need to login.
+			// Unable to make a request without token and id. Do not make any
+			// additional api calls
 			setState('done');
 		} else {
 			try {
@@ -45,20 +55,11 @@ function useSession(): UseSession {
 			} catch (err) {
 				// Request was unsuccessful. Clear storage of invalid keys
 				// and set state to complete
-				localStorage.removeItem('auth-token');
-				localStorage.removeItem('user-id');
-
+				handleClearSession();
 				setState('done');
 			}
 		}
-	}, [api, setState, setUser]);
-
-	const handleClearSession = () => {
-		localStorage.removeItem('auth-token');
-		localStorage.removeItem('user-id');
-
-		setUser(null);
-	};
+	}, [api, handleClearSession, setState, setUser]);
 
 	useEffect(() => {
 		if (state === 'waiting') {

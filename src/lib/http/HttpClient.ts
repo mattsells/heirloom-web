@@ -15,9 +15,9 @@ class HttpClient {
 	private headers: object;
 
 	constructor() {
-		this.apiHost = process.env.API_HOST || DEFAULT_API_HOST;
-		this.apiPath = process.env.API_PATH || DEFAULT_API_PATH;
-		this.apiScheme = process.env.API_SCHEME || DEFAULT_API_SCHEME;
+		this.apiHost = process.env.REACT_APP_API_HOST || DEFAULT_API_HOST;
+		this.apiPath = process.env.REACT_APP_API_PATH || DEFAULT_API_PATH;
+		this.apiScheme = process.env.REACT_APP_API_SCHEME || DEFAULT_API_SCHEME;
 
 		this.headers = this.createBaseHeaders();
 	}
@@ -82,7 +82,10 @@ class HttpClient {
 	}
 
 	private buildUrl(path: string): string {
-		// TODO: If is full url, don't build
+		if (path.includes('http')) {
+			return path;
+		}
+
 		return `${this.apiScheme}://${this.apiHost}/${
 			this.apiPath
 		}/${this.cleanPath(path)}`;
