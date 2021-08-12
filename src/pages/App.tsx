@@ -5,6 +5,8 @@ import Profile from './Profile';
 import ProtectedRoute from '../components/ProtectedRoute';
 import useSession from '../hooks/useSession';
 
+import {HttpClient} from '@/lib/http';
+
 function App() {
 	const { isLoading } = useSession();
 
