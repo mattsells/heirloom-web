@@ -1,8 +1,9 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import shallow from 'zustand/shallow';
 
-import { useSessionStore } from '../stores/session';
-import { User } from '../types/user';
+import ApiContext from '@/context/api';
+import { useSessionStore } from '@/stores/session';
+import { User } from '@/types/user';
 
 type UseSession = {
 	clearSession: VoidFunction;
@@ -12,6 +13,8 @@ type UseSession = {
 };
 
 function useSession(): UseSession {
+	const api = useContext(ApiContext);
+
 	const { state, user, setState, setUser } = useSessionStore(
 		(state) => ({
 			state: state.state,
@@ -32,31 +35,23 @@ function useSession(): UseSession {
 			// User does not exist. Will need to login.
 			setState('done');
 		} else {
-			// Attempt to fetch user data
-			// TODO: Create HTTP client and attach token to header
-			const response = await fetch(`http://localhost:3000/v1/users/${userId}`, {
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: authToken,
-					'Key-Inflection': 'camel',
-				},
-			});
+			try {
+				api.setToken(authToken);
 
-			if (response.ok) {
-				// Save user data in local storage
-				const data = await response.json();
+				const response = await api.get<User>(`users/${userId}`);
 
-				setUser(data);
+				setUser(response.data);
 				setState('done');
-			} else {
-				// Token was not good. Clear local data
+			} catch (err) {
+				// Request was unsuccessful. Clear storage of invalid keys
+				// and set state to complete
 				localStorage.removeItem('auth-token');
 				localStorage.removeItem('user-id');
 
 				setState('done');
 			}
 		}
-	}, []);
+	}, [api, setState, setUser]);
 
 	const handleClearSession = () => {
 		localStorage.removeItem('auth-token');
