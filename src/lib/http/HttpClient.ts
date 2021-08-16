@@ -4,6 +4,7 @@ import {
 	DEFAULT_API_SCHEME,
 } from './config';
 import HttpError from './HttpError';
+import HttpResponse from './HttpResponse';
 
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -34,43 +35,52 @@ class HttpClient {
 		return this.performRequest<T>('GET', path);
 	}
 
-	create(path: string, data?: BodyInit) {
-		return this.performRequest('POST', path, data);
+	create<T>(path: string, data?: object) {
+		return this.performRequest<T>('POST', path, data);
 	}
 
-	update(path: string, data?: BodyInit) {
-		return this.performRequest('PATCH', path, data);
+	update<T>(path: string, data?: object) {
+		return this.performRequest<T>('PATCH', path, data);
 	}
 
-	replace(path: string, data?: BodyInit) {
-		return this.performRequest('PUT', path, data);
+	replace<T>(path: string, data?: object) {
+		return this.performRequest<T>('PUT', path, data);
 	}
 
 	destroy(path: string) {
 		return this.performRequest('DELETE', path);
 	}
 
-	private async performRequest<T = {}>(
+	private async performRequest<T>(
 		method: HttpMethod,
 		path: string,
-		data?: BodyInit
-	) {
+		data?: object
+	): Promise<HttpResponse<T>> {
 		const url = this.buildUrl(path);
 
-		const response = await fetch(url, {
-			method,
-			headers: {
-				...this.headers,
-				...(this.authToken && { Authorization: this.authToken }),
-			},
-			...(data && { body: data }),
-		});
+		try {
+			const response = await fetch(url, {
+				method,
+				headers: {
+					...this.headers,
+					...(this.authToken && { Authorization: this.authToken }),
+				},
+				...(data && { body: JSON.stringify(data) }),
+			});
 
-		if (response.ok) {
-			const data = (await response.json()) as T;
-			return { data, status: response.status };
-		} else {
-			throw new HttpError(response.status, response.statusText);
+			if (response.ok) {
+				const data = await response.json();
+				const httpResponse = new HttpResponse<T>(data);
+
+				httpResponse.status = response.status;
+				httpResponse.parseHeaders(response.headers);
+
+				return httpResponse;
+			} else {
+				throw new HttpError(response.status, response.statusText);
+			}
+		} catch (err) {
+			throw new HttpError(400, err.message);
 		}
 	}
 

@@ -22,7 +22,7 @@
 		"zustand": "^3.5.7"
 	},
 	"scripts": {
-		"start": "craco start",
+		"start": "PORT=3001 craco start",
 		"build": "craco build",
 		"test": "craco test",
 		"eject": "react-scripts eject",

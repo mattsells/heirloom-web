@@ -9,8 +9,12 @@ type UseSession = {
 	clearSession: VoidFunction;
 	isAuthenticated: boolean;
 	isLoading: boolean;
+	setSession: (user: User, authToken: string) => void;
 	user: User;
 };
+
+const STORAGE_AUTH_TOKEN_KEY = 'auth-token';
+const STORAGE_USER_ID_KEY = 'user-id';
 
 function useSession(): UseSession {
 	const api = useContext(ApiContext);
@@ -34,11 +38,23 @@ function useSession(): UseSession {
 		setUser(null);
 	}, [api, setUser]);
 
+	const handleSetSession = useCallback(
+		(user: User, authToken: string) => {
+			api.setToken(authToken);
+
+			localStorage.setItem(STORAGE_AUTH_TOKEN_KEY, authToken);
+			localStorage.setItem(STORAGE_USER_ID_KEY, user.id);
+
+			setUser(user);
+		},
+		[api, setUser]
+	);
+
 	const checkForLocalUserData = useCallback(async () => {
 		setState('initializing');
 
-		const authToken = localStorage.getItem('auth-token');
-		const userId = localStorage.getItem('user-id');
+		const authToken = localStorage.getItem(STORAGE_AUTH_TOKEN_KEY);
+		const userId = localStorage.getItem(STORAGE_USER_ID_KEY);
 
 		if (!authToken || !userId) {
 			// Unable to make a request without token and id. Do not make any
@@ -71,6 +87,7 @@ function useSession(): UseSession {
 		clearSession: handleClearSession,
 		isAuthenticated: !!user,
 		isLoading: state !== 'done',
+		setSession: handleSetSession,
 		user,
 	};
 }

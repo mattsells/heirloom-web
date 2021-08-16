@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-import useSession from '../../hooks/useSession';
+import useSession from '@/hooks/useSession';
 
 type Props = {
 	children: ReactNode;
