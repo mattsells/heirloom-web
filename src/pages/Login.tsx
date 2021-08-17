@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
 import ApiContext from '@/context/api';
+import useRedirect from '@/hooks/useRedirect';
 import useSession from '@/hooks/useSession';
 import { User } from '@/types/user';
 
@@ -16,6 +17,7 @@ type Form = typeof formValues;
 
 function Login() {
 	const api = useContext(ApiContext);
+	const { redirectTo } = useRedirect();
 	const { setSession } = useSession();
 	const { t } = useTranslation();
 
@@ -52,8 +54,9 @@ function Login() {
 							}
 						);
 
-						toast('Successfully logged in!');
+						toast.success('Successfully logged in!');
 						setSession(user, headers.Authorization);
+						redirectTo('/profile');
 					} catch (err) {
 						// TODO: Handle error messaging system
 					}
