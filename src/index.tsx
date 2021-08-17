@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 
+import '@/i18n';
+
 import { HttpClient } from '@/lib/http';
 import App from '@/pages/App';
 import ApiContext from '@/context/api';

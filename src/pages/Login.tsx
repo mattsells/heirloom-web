@@ -1,5 +1,6 @@
 import { Formik, FormikErrors } from 'formik';
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import ApiContext from '@/context/api';
 import useSession from '@/hooks/useSession';
@@ -15,10 +16,11 @@ type Form = typeof formValues;
 function Login() {
 	const api = useContext(ApiContext);
 	const { setSession } = useSession();
+	const { t } = useTranslation();
 
 	return (
 		<div>
-			<h1>Login</h1>
+			<h1>{t('login.title')}</h1>
 			<Formik
 				initialValues={formValues}
 				validate={(values) => {
