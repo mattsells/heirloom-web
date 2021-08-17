@@ -1,6 +1,7 @@
 import { Formik, FormikErrors } from 'formik';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
 import ApiContext from '@/context/api';
 import useSession from '@/hooks/useSession';
@@ -51,6 +52,7 @@ function Login() {
 							}
 						);
 
+						toast('Successfully logged in!');
 						setSession(user, headers.Authorization);
 					} catch (err) {
 						// TODO: Handle error messaging system
