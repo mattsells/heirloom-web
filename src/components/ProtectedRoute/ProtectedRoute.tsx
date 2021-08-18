@@ -4,7 +4,7 @@ import { Redirect, Route } from 'react-router-dom';
 import useSession from '@/hooks/useSession';
 
 type Props = {
-	children: ReactNode;
+	children?: ReactNode;
 	path: string;
 };
 

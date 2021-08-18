@@ -1,4 +1,4 @@
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import useRedirect from '@/hooks/useRedirect';
@@ -14,18 +14,13 @@ function Router() {
 
 	return (
 		<>
-			<h1>Heirloom</h1>
-			<Link to="/profile">Profile</Link>
-			<br />
-			<Link to="/login">Login</Link>
+			<Route path="/login">
+				<Login />
+			</Route>
 
 			<ProtectedRoute path="/profile">
 				<Profile />
 			</ProtectedRoute>
-
-			<Route path="/login">
-				<Login />
-			</Route>
 		</>
 	);
 }

@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { createElement, ReactElement } from 'react';
 import { Redirect, useRouteMatch } from 'react-router-dom';
 
 import { useRedirectStore } from '@/stores/routing';
@@ -16,7 +16,7 @@ function useRedirect(): UseRedirect {
 		setPath(path);
 	};
 
-	const redirect = path ? <Redirect to={path} /> : null;
+	const redirect = path ? createElement(Redirect, { to: path }) : null;
 
 	// If the current location is the requested redirect path,
 	// remove the redirect to prevent further url changes
