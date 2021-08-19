@@ -3,6 +3,8 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
+import * as Layout from '@/components/Layout';
+import * as Panel from '@/components/Panel';
 import ApiContext from '@/context/api';
 import useRedirect from '@/hooks/useRedirect';
 import useSession from '@/hooks/useSession';
@@ -22,9 +24,15 @@ function Login() {
 	const { t } = useTranslation();
 
 	return (
-		<div>
-			<h1>{t('login.title')}</h1>
-			<Formik
+		<Layout.Minimal>
+			<Layout.Centered>
+				<Panel.Frame isFloating size="regular">
+					<Panel.Content>
+						<h1>{t('app.name')}</h1>
+					</Panel.Content>
+				</Panel.Frame>
+			</Layout.Centered>
+			{/* <Formik
 				initialValues={formValues}
 				validate={(values) => {
 					const errors: FormikErrors<Form> = {};
@@ -103,8 +111,8 @@ function Login() {
 						</button>
 					</form>
 				)}
-			</Formik>
-		</div>
+			</Formik> */}
+		</Layout.Minimal>
 	);
 }
 

@@ -1,15 +1,26 @@
 export enum Forest {
-	regular = '#4AA96C',
+	regular = '#403838',
 }
 
 export enum Mint {
-	regular = '#9FE6A0',
+	light = '#b9edba',
+	regular = '#9fe6a0',
 }
 
 export enum Slate {
-	regular = '#564A4A',
+	lightest = '#ebe4e4',
+	light = '#ada3a3',
+	regular = '#564a4a',
+	dark = '#403838',
+	darkest = '#241d1d',
 }
 
 export enum Tangerine {
-	regular = '#F55C47',
+	regular = '#f55c47',
+}
+
+export enum Shade {
+	black = '#000000',
+	offwhite = '#f7f7f7',
+	white = '#ffffff',
 }

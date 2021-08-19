@@ -1,4 +1,7 @@
 {
+	"app": {
+		"name": "Heirloom"
+	},
 	"login": {
 		"title": "Welcome to Login"
 	}

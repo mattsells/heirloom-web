@@ -3,19 +3,22 @@ import { createUseStyles } from 'react-jss';
 
 type Props = {
 	children: ReactNode;
-	isFloating?: boolean;
 };
 
 const useStyles = createUseStyles({
 	root: {
-		backgroundColor: 'red',
+		alignItems: 'center',
+		display: 'flex',
+		flexDirection: 'column',
+		height: '100%',
+		justifyContent: 'center',
 	},
 });
 
-function Panel({ children, ...props }: Props): ReactElement<Props> {
+function Centered({ children }: Props): ReactElement<Props> {
 	const classes = useStyles();
 
 	return <div className={classes.root}>{children}</div>;
 }
 
-export default Panel;
+export default Centered;
