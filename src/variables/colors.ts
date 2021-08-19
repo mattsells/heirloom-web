@@ -16,7 +16,11 @@ export enum Slate {
 }
 
 export enum Tangerine {
+	lightest = '#ffc7bf',
+	light = '#ff8a7a',
 	regular = '#f55c47',
+	dark = '#eb2c13',
+	darkest = '#c91700',
 }
 
 export enum Shade {
