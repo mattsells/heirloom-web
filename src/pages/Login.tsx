@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
+import { Submit } from '@/components/Button';
 import * as InputGroup from '@/components/InputGroup';
 import * as Layout from '@/components/Layout';
 import * as Panel from '@/components/Panel';
@@ -99,9 +100,7 @@ function Login() {
 										value={values.password}
 									/>
 
-									<button type="submit" disabled={isSubmitting}>
-										Submit
-									</button>
+									<Submit disabled={isSubmitting}>Submit</Submit>
 								</form>
 							)}
 						</Formik>

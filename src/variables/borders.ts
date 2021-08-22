@@ -7,6 +7,7 @@ export enum Width {
 
 export enum Radius {
 	none = '0',
+	tight = '3px',
 	narrow = '6px',
 	regular = '14px',
 }

@@ -1,5 +1,6 @@
 export enum Forest {
-	regular = '#403838',
+	light = '#63bf84',
+	regular = '#4aa96c',
 }
 
 export enum Mint {

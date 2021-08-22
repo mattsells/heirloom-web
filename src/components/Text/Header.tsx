@@ -1,7 +1,7 @@
 import { createElement, ReactElement } from 'react';
 import { createUseStyles } from 'react-jss';
 
-import { Forest, Slate } from '@/variables/colors';
+import { Forest, Slate, Tangerine } from '@/variables/colors';
 import { Size } from '@/variables/fonts';
 import { Space } from '@/variables/space';
 
@@ -14,8 +14,8 @@ type Props = {
 
 const useStyles = createUseStyles({
 	root: (as: HeaderStyle) => ({
-		color: Forest.regular,
 		...(as === 'h1' && {
+			color: Tangerine.light,
 			fontSize: Size.giant,
 			marginBottom: Space.regular,
 		}),
