@@ -1,7 +1,7 @@
 import { createElement, ReactElement } from 'react';
 import { createUseStyles } from 'react-jss';
 
-import { Forest, Slate, Tangerine } from '@/variables/colors';
+import { Slate, Tangerine } from '@/variables/colors';
 import { Size } from '@/variables/fonts';
 import { Space } from '@/variables/space';
 

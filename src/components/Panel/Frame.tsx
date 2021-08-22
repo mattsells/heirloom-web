@@ -1,8 +1,8 @@
 import { ReactElement, ReactNode } from 'react';
 import { createUseStyles } from 'react-jss';
 
-import { Radius, Width } from '@/variables/borders';
-import { Shade, Slate } from '@/variables/colors';
+import { Radius } from '@/variables/borders';
+import { Shade } from '@/variables/colors';
 import { Shadow } from '@/variables/shadows';
 
 type Size = 'auto' | 'regular';

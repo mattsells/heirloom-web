@@ -1,8 +1,11 @@
-import { Formik, FormikErrors } from 'formik';
+import { Formik } from 'formik';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import * as Yup from 'yup';
 
+import apiRoutes from '@/api/routes';
+import { createSessionBody } from '@/api/utils/authentication';
 import { Submit } from '@/components/Button';
 import * as InputGroup from '@/components/InputGroup';
 import * as Layout from '@/components/Layout';
@@ -11,6 +14,7 @@ import { Header } from '@/components/Text';
 import ApiContext from '@/context/api';
 import useRedirect from '@/hooks/useRedirect';
 import useSession from '@/hooks/useSession';
+import webRoutes from '@/router/routes';
 import { User } from '@/types/user';
 
 const formValues = {
@@ -18,10 +22,13 @@ const formValues = {
 	password: '',
 };
 
-type Form = typeof formValues;
+const LoginSchema = Yup.object().shape({
+	email: Yup.string().email('Invalid email').required('Required'),
+	password: Yup.string().required(),
+});
 
 function Login() {
-	const api = useContext(ApiContext);
+	const client = useContext(ApiContext);
 	const { redirectTo } = useRedirect();
 	const { setSession } = useSession();
 	const { t } = useTranslation();
@@ -34,39 +41,19 @@ function Login() {
 						<Header>{t('app.name')}</Header>
 						<Formik
 							initialValues={formValues}
-							validate={(values) => {
-								const errors: FormikErrors<Form> = {};
-
-								// TODO: Move validation to a separate lib
-								if (!values.email) {
-									// TODO: Add i18n for text
-									errors.email = 'Required';
-								} else if (
-									!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-								) {
-									errors.email = 'Invalid email address';
-								}
-
-								return errors;
-							}}
-							onSubmit={async (values, actions) => {
+							validationSchema={LoginSchema}
+							onSubmit={async ({ email, password }) => {
 								try {
-									const { data: user, headers } = await api.create<User>(
-										// TODO: Use router import
-										'users/sign_in',
-										{
-											user: {
-												email: values.email,
-												password: values.password,
-											},
-										}
+									const { data: user, headers } = await client.create<User>(
+										apiRoutes.users.signIn,
+										createSessionBody(email, password)
 									);
 
-									toast.success('Successfully logged in!');
+									toast.success(t('authentication.loginSuccess'));
 									setSession(user, headers.Authorization);
-									redirectTo('/profile');
+									redirectTo(webRoutes.profile);
 								} catch (err) {
-									// TODO: Handle error messaging system
+									toast.error(t('authentication.loginFailure'));
 								}
 							}}
 						>

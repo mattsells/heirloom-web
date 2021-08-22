@@ -2,6 +2,10 @@
 	"app": {
 		"name": "Heirloom"
 	},
+	"authentication": {
+		"loginFailure": "Unable to log in",
+		"loginSuccess": "Successfully logged in!"
+	},
 	"login": {
 		"title": "Welcome to Login"
 	},
