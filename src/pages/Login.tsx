@@ -3,10 +3,10 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
-import Input from '@/components/Input';
-import Label from '@/components/Label';
+import * as InputGroup from '@/components/InputGroup';
 import * as Layout from '@/components/Layout';
 import * as Panel from '@/components/Panel';
+import { Header } from '@/components/Text';
 import ApiContext from '@/context/api';
 import useRedirect from '@/hooks/useRedirect';
 import useSession from '@/hooks/useSession';
@@ -30,7 +30,7 @@ function Login() {
 			<Layout.Centered>
 				<Panel.Frame isFloating size="regular">
 					<Panel.Content>
-						<h1>{t('app.name')}</h1>
+						<Header>{t('app.name')}</Header>
 						<Formik
 							initialValues={formValues}
 							validate={(values) => {
@@ -79,32 +79,26 @@ function Login() {
 								isSubmitting,
 							}) => (
 								<form onSubmit={handleSubmit}>
-									<Label htmlFor="email">Email</Label>
-									<br />
-									<Input
-										id="email"
-										type="email"
+									<InputGroup.Text
+										error={errors.email}
+										label={t('fields.email')}
 										name="email"
-										onChange={handleChange}
 										onBlur={handleBlur}
+										onChange={handleChange}
+										touched={touched.email}
 										value={values.email}
 									/>
-									<br />
-									{errors.email && touched.email && errors.email}
-									<br />
-									<label htmlFor="password">Password</label>
-									<br />
-									<input
-										id="password"
-										type="password"
+
+									<InputGroup.Password
+										error={errors.password}
+										label={t('fields.password')}
 										name="password"
-										onChange={handleChange}
 										onBlur={handleBlur}
+										onChange={handleChange}
+										touched={touched.password}
 										value={values.password}
 									/>
-									<br />
-									{errors.password && touched.password && errors.password}
-									<br />
+
 									<button type="submit" disabled={isSubmitting}>
 										Submit
 									</button>

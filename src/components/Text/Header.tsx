@@ -1,0 +1,39 @@
+import { createElement, ReactElement } from 'react';
+import { createUseStyles } from 'react-jss';
+
+import { Forest, Slate } from '@/variables/colors';
+import { Size } from '@/variables/fonts';
+import { Space } from '@/variables/space';
+
+type HeaderStyle = 'h1' | 'h2' | 'h3';
+
+type Props = {
+	as?: HeaderStyle;
+	children?: string;
+};
+
+const useStyles = createUseStyles({
+	root: (as: HeaderStyle) => ({
+		color: Forest.regular,
+		...(as === 'h1' && {
+			fontSize: Size.giant,
+			marginBottom: Space.regular,
+		}),
+		...(as === 'h2' && {
+			color: Slate.dark,
+			fontSize: Size.large,
+		}),
+		...(as === 'h3' && {
+			color: Slate.darkest,
+			fontSize: Size.regular,
+		}),
+	}),
+});
+
+function Header({ children, as = 'h1' }: Props): ReactElement<Props> {
+	const classes = useStyles(as);
+
+	return createElement(as, { as, className: classes.root }, children);
+}
+
+export default Header;

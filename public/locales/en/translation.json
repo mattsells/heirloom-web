@@ -4,5 +4,9 @@
 	},
 	"login": {
 		"title": "Welcome to Login"
+	},
+	"fields": {
+		"email": "Email",
+		"password": "Password"
 	}
 }
