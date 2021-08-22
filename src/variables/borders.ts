@@ -7,5 +7,10 @@ export enum Width {
 
 export enum Radius {
 	none = '0',
+	narrow = '6px',
 	regular = '14px',
+}
+
+export enum Pattern {
+	solid = 'solid',
 }

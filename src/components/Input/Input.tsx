@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss';
 
 import { Shade, Slate, Tangerine } from '@/variables/colors';
 import { Width } from '@/variables/borders';
+import { Size } from '@/variables/fonts';
 
 type Props = HTMLProps<HTMLInputElement> & {
 	error?: string;
@@ -14,7 +15,7 @@ const useStyles = createUseStyles({
 		background: Shade.white,
 		border: `${Width.thin} solid ${Slate.lightest}`,
 		borderRadius: '6px',
-		fontSize: '16px',
+		fontSize: Size.regular,
 		padding: '8px',
 		width: '100%',
 		...(props.error && {

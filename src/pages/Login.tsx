@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
 import Input from '@/components/Input';
+import Label from '@/components/Label';
 import * as Layout from '@/components/Layout';
 import * as Panel from '@/components/Panel';
 import ApiContext from '@/context/api';
@@ -78,7 +79,7 @@ function Login() {
 								isSubmitting,
 							}) => (
 								<form onSubmit={handleSubmit}>
-									<label htmlFor="email">Email</label>
+									<Label htmlFor="email">Email</Label>
 									<br />
 									<Input
 										id="email"
