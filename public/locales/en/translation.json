@@ -5,7 +5,9 @@
 	"authentication": {
 		"loginFailure": "Unable to log in.",
 		"loginSuccess": "Successfully logged in!",
-		"passwordIncorrect": "Unable to log in. Email or password is incorrect."
+		"passwordIncorrect": "Unable to log in. Email or password is incorrect.",
+		"passwordsMatch": "Password do not match",
+		"required": "Field is required"
 	},
 	"login": {
 		"need-account-1": "Don't have an account?",

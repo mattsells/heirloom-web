@@ -25,11 +25,14 @@ const formValues = {
 	passwordConfirmation: '',
 };
 
+// TODO: Add translations
 const RegistrationSchema = Yup.object().shape({
-	email: Yup.string().email('Invalid email').required('Required'),
-	// TODO: Confirm passwords match
-	// password: Yup.string().required(),
-	// passwordConfirmation: Yup.string().required(),
+	email: Yup.string().email('Not a valid email').required('Required'),
+	password: Yup.string().required(),
+	passwordConfirmation: Yup.string().oneOf(
+		[Yup.ref('password'), null],
+		'Passwords must match'
+	),
 });
 
 function Registration() {
