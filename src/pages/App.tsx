@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import useSession from '@/hooks/useSession';
 import Router from '@/router';
+import { Size } from '@/variables/fonts';
 
 function App() {
 	const { isLoading } = useSession();
@@ -15,7 +16,14 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<Toaster position="top-right" />
+			<Toaster
+				position="top-right"
+				toastOptions={{
+					style: {
+						fontSize: Size.regular,
+					},
+				}}
+			/>
 			<Router />
 		</BrowserRouter>
 	);

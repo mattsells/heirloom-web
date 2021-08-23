@@ -58,29 +58,32 @@ class HttpClient {
 	): Promise<HttpResponse<T>> {
 		const url = this.buildUrl(path);
 
-		try {
-			const response = await fetch(url, {
-				method,
-				headers: {
-					...this.headers,
-					...(this.authToken && { Authorization: this.authToken }),
-				},
-				...(data && { body: JSON.stringify(data) }),
-			});
+		const response = await fetch(url, {
+			method,
+			headers: {
+				...this.headers,
+				...(this.authToken && { Authorization: this.authToken }),
+			},
+			...(data && { body: JSON.stringify(data) }),
+		});
 
-			if (response.ok) {
-				const data = await response.json();
-				const httpResponse = new HttpResponse<T>(data);
+		if (response.ok) {
+			let data;
 
-				httpResponse.status = response.status;
-				httpResponse.parseHeaders(response.headers);
-
-				return httpResponse;
-			} else {
-				throw new HttpError(response.status, response.statusText);
+			try {
+				data = await response.json();
+			} catch (err) {
+				throw new HttpError(400, response.statusText);
 			}
-		} catch (err) {
-			throw new HttpError(400, err.message);
+
+			const httpResponse = new HttpResponse<T>(data);
+
+			httpResponse.status = response.status;
+			httpResponse.parseHeaders(response.headers);
+
+			return httpResponse;
+		} else {
+			throw new HttpError(response.status, response.statusText);
 		}
 	}
 

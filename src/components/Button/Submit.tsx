@@ -13,7 +13,7 @@ type Props = HTMLProps<HTMLButtonElement> & {
 
 const useStyles = createUseStyles({
 	root: {
-		backgroundColor: Forest.regular,
+		backgroundColor: Forest.light,
 		border: 'none',
 		borderRadius: Radius.tight,
 		cursor: 'pointer',
@@ -23,7 +23,7 @@ const useStyles = createUseStyles({
 		transition: `background-color linear ${Speed.fast}`,
 
 		'&:hover': {
-			backgroundColor: Forest.light,
+			backgroundColor: Forest.regular,
 		},
 	},
 });

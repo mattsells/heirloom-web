@@ -7,10 +7,12 @@ import * as Yup from 'yup';
 import apiRoutes from '@/api/routes';
 import { createSessionBody } from '@/api/utils/authentication';
 import { Submit } from '@/components/Button';
+import Form from '@/components/Form';
 import * as InputGroup from '@/components/InputGroup';
 import * as Layout from '@/components/Layout';
+import Link from '@/components/Link';
 import * as Panel from '@/components/Panel';
-import { Header } from '@/components/Text';
+import * as Text from '@/components/Text';
 import ApiContext from '@/context/api';
 import useRedirect from '@/hooks/useRedirect';
 import useSession from '@/hooks/useSession';
@@ -22,9 +24,9 @@ const formValues = {
 	password: '',
 };
 
+// TODO: Add translations
 const LoginSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid email').required('Required'),
-	password: Yup.string().required(),
 });
 
 function Login() {
@@ -38,7 +40,7 @@ function Login() {
 			<Layout.Centered>
 				<Panel.Frame isFloating size="regular">
 					<Panel.Content>
-						<Header>{t('app.name')}</Header>
+						<Text.Header>{t('login.title')}</Text.Header>
 						<Formik
 							initialValues={formValues}
 							validationSchema={LoginSchema}
@@ -53,7 +55,12 @@ function Login() {
 									setSession(user, headers.Authorization);
 									redirectTo(webRoutes.profile);
 								} catch (err) {
-									toast.error(t('authentication.loginFailure'));
+									// TODO: Update error instance to do err.unauthorized
+									if (err.status === 401) {
+										toast.error(t('authentication.passwordIncorrect'));
+									} else {
+										toast.error(t('authentication.loginFailure'));
+									}
 								}
 							}}
 						>
@@ -66,7 +73,7 @@ function Login() {
 								handleSubmit,
 								isSubmitting,
 							}) => (
-								<form onSubmit={handleSubmit}>
+								<Form onSubmit={handleSubmit}>
 									<InputGroup.Text
 										error={errors.email}
 										label={t('fields.email')}
@@ -87,10 +94,18 @@ function Login() {
 										value={values.password}
 									/>
 
-									<Submit disabled={isSubmitting}>Submit</Submit>
-								</form>
+									<Submit disabled={isSubmitting}>{t('login.submit')}</Submit>
+								</Form>
 							)}
 						</Formik>
+
+						<Text.Body>
+							{t('login.need-account-1')}{' '}
+							<Link to={webRoutes.registration}>
+								{t('login.need-account-2')}
+							</Link>{' '}
+							{t('login.need-account-3')}
+						</Text.Body>
 					</Panel.Content>
 				</Panel.Frame>
 			</Layout.Centered>

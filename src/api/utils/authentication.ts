@@ -6,3 +6,17 @@ export function createSessionBody(email: string, password: string): object {
 		},
 	};
 }
+
+export function createRegistrationBody(
+	email: string,
+	password: string,
+	passwordConfirmation: string
+): object {
+	return {
+		user: {
+			email,
+			password,
+			passwordConfirmation,
+		},
+	};
+}

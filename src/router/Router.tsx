@@ -2,8 +2,10 @@ import { Route } from 'react-router-dom';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import useRedirect from '@/hooks/useRedirect';
+import Login from '@/pages/auth/Login';
 import Profile from '@/pages/Profile';
-import Login from '@/pages/Login';
+import Registration from '@/pages/auth/Registration';
+import { routes } from '@/router';
 
 function Router() {
 	const { redirect } = useRedirect();
@@ -12,13 +14,18 @@ function Router() {
 		return redirect;
 	}
 
+	// TODO: Pull template out of individual pages and wrap around router
 	return (
 		<>
-			<Route path="/login">
+			<Route path={routes.login}>
 				<Login />
 			</Route>
 
-			<ProtectedRoute path="/profile">
+			<Route path={routes.registration}>
+				<Registration />
+			</Route>
+
+			<ProtectedRoute path={routes.profile}>
 				<Profile />
 			</ProtectedRoute>
 		</>

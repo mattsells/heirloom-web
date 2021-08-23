@@ -3,14 +3,24 @@
 		"name": "Heirloom"
 	},
 	"authentication": {
-		"loginFailure": "Unable to log in",
-		"loginSuccess": "Successfully logged in!"
+		"loginFailure": "Unable to log in.",
+		"loginSuccess": "Successfully logged in!",
+		"passwordIncorrect": "Unable to log in. Email or password is incorrect."
 	},
 	"login": {
-		"title": "Welcome to Login"
+		"need-account-1": "Don't have an account?",
+		"need-account-2": "Sign up",
+		"need-account-3": "instead!",
+		"submit": "Sign In",
+		"title": "Sign In"
 	},
 	"fields": {
 		"email": "Email",
-		"password": "Password"
+		"password": "Password",
+		"passwordConfirmation": "Confirm Password"
+	},
+	"registration": {
+		"title": "Join Heirloom",
+		"submit": "Sign Up"
 	}
 }

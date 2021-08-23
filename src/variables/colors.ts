@@ -8,6 +8,11 @@ export enum Mint {
 	regular = '#9fe6a0',
 }
 
+export enum Sea {
+	regular = '#78bfb6',
+	dark = '#4bab9f',
+}
+
 export enum Slate {
 	lightest = '#ebe4e4',
 	light = '#ada3a3',
