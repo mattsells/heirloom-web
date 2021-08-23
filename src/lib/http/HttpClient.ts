@@ -67,23 +67,31 @@ class HttpClient {
 			...(data && { body: JSON.stringify(data) }),
 		});
 
+		// Attempt to parse data from resposne
+		let responseData;
+
+		// Throw an error if body is not readable
+		try {
+			responseData = await response.json();
+		} catch (err) {
+			throw new HttpError(400, response.statusText);
+		}
+
+		// If successful response, return a response object with status and data
 		if (response.ok) {
-			let data;
-
-			try {
-				data = await response.json();
-			} catch (err) {
-				throw new HttpError(400, response.statusText);
-			}
-
-			const httpResponse = new HttpResponse<T>(data);
+			const httpResponse = new HttpResponse<T>(responseData);
 
 			httpResponse.status = response.status;
 			httpResponse.parseHeaders(response.headers);
 
 			return httpResponse;
 		} else {
-			throw new HttpError(response.status, response.statusText);
+			// If error response, throw error with status and error from either the body
+			// or default from response meta
+			throw new HttpError(
+				responseData.status || response.status,
+				responseData.error || response.statusText
+			);
 		}
 	}
 

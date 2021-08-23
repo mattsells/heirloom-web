@@ -20,6 +20,9 @@
 		"passwordConfirmation": "Confirm Password"
 	},
 	"registration": {
+		"have-account-1": "Already have an account?",
+		"have-account-2": "Sign in",
+		"have-account-3": "instead!",
 		"title": "Join Heirloom",
 		"submit": "Sign Up"
 	}

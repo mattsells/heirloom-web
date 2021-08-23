@@ -27,8 +27,9 @@ const formValues = {
 
 const RegistrationSchema = Yup.object().shape({
 	email: Yup.string().email('Invalid email').required('Required'),
-	password: Yup.string().required(),
-	passwordConfirmation: Yup.string().required(),
+	// TODO: Confirm passwords match
+	// password: Yup.string().required(),
+	// passwordConfirmation: Yup.string().required(),
 });
 
 function Registration() {
@@ -49,7 +50,7 @@ function Registration() {
 							onSubmit={async ({ email, password, passwordConfirmation }) => {
 								try {
 									const { data: user, headers } = await client.create<User>(
-										apiRoutes.users.signIn,
+										apiRoutes.users.signUp,
 										createRegistrationBody(
 											email,
 											password,
@@ -61,7 +62,8 @@ function Registration() {
 									setSession(user, headers.Authorization);
 									redirectTo(webRoutes.profile);
 								} catch (err) {
-									toast.error(t('authentication.loginFailure'));
+									// TODO: Check if message is available otherwise show default
+									toast.error(err.message);
 								}
 							}}
 						>
@@ -96,9 +98,9 @@ function Registration() {
 									/>
 
 									<InputGroup.Password
-										error={errors.password}
+										error={errors.passwordConfirmation}
 										label={t('fields.passwordConfirmation')}
-										name="password-confirmation"
+										name="passwordConfirmation"
 										onBlur={handleBlur}
 										onChange={handleChange}
 										touched={touched.passwordConfirmation}
@@ -111,6 +113,14 @@ function Registration() {
 								</Form>
 							)}
 						</Formik>
+
+						<Text.Body>
+							{t('registration.have-account-1')}{' '}
+							<Link to={webRoutes.login}>
+								{t('registration.have-account-2')}
+							</Link>{' '}
+							{t('registration.have-account-3')}
+						</Text.Body>
 					</Panel.Content>
 				</Panel.Frame>
 			</Layout.Centered>
