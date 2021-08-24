@@ -13,10 +13,6 @@ i18n
 		interpolation: {
 			escapeValue: false,
 		},
-		// TODO: Use suspense to ensure data is loaded prior to app start
-		react: {
-			useSuspense: false,
-		},
 	});
 
 export default i18n;

@@ -1,5 +1,6 @@
 import '@/styles/app.css';
 
+import { Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -11,21 +12,23 @@ function App() {
 	const { isLoading } = useSession();
 
 	if (isLoading) {
-		return <h1>LOADING DATA</h1>;
+		return <h1>LOADING USER DATA</h1>;
 	}
 
 	return (
-		<BrowserRouter>
-			<Toaster
-				position="top-right"
-				toastOptions={{
-					style: {
-						fontSize: Size.regular,
-					},
-				}}
-			/>
-			<Router />
-		</BrowserRouter>
+		<Suspense fallback="LOADING LANGUAGE DATA">
+			<BrowserRouter>
+				<Toaster
+					position="top-right"
+					toastOptions={{
+						style: {
+							fontSize: Size.regular,
+						},
+					}}
+				/>
+				<Router />
+			</BrowserRouter>
+		</Suspense>
 	);
 }
 
