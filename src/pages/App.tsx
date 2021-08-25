@@ -9,6 +9,7 @@ import Router from '@/router';
 import { Size } from '@/variables/fonts';
 
 function App() {
+	// TODO: Create loading screen
 	const { isLoading } = useSession();
 
 	if (isLoading) {
