@@ -1,6 +1,8 @@
 import { ReactElement, ReactNode } from 'react';
 import { createUseStyles } from 'react-jss';
 
+import Navbar from '@/components/Navbar';
+
 type Props = {
 	children: ReactNode;
 };
@@ -32,7 +34,10 @@ function Application({ children }: Props): ReactElement<Props> {
 
 	return (
 		<div className={classes.root}>
-			<div className={classes.nav}>Nav</div>
+			<div className={classes.nav}>
+				<Navbar />
+			</div>
+
 			<div className={classes.content}>{children}</div>
 		</div>
 	);

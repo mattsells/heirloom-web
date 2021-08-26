@@ -6,7 +6,7 @@ function Profile() {
 
 	return (
 		<Application>
-			<h1>Profile</h1>
+			<h1>Home</h1>
 			<pre>{JSON.stringify(user, null, 2)}</pre>
 		</Application>
 	);

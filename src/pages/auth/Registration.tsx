@@ -63,7 +63,7 @@ function Registration() {
 
 									toast.success(t('authentication.loginSuccess'));
 									setSession(user, headers.Authorization);
-									redirectTo(webRoutes.profile);
+									redirectTo(webRoutes.home);
 								} catch (err) {
 									// TODO: Check if message is available otherwise show default
 									toast.error(err.message);

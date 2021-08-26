@@ -1,8 +1,9 @@
 // Routing for application router
 
 const routes = {
+	home: '/me',
 	login: '/login',
-	profile: '/profile',
+	recipes: '/recipes',
 	registration: '/join',
 };
 

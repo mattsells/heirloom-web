@@ -1,11 +1,13 @@
 export enum Forest {
 	light = '#63bf84',
 	regular = '#4aa96c',
+	dark = '#349455',
 }
 
 export enum Mint {
 	light = '#b9edba',
 	regular = '#9fe6a0',
+	dark = '#80d181',
 }
 
 export enum Sea {
@@ -31,6 +33,7 @@ export enum Tangerine {
 
 export enum Shade {
 	black = '#000000',
+	lightGray = '#e8e8e8',
 	offwhite = '#f7f7f7',
 	white = '#ffffff',
 }

@@ -53,7 +53,7 @@ function Login() {
 
 									toast.success(t('authentication.loginSuccess'));
 									setSession(user, headers.Authorization);
-									redirectTo(webRoutes.profile);
+									redirectTo(webRoutes.home);
 								} catch (err) {
 									// TODO: Update error instance to do err.unauthorized
 									if (err.status === 401) {
