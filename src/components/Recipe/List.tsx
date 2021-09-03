@@ -13,6 +13,7 @@ import Card from './Card';
 
 type Props = {
 	isLoading: boolean;
+	onClickAddRecipe: VoidFunction;
 	recipes: Recipe[];
 };
 
@@ -43,7 +44,11 @@ const useStyles = createUseStyles({
 	},
 });
 
-function List({ isLoading, recipes = [] }: Props): ReactElement<Props> {
+function List({
+	isLoading,
+	onClickAddRecipe,
+	recipes = [],
+}: Props): ReactElement<Props> {
 	const classes = useStyles();
 	const { t } = useTranslation();
 
@@ -60,10 +65,10 @@ function List({ isLoading, recipes = [] }: Props): ReactElement<Props> {
 	return (
 		<div className={classes.root}>
 			{recipes.map((recipe) => (
-				<Card recipe={recipe} />
+				<Card key={recipe.id} recipe={recipe} />
 			))}
 
-			<Button.Square>
+			<Button.Square onClick={onClickAddRecipe}>
 				<div className={classes.add}>
 					<BiPlusMedical />
 					<span className={classes.addText}>{t('recipes.add')}</span>
