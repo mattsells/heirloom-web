@@ -52,6 +52,8 @@ const useStyles = createUseStyles({
 	},
 });
 
+// TODO: Close modal when clicking out of bounds
+// TODO: Animate modal in/out
 function Modal({ children, isVisible, onDismiss }: Props): ReactElement<Props> {
 	const classes = useStyles();
 
