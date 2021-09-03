@@ -1,8 +1,13 @@
 import { ReactElement } from 'react';
+import { BiPlusMedical } from 'react-icons/bi';
 import { createUseStyles } from 'react-jss';
+import { useTranslation } from 'react-i18next';
 
-import { Space } from '@/variables/space';
+import * as Button from '@/components/Button';
 import { Recipe } from '@/types/recipe';
+import { Forest } from '@/variables/colors';
+import { Size } from '@/variables/fonts';
+import { Space } from '@/variables/space';
 
 import Card from './Card';
 
@@ -18,10 +23,29 @@ const useStyles = createUseStyles({
 		// TODO: Change grid size for media queries
 		gridTemplateColumns: 'repeat(5, 1fr)',
 	},
+
+	add: {
+		alignItems: 'center',
+		color: Forest.light,
+		display: 'flex',
+		flexDirection: 'column',
+		height: '100%',
+		justifyContent: 'center',
+
+		'& > svg': {
+			fontSize: Size.giant,
+			marginBottom: Space.thin,
+		},
+	},
+
+	addText: {
+		fontSize: Size.regular,
+	},
 });
 
 function List({ isLoading, recipes = [] }: Props): ReactElement<Props> {
 	const classes = useStyles();
+	const { t } = useTranslation();
 
 	// TODO: Add loading indicator
 	if (isLoading) {
@@ -38,6 +62,13 @@ function List({ isLoading, recipes = [] }: Props): ReactElement<Props> {
 			{recipes.map((recipe) => (
 				<Card recipe={recipe} />
 			))}
+
+			<Button.Square>
+				<div className={classes.add}>
+					<BiPlusMedical />
+					<span className={classes.addText}>{t('recipes.add')}</span>
+				</div>
+			</Button.Square>
 		</div>
 	);
 }

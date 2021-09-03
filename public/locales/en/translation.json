@@ -21,6 +21,10 @@
 		"password": "Password",
 		"passwordConfirmation": "Confirm Password"
 	},
+	"recipes": {
+		"add": "Add Recipe",
+		"title": "My Recipes"
+	},
 	"registration": {
 		"have-account-1": "Already have an account?",
 		"have-account-2": "Sign in",

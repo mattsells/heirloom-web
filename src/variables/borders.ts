@@ -13,5 +13,6 @@ export enum Radius {
 }
 
 export enum Pattern {
+	dashed = 'dashed',
 	solid = 'solid',
 }
