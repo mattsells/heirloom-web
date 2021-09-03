@@ -21,8 +21,8 @@ function Navbar(): ReactElement {
 	return (
 		<div className={classes.root}>
 			<ul>
-				{NAVBAR_ITEMS.map(({ icon: Icon, ...props }) => (
-					<Link {...props} icon={<Icon />} />
+				{NAVBAR_ITEMS.map(({ icon: Icon, ...props }, index) => (
+					<Link {...props} icon={<Icon />} key={index} />
 				))}
 			</ul>
 		</div>

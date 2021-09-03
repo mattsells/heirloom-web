@@ -5,7 +5,7 @@ import useRedirect from '@/hooks/useRedirect';
 import Login from '@/pages/auth/Login';
 import Registration from '@/pages/auth/Registration';
 import Home from '@/pages/Home';
-import Recipes from '@/pages/Recipes';
+import Recipes from '@/pages/recipes/Recipes';
 import { routes } from '@/router';
 
 function Router() {

@@ -1,3 +1,5 @@
+// TODO: Change how this works
+
 export function createSessionBody(email: string, password: string): object {
 	return {
 		user: {

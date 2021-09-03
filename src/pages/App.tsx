@@ -3,10 +3,13 @@ import '@/styles/app.css';
 import { Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import useSession from '@/hooks/useSession';
 import Router from '@/router';
 import { Size } from '@/variables/fonts';
+
+const queryClient = new QueryClient();
 
 function App() {
 	// TODO: Create loading screen
@@ -18,17 +21,21 @@ function App() {
 
 	return (
 		<Suspense fallback="LOADING LANGUAGE DATA">
-			<BrowserRouter>
-				<Toaster
-					position="top-right"
-					toastOptions={{
-						style: {
-							fontSize: Size.regular,
-						},
-					}}
-				/>
-				<Router />
-			</BrowserRouter>
+			<QueryClientProvider client={queryClient}>
+				<BrowserRouter>
+					<Toaster
+						position="top-right"
+						toastOptions={{
+							style: {
+								fontSize: Size.regular,
+							},
+						}}
+					/>
+
+					{/* Main app is rendered by the router */}
+					<Router />
+				</BrowserRouter>
+			</QueryClientProvider>
 		</Suspense>
 	);
 }
