@@ -32,8 +32,8 @@ function useSession(): UseSession {
 	const handleClearSession = useCallback(() => {
 		api.clearToken();
 
-		localStorage.removeItem('auth-token');
-		localStorage.removeItem('user-id');
+		localStorage.removeItem(STORAGE_AUTH_TOKEN_KEY);
+		localStorage.removeItem(STORAGE_USER_ID_KEY);
 
 		setUser(null);
 	}, [api, setUser]);
