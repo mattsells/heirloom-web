@@ -1,11 +1,14 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext } from 'react';
 import shallow from 'zustand/shallow';
 
 import ApiContext from '@/context/api';
 import { useSessionStore } from '@/stores/session';
 import { User } from '@/types/user';
 
+import useActiveAccount from './useActiveAccount';
+
 type UseSession = {
+	checkForLocalUserData: VoidFunction;
 	clearSession: VoidFunction;
 	isAuthenticated: boolean;
 	isLoading: boolean;
@@ -18,6 +21,7 @@ const STORAGE_USER_ID_KEY = 'user-id';
 
 function useSession(): UseSession {
 	const api = useContext(ApiContext);
+	const { activateUserAccount } = useActiveAccount();
 
 	const { state, user, setState, setUser } = useSessionStore(
 		(state) => ({
@@ -46,8 +50,9 @@ function useSession(): UseSession {
 			localStorage.setItem(STORAGE_USER_ID_KEY, user.id);
 
 			setUser(user);
+			activateUserAccount(user);
 		},
-		[api, setUser]
+		[activateUserAccount, api, setUser]
 	);
 
 	const checkForLocalUserData = useCallback(async () => {
@@ -67,6 +72,7 @@ function useSession(): UseSession {
 				const response = await api.get<User>(`users/${userId}`);
 
 				setUser(response.data);
+				activateUserAccount(response.data);
 				setState('done');
 			} catch (err) {
 				// Request was unsuccessful. Clear storage of invalid keys
@@ -75,15 +81,10 @@ function useSession(): UseSession {
 				setState('done');
 			}
 		}
-	}, [api, handleClearSession, setState, setUser]);
-
-	useEffect(() => {
-		if (state === 'waiting') {
-			checkForLocalUserData();
-		}
-	}, [checkForLocalUserData, state]);
+	}, [activateUserAccount, api, handleClearSession, setState, setUser]);
 
 	return {
+		checkForLocalUserData,
 		clearSession: handleClearSession,
 		isAuthenticated: !!user,
 		isLoading: state !== 'done',

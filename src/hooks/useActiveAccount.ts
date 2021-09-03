@@ -1,16 +1,16 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext } from 'react';
 import shallow from 'zustand/shallow';
 
 import routes from '@/api/routes';
 import ApiContext from '@/context/api';
 import { useAccountStore } from '@/stores/accounts';
 import { Account, AccountUser, AccountUserRole } from '@/types/account';
-
-import useSession from './useSession';
+import { User } from '@/types/user';
 
 type UseActiveAccount = {
 	account: Account;
 	accountUser: AccountUser;
+	activateUserAccount: (user: User) => void;
 	isLoading: boolean;
 	role: AccountUserRole;
 };
@@ -28,70 +28,66 @@ function useActiveAccount(): UseActiveAccount {
 		shallow
 	);
 
-	const { user } = useSession();
-
 	const api = useContext(ApiContext);
 
-	const handleActivateUserAccounts = useCallback(async () => {
-		setState('initializing');
+	const activateUserAccount = useCallback(
+		async (user: User) => {
+			setState('initializing');
 
-		const activeAccountId = localStorage.getItem(STORAGE_ACTIVE_ACCOUNT_ID);
+			const activeAccountId = localStorage.getItem(STORAGE_ACTIVE_ACCOUNT_ID);
 
-		try {
-			const accountUsers = await api.get<AccountUser[]>(
-				routes.accountUsers.index,
-				{
-					extended: true,
-					filters: { user: user.id },
-				}
-			);
-
-			let activeAccountUser: AccountUser;
-
-			// Attempt to set active account based on stored ID
-			if (activeAccountId) {
-				activeAccountUser = accountUsers.data.find(
-					(accountUser) =>
-						accountUser.account.id === parseInt(activeAccountId, 10)
+			try {
+				const accountUsers = await api.get<AccountUser[]>(
+					routes.accountUsers.index,
+					{
+						extended: true,
+						filters: { user: user.id },
+					}
 				);
 
+				let activeAccountUser: AccountUser;
+
+				// Attempt to set active account based on stored ID
+				if (activeAccountId) {
+					activeAccountUser = accountUsers.data.find(
+						(accountUser) =>
+							accountUser.account.id === parseInt(activeAccountId, 10)
+					);
+
+					if (!activeAccountUser) {
+						localStorage.removeItem(STORAGE_ACTIVE_ACCOUNT_ID);
+					}
+				}
+
+				// If active account does not exist, set as own accouont
 				if (!activeAccountUser) {
-					localStorage.removeItem(STORAGE_ACTIVE_ACCOUNT_ID);
+					activeAccountUser = accountUsers.data.find(
+						(accountUser) => accountUser.role === 'owner'
+					);
 				}
-			}
 
-			// If active account does not exist, set as own accouont
-			if (!activeAccountUser) {
-				activeAccountUser = accountUsers.data.find(
-					(accountUser) => accountUser.role === 'owner'
+				// TODO: Check if account still does not exist, but this should
+				// never be the case
+
+				localStorage.setItem(
+					STORAGE_ACTIVE_ACCOUNT_ID,
+					activeAccountUser.account.id.toString()
 				);
+
+				setState('done');
+				setAccountUser(activeAccountUser);
+			} catch (err) {
+				// TODO: What should happen if there is an error here?
 			}
-
-			// TODO: Check if account still does not exist, but this should
-			// never be the case
-
-			localStorage.setItem(
-				STORAGE_ACTIVE_ACCOUNT_ID,
-				activeAccountUser.account.id.toString()
-			);
-
-			setState('done');
-			setAccountUser(activeAccountUser);
-		} catch (err) {
-			// TODO: What should happen if there is an error here?
-		}
-	}, [api, setAccountUser, setState, user]);
-
-	useEffect(() => {
-		if (user && state === 'waiting') {
-			handleActivateUserAccounts();
-		}
-	}, [handleActivateUserAccounts, state, user]);
+		},
+		[api, setAccountUser, setState]
+	);
 
 	return {
 		account: accountUser?.account,
 		accountUser,
-		isLoading: state !== 'done',
+		activateUserAccount,
+		isLoading: state === 'initializing',
 		role: accountUser?.role,
 	};
 }

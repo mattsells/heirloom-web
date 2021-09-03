@@ -1,6 +1,6 @@
 import '@/styles/app.css';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -10,13 +10,24 @@ import useSession from '@/hooks/useSession';
 import Router from '@/router';
 import { Size } from '@/variables/fonts';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+		},
+	},
+});
 
 function App() {
 	const { isLoading: isLoadingAccount } = useActiveAccount();
-	const { isLoading: isLoadingSession } = useSession();
+	const { checkForLocalUserData, isLoading: isLoadingSession } = useSession();
 
-	if (isLoadingAccount || isLoadingSession) {
+	// On app load retrieve stored user information if available
+	useEffect(() => {
+		checkForLocalUserData();
+	}, [checkForLocalUserData]);
+
+	if (isLoadingSession || isLoadingAccount) {
 		return <h1>LOADING USER DATA</h1>;
 	}
 
