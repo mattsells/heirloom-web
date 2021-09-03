@@ -27,10 +27,10 @@ const useStyles = createUseStyles({
 	}),
 });
 
-function Input({ type = 'text', ...props }: Props): ReactElement<Props> {
+function Text({ type = 'text', ...props }: Props): ReactElement<Props> {
 	const classes = useStyles(props as any);
 
 	return <input className={classes.root} type={type} {...props} />;
 }
 
-export default Input;
+export default Text;

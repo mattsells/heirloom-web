@@ -1,7 +1,7 @@
 import { useRef, HTMLProps, ReactElement } from 'react';
 import { createUseStyles } from 'react-jss';
 
-import Input from '@/components/Input';
+import * as Input from '@/components/Input';
 import Label from '@/components/Label';
 import { Error } from '@/components/Text';
 import { Space } from '@/variables/space';
@@ -45,7 +45,12 @@ function InputGroup({
 			</Label>
 
 			<div className={classes.input}>
-				<Input error={errorMessage} id={id.current} name={name} {...props} />
+				<Input.Text
+					error={errorMessage}
+					id={id.current}
+					name={name}
+					{...props}
+				/>
 			</div>
 
 			{errorMessage && <Error>{errorMessage}</Error>}
