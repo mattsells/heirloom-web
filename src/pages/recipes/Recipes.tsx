@@ -12,8 +12,7 @@ function Recipes() {
 	const { account } = useActiveAccount();
 
 	// TODO: Create something to make these requests
-	// FIXME: This is getting an undefined error
-	const { data, isLoading } = useQuery('recipes', () =>
+	const { data, isLoading } = useQuery(['recipes', account], () =>
 		api.get<Recipe[]>('recipes', { filters: { account: account.id } })
 	);
 

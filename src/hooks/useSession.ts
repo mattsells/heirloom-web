@@ -42,6 +42,14 @@ function useSession(): UseSession {
 		setUser(null);
 	}, [api, setUser]);
 
+	const handleActivateUser = useCallback(
+		(user: User) => {
+			setUser(user);
+			activateUserAccount(user);
+		},
+		[activateUserAccount, setUser]
+	);
+
 	const handleSetSession = useCallback(
 		(user: User, authToken: string) => {
 			api.setToken(authToken);
@@ -49,10 +57,9 @@ function useSession(): UseSession {
 			localStorage.setItem(STORAGE_AUTH_TOKEN_KEY, authToken);
 			localStorage.setItem(STORAGE_USER_ID_KEY, user.id);
 
-			setUser(user);
-			activateUserAccount(user);
+			handleActivateUser(user);
 		},
-		[activateUserAccount, api, setUser]
+		[api, handleActivateUser]
 	);
 
 	const checkForLocalUserData = useCallback(async () => {
@@ -71,8 +78,7 @@ function useSession(): UseSession {
 
 				const response = await api.get<User>(`users/${userId}`);
 
-				setUser(response.data);
-				activateUserAccount(response.data);
+				handleActivateUser(response.data);
 				setState('done');
 			} catch (err) {
 				// Request was unsuccessful. Clear storage of invalid keys
@@ -81,7 +87,7 @@ function useSession(): UseSession {
 				setState('done');
 			}
 		}
-	}, [activateUserAccount, api, handleClearSession, setState, setUser]);
+	}, [api, handleActivateUser, handleClearSession, setState]);
 
 	return {
 		checkForLocalUserData,
