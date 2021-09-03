@@ -1,6 +1,6 @@
 import { User } from './user';
 
-type AccountUserRole = 'admin' | 'owner' | 'standard';
+export type AccountUserRole = 'admin' | 'owner' | 'standard';
 
 export type Account = {
 	id: number;

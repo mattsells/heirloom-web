@@ -1,20 +1,20 @@
 import create from 'zustand';
 
-import { Account } from '@/types/account';
+import { AccountUser } from '@/types/account';
 
 type AccountState = 'waiting' | 'initializing' | 'done';
 
-type UseAccountState = {
-	account: Account;
+type UseAccountStore = {
+	accountUser: AccountUser;
 	state: AccountState;
-	setAccount: (account: Account) => void;
+	setAccountUser: (accountUser: AccountUser) => void;
 	setState: (state: AccountState) => void;
 };
 
-const useAccountStore = create<UseAccountState>((set) => ({
+const useAccountStore = create<UseAccountStore>((set) => ({
 	state: 'waiting',
-	account: null,
-	setAccount: (account: Account) => set({ account }),
+	accountUser: null,
+	setAccountUser: (accountUser: AccountUser) => set({ accountUser }),
 	setState: (state: AccountState) => set({ state }),
 }));
 

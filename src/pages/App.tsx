@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+import useActiveAccount from '@/hooks/useActiveAccount';
 import useSession from '@/hooks/useSession';
 import Router from '@/router';
 import { Size } from '@/variables/fonts';
@@ -12,10 +13,10 @@ import { Size } from '@/variables/fonts';
 const queryClient = new QueryClient();
 
 function App() {
-	// TODO: Create loading screen
-	const { isLoading } = useSession();
+	const { isLoading: isLoadingAccount } = useActiveAccount();
+	const { isLoading: isLoadingSession } = useSession();
 
-	if (isLoading) {
+	if (isLoadingAccount || isLoadingSession) {
 		return <h1>LOADING USER DATA</h1>;
 	}
 

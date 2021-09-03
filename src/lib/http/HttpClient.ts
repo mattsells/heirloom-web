@@ -1,3 +1,5 @@
+import qs from 'qs';
+
 import {
 	DEFAULT_API_HOST,
 	DEFAULT_API_PATH,
@@ -31,8 +33,8 @@ class HttpClient {
 		this.authToken = token;
 	}
 
-	get<T>(path: string) {
-		return this.performRequest<T>('GET', path);
+	get<T>(path: string, params?: object) {
+		return this.performRequest<T>('GET', this.addQueryParams(path, params));
 	}
 
 	create<T>(path: string, data?: object) {
@@ -114,6 +116,16 @@ class HttpClient {
 
 	private cleanPath(path: string): string {
 		return path.replace(/^\/|\/$/g, '');
+	}
+
+	private addQueryParams(path: string, query?: object): string {
+		if (!query) {
+			return path;
+		}
+
+		const queryString = qs.stringify(query);
+
+		return `${path}?${queryString}`;
 	}
 }
 
