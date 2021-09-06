@@ -19,10 +19,13 @@
 	"fields": {
 		"email": "Email",
 		"password": "Password",
-		"passwordConfirmation": "Confirm Password"
+		"passwordConfirmation": "Confirm Password",
+		"recipe-name": "Name"
 	},
 	"recipes": {
 		"add": "Add Recipe",
+		"add-cover-image": "Click to Add Cover Image",
+		"created": "Recipe added!",
 		"title": "My Recipes"
 	},
 	"registration": {

@@ -36,7 +36,7 @@ const useStyles = createUseStyles({
 	header: {
 		display: 'flex',
 		justifyContent: 'flex-end',
-		padding: Space.regular,
+		padding: `${Space.regular} ${Space.regular} ${Space.none} ${Space.regular}`,
 	},
 
 	button: {

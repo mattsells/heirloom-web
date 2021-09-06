@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 
 import * as Layout from '@/components/Layout';
-import Modal from '@/components/Modal';
+import * as Modal from '@/components/Modal';
 import * as Recipe from '@/components/Recipe';
 import * as Text from '@/components/Text';
 import { ApiContext } from '@/context';
@@ -33,13 +33,15 @@ function Recipes() {
 				recipes={data?.data}
 			/>
 
-			<Modal
+			<Modal.Modal
 				isVisible={isCreateModalVisible}
 				onDismiss={(): void => setIsCreateModalVisible(false)}
 			>
-				This is the modal
-				<Recipe.Form />
-			</Modal>
+				<Modal.Content>
+					<Text.Header as="h2">{t('recipes.add')}</Text.Header>
+					<Recipe.Form />
+				</Modal.Content>
+			</Modal.Modal>
 		</Layout.Application>
 	);
 }

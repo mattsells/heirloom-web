@@ -4,6 +4,9 @@ const routes = {
 	accountUsers: {
 		index: 'account_users',
 	},
+	recipes: {
+		index: 'recipes',
+	},
 	users: {
 		show: 'users/:id',
 		signIn: 'users/sign_in',
