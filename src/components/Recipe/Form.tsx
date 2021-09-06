@@ -1,8 +1,9 @@
 import { Formik } from 'formik';
 import { ReactElement, useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { createUseStyles } from 'react-jss';
-import toast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 
 import apiRoutes from '@/api/routes';
@@ -40,6 +41,7 @@ const RecipeSchema = Yup.object().shape({
 function RecipeForm({ recipe }: Props): ReactElement<Props> {
 	const { account } = useActiveAccount();
 	const client = useContext(ApiContext);
+	const queryClient = useQueryClient();
 	const { redirectTo } = useRedirect();
 	const classes = useStyles();
 	const { t } = useTranslation();
@@ -56,9 +58,10 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 					);
 
 					toast.success(t('recipes.created'));
+					queryClient.invalidateQueries('recipes');
 
 					// TODO: Create utility to generate route with id
-					redirectTo(`recipes/${recipe.id}`);
+					redirectTo(`/recipes/${recipe.id}`);
 				} catch (err) {
 					// TODO: Add error handling
 				}
