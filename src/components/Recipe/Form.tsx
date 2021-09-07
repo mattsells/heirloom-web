@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { ReactElement, useContext, useState } from 'react';
+import { ReactElement, useContext } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { createUseStyles } from 'react-jss';
@@ -10,16 +10,12 @@ import apiRoutes from '@/api/routes';
 import { createRecipeBody } from '@/api/utils/recipes';
 import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
-import * as Input from '@/components/Input';
 import * as InputGroup from '@/components/InputGroup';
 import ApiContext from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import useRedirect from '@/hooks/useRedirect';
 import webRoutes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
-import { Radius } from '@/variables/borders';
-import { Shade } from '@/variables/colors';
-import { Shadow } from '@/variables/shadows';
 
 type Props = {
 	recipe?: Recipe;

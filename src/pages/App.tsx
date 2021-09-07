@@ -5,11 +5,14 @@ import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
+import ApiContext from '@/context/api';
+import { HttpClient } from '@/lib/http';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import useSession from '@/hooks/useSession';
 import Router from '@/router';
 import { Size } from '@/variables/fonts';
 
+// Client for server state
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -19,7 +22,10 @@ const queryClient = new QueryClient({
 	},
 });
 
-function App() {
+// Create a new client instance and add to context
+const api = new HttpClient();
+
+function AppContent() {
 	const { isLoading: isLoadingAccount } = useActiveAccount();
 	const { checkForLocalUserData, isLoading: isLoadingSession } = useSession();
 
@@ -34,23 +40,29 @@ function App() {
 
 	return (
 		<Suspense fallback="LOADING LANGUAGE DATA">
-			<QueryClientProvider client={queryClient}>
-				<BrowserRouter>
-					<Toaster
-						position="top-right"
-						toastOptions={{
-							style: {
-								fontSize: Size.regular,
-							},
-						}}
-					/>
+			<Toaster
+				position="top-right"
+				toastOptions={{
+					style: {
+						fontSize: Size.regular,
+					},
+				}}
+			/>
 
-					{/* Main app is rendered by the router */}
-					<Router />
-				</BrowserRouter>
-			</QueryClientProvider>
+			{/* Main app is rendered by the router */}
+			<Router />
 		</Suspense>
 	);
 }
 
-export default App;
+export default function App() {
+	return (
+		<QueryClientProvider client={queryClient}>
+			<BrowserRouter>
+				<ApiContext.Provider value={api}>
+					<AppContent />
+				</ApiContext.Provider>
+			</BrowserRouter>
+		</QueryClientProvider>
+	);
+}

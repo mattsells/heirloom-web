@@ -34,5 +34,9 @@
 		"have-account-3": "instead!",
 		"title": "Join Heirloom",
 		"submit": "Sign Up"
+	},
+	"settings": {
+		"title": "Settings",
+		"sign-out": "Sign Out"
 	}
 }

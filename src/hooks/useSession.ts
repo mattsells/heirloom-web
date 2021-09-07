@@ -1,11 +1,15 @@
 import { useCallback, useContext } from 'react';
+import toast from 'react-hot-toast';
 import shallow from 'zustand/shallow';
 
+import apiRoutes from '@/api/routes';
 import ApiContext from '@/context/api';
+import webRoutes from '@/router/routes';
 import { useSessionStore } from '@/stores/session';
 import { User } from '@/types/user';
 
 import useActiveAccount from './useActiveAccount';
+import useRedirect from './useRedirect';
 
 type UseSession = {
 	checkForLocalUserData: VoidFunction;
@@ -13,6 +17,7 @@ type UseSession = {
 	isAuthenticated: boolean;
 	isLoading: boolean;
 	setSession: (user: User, authToken: string) => void;
+	signOut: VoidFunction;
 	user: User;
 };
 
@@ -22,6 +27,7 @@ const STORAGE_USER_ID_KEY = 'user-id';
 function useSession(): UseSession {
 	const api = useContext(ApiContext);
 	const { activateUserAccount } = useActiveAccount();
+	const { redirectTo } = useRedirect();
 
 	const { state, user, setState, setUser } = useSessionStore(
 		(state) => ({
@@ -62,6 +68,16 @@ function useSession(): UseSession {
 		[api, handleActivateUser]
 	);
 
+	const handleSignOut = useCallback(async () => {
+		try {
+			await api.get(apiRoutes.users.signOut);
+			handleClearSession();
+			redirectTo(webRoutes.login);
+		} catch (err) {
+			toast.error(err.message);
+		}
+	}, [api, handleClearSession, redirectTo]);
+
 	const checkForLocalUserData = useCallback(async () => {
 		setState('initializing');
 
@@ -95,6 +111,7 @@ function useSession(): UseSession {
 		isAuthenticated: !!user,
 		isLoading: state !== 'done',
 		setSession: handleSetSession,
+		signOut: handleSignOut,
 		user,
 	};
 }

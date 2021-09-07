@@ -11,6 +11,7 @@ const routes = {
 		show: 'users/:id',
 		signIn: 'users/sign_in',
 		signUp: 'users/sign_up',
+		signOut: 'users/sign_out',
 	},
 };
 

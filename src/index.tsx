@@ -3,20 +3,13 @@ import ReactDOM from 'react-dom';
 
 import '@/i18n';
 
-import { HttpClient } from '@/lib/http';
 import App from '@/pages/App';
-import ApiContext from '@/context/api';
 
 import reportWebVitals from './reportWebVitals';
 
-// Create a new client instance and add to context
-const api = new HttpClient();
-
 ReactDOM.render(
 	<StrictMode>
-		<ApiContext.Provider value={api}>
-			<App />
-		</ApiContext.Provider>
+		<App />
 	</StrictMode>,
 	document.getElementById('root')
 );

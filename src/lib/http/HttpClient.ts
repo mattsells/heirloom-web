@@ -33,19 +33,19 @@ class HttpClient {
 		this.authToken = token;
 	}
 
-	get<T>(path: string, params?: object) {
+	get<T = {}>(path: string, params?: object) {
 		return this.performRequest<T>('GET', this.addQueryParams(path, params));
 	}
 
-	create<T>(path: string, data?: object) {
+	create<T = {}>(path: string, data?: object) {
 		return this.performRequest<T>('POST', path, data);
 	}
 
-	update<T>(path: string, data?: object) {
+	update<T = {}>(path: string, data?: object) {
 		return this.performRequest<T>('PATCH', path, data);
 	}
 
-	replace<T>(path: string, data?: object) {
+	replace<T = {}>(path: string, data?: object) {
 		return this.performRequest<T>('PUT', path, data);
 	}
 
