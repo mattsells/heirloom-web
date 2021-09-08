@@ -25,7 +25,7 @@ const queryClient = new QueryClient({
 // Create a new client instance and add to context
 const api = new HttpClient();
 
-function AppContent() {
+function App() {
 	const { isLoading: isLoadingAccount } = useActiveAccount();
 	const { checkForLocalUserData, isLoading: isLoadingSession } = useSession();
 
@@ -55,12 +55,12 @@ function AppContent() {
 	);
 }
 
-export default function App() {
+export default function AppProvider() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<BrowserRouter>
 				<ApiContext.Provider value={api}>
-					<AppContent />
+					<App />
 				</ApiContext.Provider>
 			</BrowserRouter>
 		</QueryClientProvider>
