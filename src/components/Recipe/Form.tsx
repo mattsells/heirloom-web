@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { Formik, FieldArray } from 'formik';
 import { ReactElement, useContext } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,6 @@ import * as ListGroup from '@/components/ListGroup';
 import ApiContext from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import useRedirect from '@/hooks/useRedirect';
-import webRoutes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
 
 type Props = {
@@ -23,15 +22,15 @@ type Props = {
 };
 
 type FormValues = {
-	name: string;
-	ingredients: string[];
 	directions: string[];
+	ingredients: string[];
+	name: string;
 };
 
 const formValues: FormValues = {
-	name: '',
-	ingredients: [],
 	directions: [],
+	ingredients: [],
+	name: '',
 };
 
 const RecipeSchema = Yup.object().shape({
@@ -86,16 +85,20 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 						value={values.name}
 					/>
 
-					<ListGroup.Numbered
-						error={errors.ingredients as string}
-						label={t('fields.recipe-ingredients')}
+					<FieldArray
 						name="ingredients"
-						onBlur={handleBlur}
-						onChange={handleChange}
-						touched={touched.ingredients}
-						value={values.ingredients}
+						render={() => (
+							<ListGroup.Numbered
+								error={errors.ingredients as string}
+								label={t('fields.recipe-ingredients')}
+								name="ingredients"
+								onBlur={handleBlur}
+								onChange={handleChange}
+								touched={touched.ingredients}
+								values={values.ingredients}
+							/>
+						)}
 					/>
-
 					<Submit disabled={isSubmitting}>{t('recipes.add')}</Submit>
 				</Form>
 			)}

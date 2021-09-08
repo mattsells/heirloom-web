@@ -1,4 +1,4 @@
-import { ReactElement, SyntheticEvent } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { Size } from '@/variables/fonts';
@@ -6,15 +6,16 @@ import { Size } from '@/variables/fonts';
 import Text from './Text';
 import { Space } from '@/variables/space';
 
-type ListStyle = 'bullet' | 'number';
+export type ListType = 'bullet' | 'number';
 
+// TODO: Update ts for events
 type Props = {
 	error?: string;
-	listStyle?: ListStyle;
 	name: string;
 	onBlur: any;
-	onChange: (list: string[]) => void;
-	value: string[];
+	onChange: any;
+	type?: ListType;
+	values: string[];
 };
 
 const useStyles = createUseStyles({
@@ -28,41 +29,39 @@ const useStyles = createUseStyles({
 
 function List({
 	error,
+	type,
 	name,
-	onBlur,
-	onChange,
-	value: items,
+	values,
+	...props
 }: Props): ReactElement<Props> {
 	const classes = useStyles();
 
-	const handleChangeItem = (index: number, value: string) => {
-		const newList = [...items];
-		newList[index] = value;
+	const allItems = [...values, ''];
 
-		onChange(newList);
-	};
-
-	const allItems = [...items, ''];
-
-	// TODO: Fix TS stuff
 	return (
-		<ol>
+		<ListWrapper type={type}>
 			{allItems.map((item, index) => (
 				<li className={classes.item} key={index}>
 					<Text
 						error={error}
 						key={index}
-						name={!index ? name : `${name}-${index}`}
-						onBlur={onBlur}
-						onChange={(e: SyntheticEvent<HTMLInputElement>) =>
-							handleChangeItem(index, (e.target as HTMLInputElement).value)
-						}
+						name={`${name}.${index}`}
 						value={item}
+						{...props}
 					/>
 				</li>
 			))}
-		</ol>
+		</ListWrapper>
 	);
+}
+
+type ListWrapperProps = {
+	children: ReactNode;
+	type?: ListType;
+};
+
+function ListWrapper({ children, type = 'bullet' }: ListWrapperProps) {
+	return type === 'bullet' ? <ol>{children}</ol> : <ul>{children}</ul>;
 }
 
 export default List;

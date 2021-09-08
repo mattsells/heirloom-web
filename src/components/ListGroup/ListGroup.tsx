@@ -1,23 +1,22 @@
 import { useRef, ReactElement } from 'react';
 import { createUseStyles } from 'react-jss';
 
-import * as Input from '@/components/Input';
+import List, { ListType } from '@/components/Input/List';
 import Label from '@/components/Label';
 import { Error } from '@/components/Text';
 import { Space } from '@/variables/space';
 import { randomId } from '@/utils/string';
 
-type ListGroupType = 'bulleted' | 'numbered';
-
+// TODO: Update TS for events
 export type Props = {
 	error?: string;
 	label: string;
-	name?: string;
+	name: string;
 	onBlur: any;
-	onChange: (value: string[]) => void;
+	onChange: any;
 	touched?: boolean;
-	type: ListGroupType;
-	value: string[];
+	type: ListType;
+	values: string[];
 };
 
 const useStyles = createUseStyles({
@@ -29,7 +28,7 @@ const useStyles = createUseStyles({
 
 	input: {
 		marginBottom: Space.narrow,
-		paddingLeft: Space.thick,
+		paddingLeft: Space.wide,
 	},
 
 	error: {
@@ -40,7 +39,6 @@ const useStyles = createUseStyles({
 function ListGroup({
 	error,
 	label,
-	name,
 	touched,
 	...props
 }: Props): ReactElement<Props> {
@@ -57,7 +55,7 @@ function ListGroup({
 			</Label>
 
 			<div className={classes.input}>
-				<Input.List error={errorMessage} name={name} {...props} />
+				<List error={errorMessage} {...props} />
 			</div>
 
 			<div className={classes.error}>

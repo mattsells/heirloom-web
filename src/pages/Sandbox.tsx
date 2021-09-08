@@ -20,7 +20,7 @@ function Sandbox() {
 				onBlur={handleBlur}
 				onChange={setValue}
 				name="list"
-				value={value}
+				values={value}
 			/>
 		</Application>
 	);

@@ -1,9 +1,9 @@
 import ListGroup, { Props } from './ListGroup';
 
 export const Bulleted = (props: Omit<Props, 'type'>) => (
-	<ListGroup type="bulleted" {...props} />
+	<ListGroup type="bullet" {...props} />
 );
 
 export const Numbered = (props: Omit<Props, 'type'>) => (
-	<ListGroup type="numbered" {...props} />
+	<ListGroup type="number" {...props} />
 );
