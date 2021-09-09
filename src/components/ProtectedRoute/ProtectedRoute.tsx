@@ -1,10 +1,12 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 import useSession from '@/hooks/useSession';
 
 type Props = {
 	children?: ReactNode;
+	component?: () => ReactElement;
+	exact?: boolean;
 	path: string;
 };
 
