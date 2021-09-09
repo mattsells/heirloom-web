@@ -18,9 +18,13 @@ function Recipes() {
 	const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
 
 	// TODO: Create something to make these requests
-	// FIXME: Don't make request unless account is present
-	const { data, isLoading } = useQuery(['recipes', account], () =>
-		api.get<RecipeType[]>('recipes', { filters: { account: account.id } })
+	const { data, isLoading } = useQuery(
+		'recipes',
+		() =>
+			api.get<RecipeType[]>('recipes', { filters: { account: account.id } }),
+		{
+			enabled: !!account,
+		}
 	);
 
 	return (

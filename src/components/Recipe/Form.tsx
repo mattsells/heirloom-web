@@ -99,6 +99,22 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 							/>
 						)}
 					/>
+
+					<FieldArray
+						name="directions"
+						render={() => (
+							<ListGroup.Bulleted
+								error={errors.directions as string}
+								label={t('fields.recipe-directions')}
+								name="directions"
+								onBlur={handleBlur}
+								onChange={handleChange}
+								touched={touched.directions}
+								values={values.directions}
+							/>
+						)}
+					/>
+
 					<Submit disabled={isSubmitting}>{t('recipes.add')}</Submit>
 				</Form>
 			)}
