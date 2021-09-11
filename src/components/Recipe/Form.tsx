@@ -77,7 +77,7 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 				<Form onSubmit={handleSubmit}>
 					<InputGroup.Text
 						error={errors.name}
-						label={t('fields.recipe-name')}
+						label={t('recipe.name')}
 						name="name"
 						onBlur={handleBlur}
 						onChange={handleChange}
@@ -90,7 +90,7 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 						render={() => (
 							<ListGroup.Numbered
 								error={errors.ingredients as string}
-								label={t('fields.recipe-ingredients')}
+								label={t('recipe.ingredients')}
 								name="ingredients"
 								onBlur={handleBlur}
 								onChange={handleChange}
@@ -105,7 +105,7 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 						render={() => (
 							<ListGroup.Bulleted
 								error={errors.directions as string}
-								label={t('fields.recipe-directions')}
+								label={t('recipe.directions')}
 								name="directions"
 								onBlur={handleBlur}
 								onChange={handleChange}

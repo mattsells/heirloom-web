@@ -22,13 +22,13 @@
 	"fields": {
 		"email": "Email",
 		"password": "Password",
-		"passwordConfirmation": "Confirm Password",
-		"recipe-directions": "Directions",
-		"recipe-ingredients": "Ingredients",
-		"recipe-name": "Name"
+		"passwordConfirmation": "Confirm Password"
 	},
 	"recipe": {
-		"loading": "Getting your recipe"
+		"directions": "Directions",
+		"ingredients": "Ingredients",
+		"loading": "Getting your recipe",
+		"name": "Name"
 	},
 	"recipes": {
 		"add": "Add Recipe",

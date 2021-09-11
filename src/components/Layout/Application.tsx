@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import Navbar from '@/components/Navbar';
+import { Space } from '@/variables/space';
 
 type Props = {
 	children: ReactNode;
@@ -23,6 +24,7 @@ const useStyles = createUseStyles({
 		gridArea: 'content',
 		maxHeight: '100vh',
 		overflowY: 'auto',
+		padding: `0 ${Space.wide}`,
 	},
 
 	nav: {
