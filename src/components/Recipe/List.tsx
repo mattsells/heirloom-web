@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss';
 import { useTranslation } from 'react-i18next';
 
 import * as Button from '@/components/Button';
+import * as Loading from '@/components/Loading';
 import { Recipe } from '@/types/recipe';
 import { Forest } from '@/variables/colors';
 import { Size } from '@/variables/fonts';
@@ -52,9 +53,8 @@ function List({
 	const classes = useStyles();
 	const { t } = useTranslation();
 
-	// TODO: Add loading indicator
 	if (isLoading) {
-		return <h1>LOADING</h1>;
+		return <Loading.Placeholder text={t('recipes.loading')} />;
 	}
 
 	// TODO: Create empty state

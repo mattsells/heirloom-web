@@ -11,21 +11,30 @@ const useStyles = createUseStyles({
 	// TODO: Add media query for desktop vs mobile
 	root: {
 		display: 'grid',
-		gridTemplateColumns:
-			'[nav-left] 14.0rem [nav-right] minmax(5.0rem, 1fr) [content-left] minmax(30.0rem, 100%) [content-right] minmax(5.0rem, 1fr) [layout-end]',
-		gridTemplateRows: '[nav-top] 1fr [nav-bottom]',
+		gridTemplateColumns: '14.0rem minmax(30.0rem, 100%)',
+		gridTemplateRows: '1fr',
 		gridTemplateAreas: `
-			"nav . content ."
+			"nav content"
 		`,
 		height: '100%',
 	},
 
 	content: {
 		gridArea: 'content',
+		maxHeight: '100vh',
+		overflowY: 'auto',
 	},
 
 	nav: {
 		gridArea: 'nav',
+	},
+
+	container: {
+		display: 'flex',
+		flexDirection: 'column',
+		height: '100%',
+		margin: 'auto',
+		maxWidth: '1000px',
 	},
 });
 
@@ -38,7 +47,9 @@ function Application({ children }: Props): ReactElement<Props> {
 				<Navbar />
 			</div>
 
-			<div className={classes.content}>{children}</div>
+			<div className={classes.content}>
+				<div className={classes.container}>{children}</div>
+			</div>
 		</div>
 	);
 }

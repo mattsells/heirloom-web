@@ -9,6 +9,9 @@
 		"passwordsMatch": "Password do not match",
 		"required": "Field is required"
 	},
+	"global": {
+		"loading": "Loading"
+	},
 	"login": {
 		"need-account-1": "Don't have an account?",
 		"need-account-2": "Sign up",
@@ -24,10 +27,14 @@
 		"recipe-ingredients": "Ingredients",
 		"recipe-name": "Name"
 	},
+	"recipe": {
+		"loading": "Getting your recipe"
+	},
 	"recipes": {
 		"add": "Add Recipe",
 		"add-cover-image": "Click to Add Cover Image",
 		"created": "Recipe added!",
+		"loading": "Getting your recipes",
 		"title": "My Recipes"
 	},
 	"registration": {

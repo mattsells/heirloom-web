@@ -10,7 +10,7 @@ type Props = {
 	path: string;
 };
 
-function ProtectedRoute({ children, ...props }: Props) {
+function Protected({ children, ...props }: Props) {
 	const { isAuthenticated } = useSession();
 
 	return (
@@ -20,4 +20,4 @@ function ProtectedRoute({ children, ...props }: Props) {
 	);
 }
 
-export default ProtectedRoute;
+export default Protected;

@@ -32,8 +32,12 @@ const LoginSchema = Yup.object().shape({
 function Login() {
 	const client = useContext(ApiContext);
 	const { redirectTo } = useRedirect();
-	const { setSession } = useSession();
+	const { isAuthenticated, setSession } = useSession();
 	const { t } = useTranslation();
+
+	if (isAuthenticated) {
+		redirectTo(webRoutes.home);
+	}
 
 	return (
 		<Layout.Minimal>

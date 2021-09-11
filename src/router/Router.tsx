@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 
-import ProtectedRoute from '@/components/ProtectedRoute';
+import * as Path from '@/components/Route';
 import useRedirect from '@/hooks/useRedirect';
 import Login from '@/pages/auth/Login';
 import Registration from '@/pages/auth/Registration';
@@ -20,16 +20,14 @@ function Router() {
 	// TODO: Pull template out of individual pages and wrap around router
 	return (
 		<Switch>
-			{/* <Route path="/" exact>
-				<Sandbox />
-			</Route> */}
+			<Route path="/" exact component={Sandbox} />
 
 			<Route path={routes.login} component={Login} />
 			<Route path={routes.registration} component={Registration} />
 
-			<ProtectedRoute path={routes.home} component={Home} />
-			<ProtectedRoute path={routes.recipe} component={Show} />
-			<ProtectedRoute path={routes.recipes} component={Recipes} />
+			<Path.Protected path={routes.home} component={Home} />
+			<Path.Protected path={routes.recipe} component={Show} />
+			<Path.Protected path={routes.recipes} component={Recipes} />
 		</Switch>
 	);
 }
