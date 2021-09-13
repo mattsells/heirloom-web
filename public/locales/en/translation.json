@@ -28,6 +28,7 @@
 		"title": "Page not found"
 	},
 	"recipe": {
+		"add-cover-image": "Click to Add Cover Image",
 		"directions": "Directions",
 		"ingredients": "Ingredients",
 		"loading": "Getting your recipe",
@@ -35,7 +36,6 @@
 	},
 	"recipes": {
 		"add": "Add Recipe",
-		"add-cover-image": "Click to Add Cover Image",
 		"created": "Recipe added!",
 		"loading": "Getting your recipes",
 		"title": "My Recipes"

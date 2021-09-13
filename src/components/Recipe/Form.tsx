@@ -9,6 +9,7 @@ import apiRoutes from '@/api/routes';
 import { createRecipeBody } from '@/api/utils/recipes';
 import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
+import * as Input from '@/components/Input';
 import * as InputGroup from '@/components/InputGroup';
 import * as ListGroup from '@/components/ListGroup';
 import ApiContext from '@/context/api';
@@ -22,12 +23,14 @@ type Props = {
 };
 
 type FormValues = {
+	coverImage: string;
 	directions: string[];
 	ingredients: string[];
 	name: string;
 };
 
 const formValues: FormValues = {
+	coverImage: '',
 	directions: [],
 	ingredients: [],
 	name: '',
@@ -49,20 +52,21 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 			initialValues={formValues}
 			validationSchema={RecipeSchema}
 			onSubmit={async (fields) => {
-				try {
-					const { data: recipe } = await client.create<Recipe>(
-						apiRoutes.recipes.index,
-						createRecipeBody({ ...fields, accountId: account.id })
-					);
+				console.log('fields are', fields);
+				// try {
+				// 	const { data: recipe } = await client.create<Recipe>(
+				// 		apiRoutes.recipes.index,
+				// 		createRecipeBody({ ...fields, accountId: account.id })
+				// 	);
 
-					toast.success(t('recipes.created'));
-					queryClient.invalidateQueries('recipes');
+				// 	toast.success(t('recipes.created'));
+				// 	queryClient.invalidateQueries('recipes');
 
-					// TODO: Create utility to generate route with id
-					redirectTo(`/recipes/${recipe.id}`);
-				} catch (err) {
-					// TODO: Add error handling
-				}
+				// 	// TODO: Create utility to generate route with id
+				// 	redirectTo(`/recipes/${recipe.id}`);
+				// } catch (err) {
+				// 	// TODO: Add error handling
+				// }
 			}}
 		>
 			{({
@@ -75,6 +79,13 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 				isSubmitting,
 			}) => (
 				<Form onSubmit={handleSubmit}>
+					<Input.Image
+						name="cover-image"
+						onChange={handleChange}
+						text={t('recipe.add-cover-image')}
+						value={values.coverImage}
+					/>
+
 					<InputGroup.Text
 						error={errors.name}
 						label={t('recipe.name')}

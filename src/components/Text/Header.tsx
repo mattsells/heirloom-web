@@ -22,6 +22,7 @@ const useStyles = createUseStyles({
 		...(as === 'h2' && {
 			color: Slate.dark,
 			fontSize: Size.large,
+			marginBottom: Space.thin,
 		}),
 		...(as === 'h3' && {
 			color: Slate.darkest,

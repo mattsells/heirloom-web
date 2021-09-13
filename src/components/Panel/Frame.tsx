@@ -9,6 +9,7 @@ type Size = 'auto' | 'regular';
 
 type Props = {
 	children: ReactNode;
+	isFlex?: boolean;
 	isFloating?: boolean;
 	size?: Size;
 };
@@ -25,16 +26,24 @@ function parseSize(size: Size = 'auto'): string {
 	}
 }
 
-const useStyles = createUseStyles({
-	root: (props: Partial<Props>) => ({
-		backgroundColor: Shade.offwhite,
-		borderRadius: Radius.regular,
-		minWidth: parseSize(props.size),
-		...(props.isFloating && {
-			boxShadow: Shadow.regular,
+const useStyles = createUseStyles(
+	{
+		root: (props: Partial<Props>) => ({
+			backgroundColor: Shade.offwhite,
+			borderRadius: Radius.regular,
+			minWidth: parseSize(props.size),
+			...(props.isFloating && {
+				boxShadow: Shadow.regular,
+			}),
+			...(props.isFlex && {
+				display: 'flex',
+				flex: 1,
+				flexDirection: 'column',
+			}),
 		}),
-	}),
-});
+	},
+	{ name: 'PanelFrame' }
+);
 
 function Frame({ children, ...props }: Props): ReactElement<Props> {
 	const classes = useStyles(props as any);

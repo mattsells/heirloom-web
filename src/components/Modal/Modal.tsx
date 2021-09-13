@@ -13,44 +13,50 @@ type Props = {
 	onDismiss: VoidFunction;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		maxHeight: '100%',
-		maxWidth: '800px',
-		width: '100%',
-	},
+const useStyles = createUseStyles(
+	{
+		root: {
+			display: 'flex',
+			maxHeight: '100%',
+			maxWidth: '800px',
+			width: '100%',
+		},
 
-	backdrop: {
-		alignItems: 'center',
-		backgroundColor: 'rgba(0, 0, 0, 0.3)',
-		bottom: 0,
-		display: 'flex',
-		justifyContent: 'center',
-		left: 0,
-		padding: Space.extraWide,
-		position: 'fixed',
-		right: 0,
-		top: 0,
-	},
+		backdrop: {
+			alignItems: 'center',
+			backgroundColor: 'rgba(0, 0, 0, 0.3)',
+			bottom: 0,
+			display: 'flex',
+			justifyContent: 'center',
+			left: 0,
+			padding: Space.extraWide,
+			position: 'fixed',
+			right: 0,
+			top: 0,
+		},
 
-	header: {
-		display: 'flex',
-		justifyContent: 'flex-end',
-		padding: `${Space.regular} ${Space.regular} ${Space.none} ${Space.regular}`,
-	},
+		header: {
+			display: 'flex',
+			justifyContent: 'flex-end',
+			padding: `${Space.regular} ${Space.regular} ${Space.none} ${Space.regular}`,
+		},
 
-	button: {
-		background: 'none',
-		border: 'none',
-		cursor: 'pointer',
-		fontSize: Size.giant,
-		padding: Space.narrow,
-	},
+		button: {
+			background: 'none',
+			border: 'none',
+			cursor: 'pointer',
+			fontSize: Size.giant,
+			padding: Space.narrow,
+		},
 
-	content: {
-		overflowY: 'auto',
+		content: {
+			overflowY: 'auto',
+		},
 	},
-});
+	{
+		name: 'Modal',
+	}
+);
 
 // TODO: Close modal when clicking out of bounds
 // TODO: Animate modal in/out
@@ -65,7 +71,7 @@ function Modal({ children, isVisible, onDismiss }: Props): ReactElement<Props> {
 		<Portal>
 			<div className={classes.backdrop}>
 				<div className={classes.root}>
-					<Panel.Frame isFloating>
+					<Panel.Frame isFlex isFloating>
 						<div className={classes.header}>
 							<button className={classes.button} onClick={onDismiss}>
 								<GrFormClose />

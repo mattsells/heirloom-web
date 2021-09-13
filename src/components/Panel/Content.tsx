@@ -7,11 +7,14 @@ type Props = {
 	children: ReactNode;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		padding: Space.thick,
+const useStyles = createUseStyles(
+	{
+		root: {
+			padding: Space.thick,
+		},
 	},
-});
+	{ name: 'PanelContent' }
+);
 
 function Content({ children }: Props): ReactElement<Props> {
 	const classes = useStyles();

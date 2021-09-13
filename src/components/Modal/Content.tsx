@@ -7,11 +7,14 @@ type Props = {
 	children: ReactNode;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		padding: `${Space.none} ${Space.thick} ${Space.thick} ${Space.thick}`,
+const useStyles = createUseStyles(
+	{
+		root: {
+			padding: `${Space.none} ${Space.thick} ${Space.thick} ${Space.thick}`,
+		},
 	},
-});
+	{ name: 'ModalContent' }
+);
 
 function Content(props: Props): ReactElement<Props> {
 	const classes = useStyles();

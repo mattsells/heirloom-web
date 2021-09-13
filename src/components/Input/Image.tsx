@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement, useRef, useState } from 'react';
+import { ChangeEvent, HTMLProps, ReactElement, useRef, useState } from 'react';
 import { BsImageFill } from 'react-icons/bs';
 import { createUseStyles } from 'react-jss';
 
@@ -7,12 +7,11 @@ import { Pattern, Radius, Width } from '@/variables/borders';
 import { Forest, Shade } from '@/variables/colors';
 import { Size } from '@/variables/fonts';
 import { Space } from '@/variables/space';
+import { FileUploadResponse } from '@/types/file';
 
-type Props = {
-	onChange?: (data: object) => void;
+type Props = HTMLProps<HTMLInputElement> & {
 	originalUrl?: string;
 	text: string;
-	value?: object;
 };
 
 const useStyles = createUseStyles({
@@ -25,6 +24,7 @@ const useStyles = createUseStyles({
 		cursor: 'pointer',
 		fontSize: Size.regular,
 		justifyContent: 'center',
+		marginBottom: Space.thick,
 		minHeight: '25rem',
 		width: '100%',
 
@@ -65,10 +65,11 @@ const useStyles = createUseStyles({
 });
 
 // TODO: Create hook for upload functionality
-function Image({ onChange, originalUrl, text, value }: Props): ReactElement {
+function Image({ originalUrl, text, ...props }: Props): ReactElement {
 	const [imageUrl, setImageUrl] = useState(originalUrl);
 
 	const id = useRef(randomId());
+	const inputRef = useRef<HTMLInputElement>(null);
 	const classes = useStyles(imageUrl as any);
 
 	const handleSelectFile = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -85,14 +86,17 @@ function Image({ onChange, originalUrl, text, value }: Props): ReactElement {
 				body: form,
 			});
 
-			const body = await response.json();
-			onChange && onChange(body.data);
+			const body = (await response.json()) as FileUploadResponse;
+
+			// Trigger onChange event in input
+			inputRef.current.value = JSON.stringify(body.data);
+			const event = new Event('input', { bubbles: true });
+			inputRef.current.dispatchEvent(event);
 
 			// TODO: Get correct URL
 			setImageUrl(`http://localhost:3000${body.url}`);
 		} else {
 			setImageUrl(originalUrl);
-			onChange && onChange(null);
 		}
 	};
 
@@ -109,6 +113,9 @@ function Image({ onChange, originalUrl, text, value }: Props): ReactElement {
 				onChange={handleSelectFile}
 				type="file"
 			/>
+
+			{/* The returned data will be applied to the hidden input, triggering the onChange event */}
+			<input ref={inputRef} type="hidden" {...props} />
 		</label>
 	);
 }
