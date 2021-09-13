@@ -9,6 +9,11 @@
 		"passwordsMatch": "Password do not match",
 		"required": "Field is required"
 	},
+	"fields": {
+		"email": "Email",
+		"password": "Password",
+		"passwordConfirmation": "Confirm Password"
+	},
 	"global": {
 		"loading": "Loading"
 	},
@@ -19,10 +24,8 @@
 		"submit": "Sign In",
 		"title": "Sign In"
 	},
-	"fields": {
-		"email": "Email",
-		"password": "Password",
-		"passwordConfirmation": "Confirm Password"
+	"not-found": {
+		"title": "Page not found"
 	},
 	"recipe": {
 		"directions": "Directions",

@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 
-import * as Layout from '@/components/Layout';
 import * as Modal from '@/components/Modal';
 import * as Recipe from '@/components/Recipe';
 import * as Text from '@/components/Text';
@@ -28,7 +27,7 @@ function Recipes() {
 	);
 
 	return (
-		<Layout.Application>
+		<>
 			<Text.Header>{t('recipes.title')}</Text.Header>
 
 			<Recipe.List
@@ -46,7 +45,7 @@ function Recipes() {
 					<Recipe.Form />
 				</Modal.Content>
 			</Modal.Modal>
-		</Layout.Application>
+		</>
 	);
 }
 

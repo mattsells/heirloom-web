@@ -17,11 +17,7 @@ function Show() {
 		api.get<RecipeType>(`recipes/${id}`)
 	);
 
-	return (
-		<Layout.Application>
-			<Recipe.View isLoading={isLoading} recipe={data?.data} />
-		</Layout.Application>
-	);
+	return <Recipe.View isLoading={isLoading} recipe={data?.data} />;
 }
 
 export default Show;
