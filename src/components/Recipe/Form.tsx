@@ -77,58 +77,60 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 				handleBlur,
 				handleSubmit,
 				isSubmitting,
-			}) => (
-				<Form onSubmit={handleSubmit}>
-					<Input.Image
-						name="cover-image"
-						onChange={handleChange}
-						text={t('recipe.add-cover-image')}
-						value={values.coverImage}
-					/>
+			}) => {
+				return (
+					<Form onSubmit={handleSubmit}>
+						<Input.Image
+							name="coverImage"
+							onChange={handleChange}
+							text={t('recipe.add-cover-image')}
+							value={values.coverImage}
+						/>
 
-					<InputGroup.Text
-						error={errors.name}
-						label={t('recipe.name')}
-						name="name"
-						onBlur={handleBlur}
-						onChange={handleChange}
-						touched={touched.name}
-						value={values.name}
-					/>
+						<InputGroup.Text
+							error={errors.name}
+							label={t('recipe.name')}
+							name="name"
+							onBlur={handleBlur}
+							onChange={handleChange}
+							touched={touched.name}
+							value={values.name}
+						/>
 
-					<FieldArray
-						name="ingredients"
-						render={() => (
-							<ListGroup.Numbered
-								error={errors.ingredients as string}
-								label={t('recipe.ingredients')}
-								name="ingredients"
-								onBlur={handleBlur}
-								onChange={handleChange}
-								touched={touched.ingredients}
-								values={values.ingredients}
-							/>
-						)}
-					/>
+						<FieldArray
+							name="ingredients"
+							render={() => (
+								<ListGroup.Numbered
+									error={errors.ingredients as string}
+									label={t('recipe.ingredients')}
+									name="ingredients"
+									onBlur={handleBlur}
+									onChange={handleChange}
+									touched={touched.ingredients}
+									values={values.ingredients}
+								/>
+							)}
+						/>
 
-					<FieldArray
-						name="directions"
-						render={() => (
-							<ListGroup.Bulleted
-								error={errors.directions as string}
-								label={t('recipe.directions')}
-								name="directions"
-								onBlur={handleBlur}
-								onChange={handleChange}
-								touched={touched.directions}
-								values={values.directions}
-							/>
-						)}
-					/>
+						<FieldArray
+							name="directions"
+							render={() => (
+								<ListGroup.Bulleted
+									error={errors.directions as string}
+									label={t('recipe.directions')}
+									name="directions"
+									onBlur={handleBlur}
+									onChange={handleChange}
+									touched={touched.directions}
+									values={values.directions}
+								/>
+							)}
+						/>
 
-					<Submit disabled={isSubmitting}>{t('recipes.add')}</Submit>
-				</Form>
-			)}
+						<Submit disabled={isSubmitting}>{t('recipes.add')}</Submit>
+					</Form>
+				);
+			}}
 		</Formik>
 	);
 }

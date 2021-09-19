@@ -1,4 +1,4 @@
-import { ChangeEvent, HTMLProps, ReactElement, useRef, useState } from 'react';
+import { ChangeEvent, HTMLProps, ReactElement, useMemo, useRef } from 'react';
 import { BsImageFill } from 'react-icons/bs';
 import { createUseStyles } from 'react-jss';
 
@@ -8,6 +8,8 @@ import { Forest, Shade } from '@/variables/colors';
 import { Size } from '@/variables/fonts';
 import { Space } from '@/variables/space';
 import { FileUploadResponse } from '@/types/file';
+
+import { generateInputEvent, parseImageUrl } from './utils';
 
 type Props = HTMLProps<HTMLInputElement> & {
 	originalUrl?: string;
@@ -65,8 +67,14 @@ const useStyles = createUseStyles({
 });
 
 // TODO: Create hook for upload functionality
-function Image({ originalUrl, text, ...props }: Props): ReactElement {
-	const [imageUrl, setImageUrl] = useState(originalUrl);
+function Image({ onChange, originalUrl, text, ...props }: Props): ReactElement {
+	// const imageUrl = parseImageUrl(props.value as string);
+	const imageUrl = useMemo(() => {
+		const url = parseImageUrl(props.value as string);
+		return url ? `http://localhost:3000${url}` : null;
+	}, [props.value]);
+
+	console.log('IMAGE URL IS', imageUrl);
 
 	const id = useRef(randomId());
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -88,15 +96,12 @@ function Image({ originalUrl, text, ...props }: Props): ReactElement {
 
 			const body = (await response.json()) as FileUploadResponse;
 
-			// Trigger onChange event in input
-			inputRef.current.value = JSON.stringify(body.data);
-			const event = new Event('input', { bubbles: true });
-			inputRef.current.dispatchEvent(event);
-
-			// TODO: Get correct URL
-			setImageUrl(`http://localhost:3000${body.url}`);
+			// TODO: Update typing here
+			// @ts-ignore
+			onChange(generateInputEvent(props.name, body));
 		} else {
-			setImageUrl(originalUrl);
+			// @ts-ignore
+			onChange(generateInputEvent(props.name, ''));
 		}
 	};
 
@@ -108,6 +113,7 @@ function Image({ originalUrl, text, ...props }: Props): ReactElement {
 			</div>
 
 			<input
+				accept="image/*"
 				className={classes.input}
 				id={id.current}
 				onChange={handleSelectFile}
