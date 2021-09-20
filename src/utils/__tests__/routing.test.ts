@@ -15,6 +15,15 @@ describe('route()', () => {
 		expect(route(path, params)).toBe('/test/bar/baz');
 	});
 
+	it.each([[true], [false], [{}], [null], [undefined]])(
+		'throws an error if the path variable is %p',
+		(value) => {
+			const path = '/test/:foo';
+
+			expect(() => route(path, { foo: value })).toThrowError();
+		}
+	);
+
 	it('appends unmarked params as the query string', () => {
 		const path = '/test';
 		const params = { foo: 'bar', bar: 'baz' };

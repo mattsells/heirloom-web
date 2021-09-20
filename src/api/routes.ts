@@ -6,6 +6,7 @@ const routes = {
 	},
 	recipes: {
 		index: 'recipes',
+		show: 'recipes/:id',
 	},
 	users: {
 		show: 'users/:id',

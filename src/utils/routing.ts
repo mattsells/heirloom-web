@@ -1,18 +1,15 @@
 import qs from 'qs';
 
 interface RouteParams {
-	[key: string]: string | number | RouteParams;
+	[key: string]: boolean | number | string | RouteParams;
 }
 
 export function route(path: string, params: RouteParams = {}): string {
 	for (const [key, value] of Object.entries(params)) {
 		const keyMark = `:${key}`;
 
-		if (path.indexOf(keyMark) !== -1 && typeof value !== 'object') {
-			path = path.replace(
-				keyMark,
-				typeof value === 'number' ? value.toString() : value
-			);
+		if (path.indexOf(keyMark) !== -1) {
+			path = path.replace(keyMark, normalize(value));
 			delete params[key];
 		}
 	}
@@ -20,4 +17,19 @@ export function route(path: string, params: RouteParams = {}): string {
 	const query = qs.stringify(params);
 
 	return path + (query ? `?${query}` : '');
+}
+
+function normalize(value: boolean | number | string | object): string {
+	switch (typeof value) {
+		case 'string':
+			return value;
+
+		case 'number':
+			return value.toString();
+
+		default:
+			throw new Error(
+				'Invalid type. Only numbers and strings can be inserted into a route path.'
+			);
+	}
 }
