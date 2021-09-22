@@ -9,7 +9,7 @@ import { Size } from '@/variables/fonts';
 import { Space } from '@/variables/space';
 import { FileUploadResponse } from '@/types/file';
 
-import { generateInputEvent, parseImageUrl } from './utils';
+import { generateInputEvent, parseFileUrl } from '@/utils/file';
 
 type Props = HTMLProps<HTMLInputElement> & {
 	originalUrl?: string;
@@ -68,13 +68,10 @@ const useStyles = createUseStyles({
 
 // TODO: Create hook for upload functionality
 function Image({ onChange, originalUrl, text, ...props }: Props): ReactElement {
-	// const imageUrl = parseImageUrl(props.value as string);
 	const imageUrl = useMemo(() => {
-		const url = parseImageUrl(props.value as string);
+		const url = parseFileUrl(props.value as string);
 		return url ? `http://localhost:3000${url}` : null;
 	}, [props.value]);
-
-	console.log('IMAGE URL IS', imageUrl);
 
 	const id = useRef(randomId());
 	const inputRef = useRef<HTMLInputElement>(null);

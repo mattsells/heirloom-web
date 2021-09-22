@@ -1,18 +1,23 @@
 // TODO: Change how this works
 
-type CreateRecipeBodyParams = {
+import { parseFileData } from '@/utils/file';
+
+export type CreateRecipeBodyParams = {
 	accountId: number;
+	coverImage: string;
+	directions: string[];
+	ingredients: string[];
 	name: string;
 };
 
 export function createRecipeBody({
-	accountId,
-	name,
+	coverImage,
+	...fields
 }: CreateRecipeBodyParams): object {
 	return {
 		recipe: {
-			accountId,
-			name,
+			coverImage: parseFileData(coverImage),
+			...fields,
 		},
 	};
 }

@@ -6,7 +6,7 @@ import { useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 
 import apiRoutes from '@/api/routes';
-import { createRecipeBody } from '@/api/utils/recipes';
+import { createRecipeBody, CreateRecipeBodyParams } from '@/api/utils/recipes';
 import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
 import * as Input from '@/components/Input';
@@ -15,19 +15,16 @@ import * as ListGroup from '@/components/ListGroup';
 import ApiContext from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import useRedirect from '@/hooks/useRedirect';
+import webroutes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
+import { route } from '@/utils/routing';
 
 type Props = {
 	recipe?: Recipe;
 	onSuccess?: (recipe: Recipe) => void;
 };
 
-type FormValues = {
-	coverImage: string;
-	directions: string[];
-	ingredients: string[];
-	name: string;
-};
+type FormValues = Omit<CreateRecipeBodyParams, 'accountId'>;
 
 const formValues: FormValues = {
 	coverImage: '',
@@ -52,21 +49,19 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 			initialValues={formValues}
 			validationSchema={RecipeSchema}
 			onSubmit={async (fields) => {
-				console.log('fields are', fields);
-				// try {
-				// 	const { data: recipe } = await client.create<Recipe>(
-				// 		apiRoutes.recipes.index,
-				// 		createRecipeBody({ ...fields, accountId: account.id })
-				// 	);
+				try {
+					const { data: recipe } = await client.create<Recipe>(
+						apiRoutes.recipes.index,
+						createRecipeBody({ ...fields, accountId: account.id })
+					);
 
-				// 	toast.success(t('recipes.created'));
-				// 	queryClient.invalidateQueries('recipes');
+					toast.success(t('recipes.created'));
+					queryClient.invalidateQueries('recipes');
 
-				// 	// TODO: Create utility to generate route with id
-				// 	redirectTo(`/recipes/${recipe.id}`);
-				// } catch (err) {
-				// 	// TODO: Add error handling
-				// }
+					redirectTo(route(webroutes.recipe, { id: recipe.id }));
+				} catch (err) {
+					// TODO: Add error handling
+				}
 			}}
 		>
 			{({

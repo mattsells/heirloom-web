@@ -48,9 +48,6 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 		return <Loading.Placeholder text={t('recipe.loading')} />;
 	}
 
-	const ingredients = JSON.parse(recipe.ingredients);
-	const directions = JSON.parse(recipe.directions);
-
 	return (
 		<div className={classes.root}>
 			<Cover recipe={recipe} />
@@ -61,7 +58,7 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 						<Text.Header as="h2">{t('recipe.ingredients')}</Text.Header>
 
 						<ul className={classes.list}>
-							{ingredients.map((ingredient: string, index: number) => (
+							{recipe.ingredients.map((ingredient: string, index: number) => (
 								<li key={index}>{ingredient}</li>
 							))}
 						</ul>
@@ -75,7 +72,7 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 						<Text.Header as="h2">{t('recipe.directions')}</Text.Header>
 
 						<ol className={classes.list}>
-							{directions.map((ingredient: string, index: number) => (
+							{recipe.directions.map((ingredient: string, index: number) => (
 								<li key={index}>{ingredient}</li>
 							))}
 						</ol>

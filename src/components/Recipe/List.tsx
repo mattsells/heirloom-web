@@ -57,17 +57,11 @@ function List({
 		return <Loading.Placeholder text={t('recipes.loading')} />;
 	}
 
-	// TODO: Create empty state
-	if (!recipes.length) {
-		return <h1>NO RECIPES</h1>;
-	}
-
 	return (
 		<div className={classes.root}>
 			{recipes.map((recipe) => (
 				<Card key={recipe.id} recipe={recipe} />
 			))}
-
 			<Button.Square onClick={onClickAddRecipe}>
 				<div className={classes.add}>
 					<BiPlusMedical />

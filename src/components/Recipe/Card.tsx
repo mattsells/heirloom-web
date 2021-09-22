@@ -60,12 +60,11 @@ function Card({ recipe }: Props): ReactElement<Props> {
 	return (
 		<Link className={classes.root} to={route(routes.recipe, { id: recipe.id })}>
 			<Frame.Square>
-				<img src={imageUrl} />
-				{/* <div className={classes.content}>
+				<div className={classes.content}>
 					<div className={classes.veil}>
 						<h4 className={classes.name}>{recipe.name}</h4>
 					</div>
-				</div> */}
+				</div>
 			</Frame.Square>
 		</Link>
 	);
