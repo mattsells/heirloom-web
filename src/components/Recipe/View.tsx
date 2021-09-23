@@ -2,12 +2,13 @@ import { ReactElement } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useTranslation } from 'react-i18next';
 
+import Breadcrumbs, { BreadcrumbsPath } from '@/components/Breadcrumbs';
 import * as Loading from '@/components/Loading';
 import * as Panel from '@/components/Panel';
 import * as Text from '@/components/Text';
+import routes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
-import { Size } from '@/variables/fonts';
-import { Space } from '@/variables/space';
+import { Size, Space } from '@/variables';
 
 import Cover from './Cover';
 
@@ -45,8 +46,21 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 		return <Loading.Placeholder text={t('recipe.loading')} />;
 	}
 
+	// TODO: Maybe update this component to be more automated?
+	const path: BreadcrumbsPath = [
+		{
+			label: 'Recipes',
+			path: routes.recipes,
+		},
+		{
+			label: recipe.name,
+		},
+	];
+
 	return (
 		<div className={classes.root}>
+			<Breadcrumbs path={path} />
+
 			<Cover recipe={recipe} />
 
 			<div className={classes.section}>
