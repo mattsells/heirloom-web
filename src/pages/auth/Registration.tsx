@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { Redirect, useHistory } from 'react-router';
 import * as Yup from 'yup';
 
 import apiRoutes from '@/api/routes';
@@ -14,10 +15,10 @@ import Link from '@/components/Link';
 import * as Panel from '@/components/Panel';
 import * as Text from '@/components/Text';
 import ApiContext from '@/context/api';
-import useRedirect from '@/hooks/useRedirect';
 import useSession from '@/hooks/useSession';
 import webRoutes from '@/router/routes';
 import { User } from '@/types/user';
+import HttpError from '@/lib/http/HttpError';
 
 const formValues = {
 	email: '',
@@ -37,12 +38,12 @@ const RegistrationSchema = Yup.object().shape({
 
 function Registration() {
 	const client = useContext(ApiContext);
-	const { redirectTo } = useRedirect();
+	const history = useHistory();
 	const { isAuthenticated, setSession } = useSession();
 	const { t } = useTranslation();
 
 	if (isAuthenticated) {
-		redirectTo(webRoutes.home);
+		return <Redirect to={webRoutes.home} />;
 	}
 
 	return (
@@ -67,10 +68,12 @@ function Registration() {
 
 									toast.success(t('authentication.loginSuccess'));
 									setSession(user, headers.Authorization);
-									redirectTo(webRoutes.home);
+									history.push(webRoutes.home);
 								} catch (err) {
 									// TODO: Check if message is available otherwise show default
-									toast.error(err.message);
+									if (err instanceof HttpError) {
+										toast.error(err.message);
+									}
 								}
 							}}
 						>

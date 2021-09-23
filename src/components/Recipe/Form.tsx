@@ -2,6 +2,7 @@ import { Formik, FieldArray } from 'formik';
 import { ReactElement, useContext } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 import { useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 
@@ -14,7 +15,6 @@ import * as InputGroup from '@/components/InputGroup';
 import * as ListGroup from '@/components/ListGroup';
 import ApiContext from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
-import useRedirect from '@/hooks/useRedirect';
 import webroutes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
 import { route } from '@/utils/routing';
@@ -40,8 +40,8 @@ const RecipeSchema = Yup.object().shape({
 function RecipeForm({ recipe }: Props): ReactElement<Props> {
 	const { account } = useActiveAccount();
 	const client = useContext(ApiContext);
+	const history = useHistory();
 	const queryClient = useQueryClient();
-	const { redirectTo } = useRedirect();
 	const { t } = useTranslation();
 
 	return (
@@ -58,7 +58,7 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 					toast.success(t('recipes.created'));
 					queryClient.invalidateQueries('recipes');
 
-					redirectTo(route(webroutes.recipe, { id: recipe.id }));
+					history.push(route(webroutes.recipe, { id: recipe.id }));
 				} catch (err) {
 					// TODO: Add error handling
 				}

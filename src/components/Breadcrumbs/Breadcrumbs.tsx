@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { Fragment, ReactElement } from 'react';
 import { BsCaretRightFill } from 'react-icons/bs';
 import { createUseStyles } from 'react-jss';
 
@@ -37,7 +37,7 @@ function Breadcrumbs({ path }: Props): ReactElement<Props> {
 
 	const links = path.map((link, index) => {
 		return (
-			<>
+			<Fragment key={index}>
 				<span>
 					{link.path ? (
 						<Link to={link.path}>{link.label}</Link>
@@ -51,7 +51,7 @@ function Breadcrumbs({ path }: Props): ReactElement<Props> {
 						<BsCaretRightFill />
 					</span>
 				)}
-			</>
+			</Fragment>
 		);
 	});
 

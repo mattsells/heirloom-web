@@ -2,7 +2,6 @@ import { Route, Switch } from 'react-router-dom';
 
 import * as Layout from '@/components/Layout';
 import * as Path from '@/components/Route';
-import useRedirect from '@/hooks/useRedirect';
 import * as Auth from '@/pages/auth';
 import Home from '@/pages/Home';
 import NotFound from '@/pages/NotFound';
@@ -11,12 +10,6 @@ import Sandbox from '@/pages/Sandbox';
 import { routes } from '@/router';
 
 function Router() {
-	const { redirect } = useRedirect();
-
-	if (redirect) {
-		return redirect;
-	}
-
 	return (
 		<Switch>
 			<Route path="/" exact component={Sandbox} />
