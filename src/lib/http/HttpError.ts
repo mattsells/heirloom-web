@@ -5,6 +5,10 @@ class HttpError extends Error {
 		super(message);
 		this.status = status;
 	}
+
+	get unauthorized() {
+		return this.status === 401;
+	}
 }
 
 export default HttpError;

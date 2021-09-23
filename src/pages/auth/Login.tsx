@@ -16,8 +16,10 @@ import * as Text from '@/components/Text';
 import ApiContext from '@/context/api';
 import useRedirect from '@/hooks/useRedirect';
 import useSession from '@/hooks/useSession';
+import HttpError from '@/lib/http/HttpError';
 import webRoutes from '@/router/routes';
 import { User } from '@/types/user';
+import { Redirect } from 'react-router';
 
 const formValues = {
 	email: '',
@@ -36,7 +38,7 @@ function Login() {
 	const { t } = useTranslation();
 
 	if (isAuthenticated) {
-		redirectTo(webRoutes.home);
+		return <Redirect to={webRoutes.home} />;
 	}
 
 	return (
@@ -59,11 +61,12 @@ function Login() {
 									setSession(user, headers.Authorization);
 									redirectTo(webRoutes.home);
 								} catch (err) {
-									// TODO: Update error instance to do err.unauthorized
-									if (err.status === 401) {
-										toast.error(t('authentication.passwordIncorrect'));
-									} else {
-										toast.error(t('authentication.loginFailure'));
+									if (err instanceof HttpError) {
+										if (err.unauthorized) {
+											toast.error(t('authentication.passwordIncorrect'));
+										} else {
+											toast.error(t('authentication.loginFailure'));
+										}
 									}
 								}
 							}}

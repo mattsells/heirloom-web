@@ -4,6 +4,7 @@ import shallow from 'zustand/shallow';
 
 import apiRoutes from '@/api/routes';
 import ApiContext from '@/context/api';
+import HttpError from '@/lib/http/HttpError';
 import webRoutes from '@/router/routes';
 import { useSessionStore } from '@/stores/session';
 import { User } from '@/types/user';
@@ -74,7 +75,9 @@ function useSession(): UseSession {
 			handleClearSession();
 			redirectTo(webRoutes.login);
 		} catch (err) {
-			toast.error(err.message);
+			if (err instanceof HttpError) {
+				toast.error(err.message);
+			}
 		}
 	}, [api, handleClearSession, redirectTo]);
 
