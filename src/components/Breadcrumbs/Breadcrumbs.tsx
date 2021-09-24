@@ -17,20 +17,25 @@ type Props = {
 	path: BreadcrumbsPath;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		alignItems: 'center',
-		display: 'flex',
-		fontSize: Size.regular,
-	},
+const useStyles = createUseStyles(
+	{
+		root: {
+			alignItems: 'center',
+			display: 'flex',
+			fontSize: Size.regular,
+		},
 
-	caret: {
-		alignItems: 'center',
-		color: Slate.regular,
-		display: 'inline-flex',
-		padding: `0 ${Space.regular}`,
+		caret: {
+			alignItems: 'center',
+			color: Slate.regular,
+			display: 'inline-flex',
+			padding: `0 ${Space.regular}`,
+		},
 	},
-});
+	{
+		name: 'Breadcrumbs',
+	}
+);
 
 function Breadcrumbs({ path }: Props): ReactElement<Props> {
 	const classes = useStyles();

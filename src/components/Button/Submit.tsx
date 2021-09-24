@@ -22,8 +22,15 @@ const useStyles = createUseStyles({
 		padding: `${Space.thin} ${Space.extraWide}`,
 		transition: `background-color linear ${Speed.fast}`,
 
-		'&:hover': {
-			backgroundColor: Forest.regular,
+		'&:disabled': {
+			cursor: 'default',
+			opacity: 0.5,
+		},
+
+		'&:not(:disabled)': {
+			'&:hover': {
+				backgroundColor: Forest.regular,
+			},
 		},
 	},
 });
