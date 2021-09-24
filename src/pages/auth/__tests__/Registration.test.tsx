@@ -9,6 +9,13 @@ import { ApiContext } from '@/context';
 
 import Registration from '../Registration';
 
+// TODO: Get this to work in a mock
+jest.mock('react-i18next', () => ({
+	useTranslation: () => ({
+		t: (key: string) => key,
+	}),
+}));
+
 const mockPost = jest.fn();
 
 const httpClientMock = { create: mockPost };
