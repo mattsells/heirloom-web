@@ -11,7 +11,7 @@ import { FileUploadResponse } from '@/types/file';
 
 import { generateInputEvent, parseFileUrl } from '@/utils/file';
 
-type Props = HTMLProps<HTMLInputElement> & {
+export type Props = HTMLProps<HTMLInputElement> & {
 	originalUrl?: string;
 	text: string;
 };
@@ -74,7 +74,6 @@ function Image({ onChange, originalUrl, text, ...props }: Props): ReactElement {
 	}, [props.value]);
 
 	const id = useRef(randomId());
-	const inputRef = useRef<HTMLInputElement>(null);
 	const classes = useStyles(imageUrl as any);
 
 	const handleSelectFile = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +102,11 @@ function Image({ onChange, originalUrl, text, ...props }: Props): ReactElement {
 	};
 
 	return (
-		<label className={classes.root} htmlFor={id.current}>
+		<label
+			className={classes.root}
+			data-testid="image-input"
+			htmlFor={id.current}
+		>
 			<div className={classes.add}>
 				<BsImageFill />
 				<span className={classes.addText}>{text}</span>
@@ -112,13 +115,11 @@ function Image({ onChange, originalUrl, text, ...props }: Props): ReactElement {
 			<input
 				accept="image/*"
 				className={classes.input}
+				data-testid="file-input"
 				id={id.current}
 				onChange={handleSelectFile}
 				type="file"
 			/>
-
-			{/* The returned data will be applied to the hidden input, triggering the onChange event */}
-			<input ref={inputRef} type="hidden" {...props} />
 		</label>
 	);
 }

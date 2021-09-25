@@ -9,7 +9,7 @@ import { Space } from '@/variables/space';
 export type ListType = 'bullet' | 'number';
 
 // TODO: Update ts for events
-type Props = {
+export type Props = {
 	error?: string;
 	name: string;
 	onBlur: any;

@@ -11,29 +11,34 @@ type Props = HTMLProps<HTMLButtonElement> & {
 	children?: string;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		backgroundColor: Forest.light,
-		border: 'none',
-		borderRadius: Radius.tight,
-		cursor: 'pointer',
-		color: Shade.white,
-		fontSize: Size.regular,
-		padding: `${Space.thin} ${Space.extraWide}`,
-		transition: `background-color linear ${Speed.fast}`,
+const useStyles = createUseStyles(
+	{
+		root: {
+			backgroundColor: Forest.light,
+			border: 'none',
+			borderRadius: Radius.tight,
+			cursor: 'pointer',
+			color: Shade.white,
+			fontSize: Size.regular,
+			padding: `${Space.thin} ${Space.extraWide}`,
+			transition: `background-color linear ${Speed.fast}`,
 
-		'&:disabled': {
-			cursor: 'default',
-			opacity: 0.5,
-		},
+			'&:disabled': {
+				cursor: 'default',
+				opacity: 0.5,
+			},
 
-		'&:not(:disabled)': {
-			'&:hover': {
-				backgroundColor: Forest.regular,
+			'&:not(:disabled)': {
+				'&:hover': {
+					backgroundColor: Forest.regular,
+				},
 			},
 		},
 	},
-});
+	{
+		name: 'ButtonSubmit',
+	}
+);
 
 function Submit(props: Props): ReactElement<Props> {
 	const classes = useStyles();
