@@ -12,7 +12,7 @@ import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
 import * as Input from '@/components/Input';
 import * as InputGroup from '@/components/InputGroup';
-import * as ListGroup from '@/components/ListGroup';
+import ListGroup from '@/components/ListGroup';
 import ApiContext from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import webroutes from '@/router/routes';
@@ -95,7 +95,7 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 						<FieldArray
 							name="ingredients"
 							render={() => (
-								<ListGroup.Numbered
+								<ListGroup
 									error={errors.ingredients as string}
 									label={t('recipe.ingredients')}
 									name="ingredients"
@@ -110,9 +110,11 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 						<FieldArray
 							name="directions"
 							render={() => (
-								<ListGroup.Bulleted
+								<ListGroup
 									error={errors.directions as string}
+									inputType="textarea"
 									label={t('recipe.directions')}
+									listType="number"
 									name="directions"
 									onBlur={handleBlur}
 									onChange={handleChange}

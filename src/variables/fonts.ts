@@ -4,3 +4,7 @@ export enum Size {
 	large = '2.0rem',
 	giant = '3.2rem',
 }
+
+export enum Family {
+	primary = "'Poppins', sans-serif",
+}

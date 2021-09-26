@@ -1,7 +1,7 @@
 import { useRef, ReactElement } from 'react';
 import { createUseStyles } from 'react-jss';
 
-import List, { ListType } from '@/components/Input/List';
+import List, { InputType, ListType } from '@/components/Input/List';
 import Label from '@/components/Label';
 import { Error } from '@/components/Text';
 import { Space } from '@/variables/space';
@@ -10,12 +10,13 @@ import { randomId } from '@/utils/string';
 // TODO: Update TS for events
 export type Props = {
 	error?: string;
+	inputType?: InputType;
 	label: string;
+	listType?: ListType;
 	name: string;
 	onBlur: any;
 	onChange: any;
 	touched?: boolean;
-	type: ListType;
 	values: string[];
 };
 
