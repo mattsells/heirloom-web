@@ -12,17 +12,20 @@ type Props = {
 	to?: string;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		color: Tangerine.regular,
-		fontSize: Size.regular,
-		transition: `all linear ${Speed.fast}`,
+const useStyles = createUseStyles(
+	{
+		root: {
+			color: Tangerine.regular,
+			fontSize: Size.regular,
+			transition: `all linear ${Speed.fast}`,
 
-		'&:hover': {
-			color: Tangerine.light,
+			'&:hover': {
+				color: Tangerine.light,
+			},
 		},
 	},
-});
+	{ name: 'TextLink' }
+);
 
 function Link(props: Props): ReactElement<Props> {
 	const classes = useStyles();

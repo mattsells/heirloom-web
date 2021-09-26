@@ -5,20 +5,23 @@ type Props = {
 	children: ReactNode;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		paddingTop: '100%',
-		position: 'relative',
-	},
+const useStyles = createUseStyles(
+	{
+		root: {
+			paddingTop: '100%',
+			position: 'relative',
+		},
 
-	pane: {
-		position: 'absolute',
-		bottom: 0,
-		left: 0,
-		right: 0,
-		top: 0,
+		pane: {
+			position: 'absolute',
+			bottom: 0,
+			left: 0,
+			right: 0,
+			top: 0,
+		},
 	},
-});
+	{ name: 'FrameSquare' }
+);
 
 function Square({ children }: Props): ReactElement<Props> {
 	const classes = useStyles();

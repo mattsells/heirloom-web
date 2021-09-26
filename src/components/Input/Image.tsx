@@ -16,55 +16,58 @@ export type Props = HTMLProps<HTMLInputElement> & {
 	text: string;
 };
 
-const useStyles = createUseStyles({
-	root: (imageUrl) => ({
-		alignItems: 'center',
-		backgroundColor: Shade.white,
-		borderRadius: Radius.narrow,
-		display: 'flex',
-		color: Shade.white,
-		cursor: 'pointer',
-		fontSize: Size.regular,
-		justifyContent: 'center',
-		marginBottom: Space.thick,
-		minHeight: '25rem',
-		width: '100%',
+const useStyles = createUseStyles(
+	{
+		root: (imageUrl) => ({
+			alignItems: 'center',
+			backgroundColor: Shade.white,
+			borderRadius: Radius.narrow,
+			display: 'flex',
+			color: Shade.white,
+			cursor: 'pointer',
+			fontSize: Size.regular,
+			justifyContent: 'center',
+			marginBottom: Space.thick,
+			minHeight: '25rem',
+			width: '100%',
 
-		...(imageUrl && {
-			backgroundImage: `url(${imageUrl})`,
-			backgroundSize: 'cover',
-			backgroundPosition: 'center center',
-			backgroundRepeat: 'no-repeat',
-			border: 'none',
+			...(imageUrl && {
+				backgroundImage: `url(${imageUrl})`,
+				backgroundSize: 'cover',
+				backgroundPosition: 'center center',
+				backgroundRepeat: 'no-repeat',
+				border: 'none',
+			}),
+
+			...(!imageUrl && {
+				border: `${Width.thick} ${Pattern.dashed} ${Forest.regular}`,
+			}),
 		}),
 
-		...(!imageUrl && {
-			border: `${Width.thick} ${Pattern.dashed} ${Forest.regular}`,
-		}),
-	}),
+		input: {
+			display: 'none',
+		},
 
-	input: {
-		display: 'none',
-	},
+		add: {
+			alignItems: 'center',
+			color: Forest.light,
+			display: (imageUrl) => (imageUrl ? 'none' : 'flex'),
+			flexDirection: 'column',
+			height: '100%',
+			justifyContent: 'center',
 
-	add: {
-		alignItems: 'center',
-		color: Forest.light,
-		display: (imageUrl) => (imageUrl ? 'none' : 'flex'),
-		flexDirection: 'column',
-		height: '100%',
-		justifyContent: 'center',
+			'& > svg': {
+				fontSize: Size.giant,
+				marginBottom: Space.thin,
+			},
+		},
 
-		'& > svg': {
-			fontSize: Size.giant,
-			marginBottom: Space.thin,
+		addText: {
+			fontSize: Size.regular,
 		},
 	},
-
-	addText: {
-		fontSize: Size.regular,
-	},
-});
+	{ name: 'InputImage' }
+);
 
 // TODO: Create hook for upload functionality
 function Image({ onChange, originalUrl, text, ...props }: Props): ReactElement {

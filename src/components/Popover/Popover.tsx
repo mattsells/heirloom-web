@@ -50,6 +50,7 @@ function Popover({
 			{isVisible && (
 				<Portal>
 					<div
+						className="Popover"
 						ref={setPopperElement}
 						style={styles.popper}
 						{...attributes.popper}

@@ -8,12 +8,15 @@ type Props = {
 	children?: string;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		color: Tangerine.dark,
-		fontSize: Size.small,
+const useStyles = createUseStyles(
+	{
+		root: {
+			color: Tangerine.dark,
+			fontSize: Size.small,
+		},
 	},
-});
+	{ name: 'TextError' }
+);
 
 function Error({ children }: Props): ReactElement<Props> {
 	const classes = useStyles();

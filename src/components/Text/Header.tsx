@@ -12,24 +12,27 @@ type Props = {
 	children?: string;
 };
 
-const useStyles = createUseStyles({
-	root: (as: HeaderStyle) => ({
-		...(as === 'h1' && {
-			color: Tangerine.light,
-			fontSize: Size.giant,
-			marginBottom: Space.regular,
+const useStyles = createUseStyles(
+	{
+		root: (as: HeaderStyle) => ({
+			...(as === 'h1' && {
+				color: Tangerine.light,
+				fontSize: Size.giant,
+				marginBottom: Space.regular,
+			}),
+			...(as === 'h2' && {
+				color: Slate.dark,
+				fontSize: Size.large,
+				marginBottom: Space.thin,
+			}),
+			...(as === 'h3' && {
+				color: Slate.darkest,
+				fontSize: Size.regular,
+			}),
 		}),
-		...(as === 'h2' && {
-			color: Slate.dark,
-			fontSize: Size.large,
-			marginBottom: Space.thin,
-		}),
-		...(as === 'h3' && {
-			color: Slate.darkest,
-			fontSize: Size.regular,
-		}),
-	}),
-});
+	},
+	{ name: 'TextHeader' }
+);
 
 function Header({ children, as = 'h1' }: Props): ReactElement<Props> {
 	const classes = useStyles(as);

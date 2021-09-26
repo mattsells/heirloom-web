@@ -8,12 +8,15 @@ type Props = {
 	children?: ReactNode;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		color: Slate.regular,
-		fontSize: Size.regular,
+const useStyles = createUseStyles(
+	{
+		root: {
+			color: Slate.regular,
+			fontSize: Size.regular,
+		},
 	},
-});
+	{ name: 'TextBody' }
+);
 
 function Body({ children }: Props): ReactElement<Props> {
 	const classes = useStyles();

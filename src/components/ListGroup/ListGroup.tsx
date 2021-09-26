@@ -19,22 +19,25 @@ export type Props = {
 	values: string[];
 };
 
-const useStyles = createUseStyles({
-	root: {
-		'&:not(:last-child)': {
-			marginBottom: Space.thick,
+const useStyles = createUseStyles(
+	{
+		root: {
+			'&:not(:last-child)': {
+				marginBottom: Space.thick,
+			},
+		},
+
+		input: {
+			marginBottom: Space.narrow,
+			paddingLeft: Space.wide,
+		},
+
+		error: {
+			paddingLeft: Space.thick,
 		},
 	},
-
-	input: {
-		marginBottom: Space.narrow,
-		paddingLeft: Space.wide,
-	},
-
-	error: {
-		paddingLeft: Space.thick,
-	},
-});
+	{ name: 'ListGroup' }
+);
 
 function ListGroup({
 	error,

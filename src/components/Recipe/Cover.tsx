@@ -9,19 +9,22 @@ type Props = {
 	recipe: Recipe;
 };
 
-const useStyles = createUseStyles({
-	cover: {
-		alignItems: 'flex-end',
-		// TODO: Get correct URL for image
-		backgroundImage: ({ recipe }: Props) =>
-			`url(http://localhost:3000${recipe.coverImageUrl})`,
-		backgroundSize: 'cover',
-		backgroundPosition: 'center center',
-		backgroundRepeat: 'no-repeat',
-		display: 'flex',
-		height: '100%',
+const useStyles = createUseStyles(
+	{
+		cover: {
+			alignItems: 'flex-end',
+			// TODO: Get correct URL for image
+			backgroundImage: ({ recipe }: Props) =>
+				`url(http://localhost:3000${recipe.coverImageUrl})`,
+			backgroundSize: 'cover',
+			backgroundPosition: 'center center',
+			backgroundRepeat: 'no-repeat',
+			display: 'flex',
+			height: '100%',
+		},
 	},
-});
+	{ name: 'RecipeCover' }
+);
 
 function Cover({ recipe }: Props): ReactElement<Props> {
 	const classes = useStyles({ recipe } as any);

@@ -7,13 +7,16 @@ type Props = {
 	children: ReactNode;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		backgroundColor: Mint.light,
-		backgroundImage: `linear-gradient(${Mint.light}, ${Mint.regular})`,
-		height: '100%',
+const useStyles = createUseStyles(
+	{
+		root: {
+			backgroundColor: Mint.light,
+			backgroundImage: `linear-gradient(${Mint.light}, ${Mint.regular})`,
+			height: '100%',
+		},
 	},
-});
+	{ name: 'LayoutMinimal' }
+);
 
 function Minimal({ children }: Props): ReactElement<Props> {
 	const classes = useStyles();

@@ -9,17 +9,20 @@ type Props = HTMLProps<HTMLLabelElement> & {
 	error?: string;
 };
 
-const useStyles = createUseStyles({
-	root: (props: Props) => ({
-		color: Slate.regular,
-		display: 'block',
-		fontSize: Size.regular,
-		marginBottom: Space.thin,
-		...(props.error && {
-			color: Tangerine.dark,
+const useStyles = createUseStyles(
+	{
+		root: (props: Props) => ({
+			color: Slate.regular,
+			display: 'block',
+			fontSize: Size.regular,
+			marginBottom: Space.thin,
+			...(props.error && {
+				color: Tangerine.dark,
+			}),
 		}),
-	}),
-});
+	},
+	{ name: 'Label' }
+);
 
 function Label({ type = 'text', ...props }: Props): ReactElement<Props> {
 	const classes = useStyles(props as any);

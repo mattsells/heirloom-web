@@ -8,37 +8,40 @@ type Props = {
 	children: ReactNode;
 };
 
-const useStyles = createUseStyles({
-	// TODO: Add media query for desktop vs mobile
-	root: {
-		display: 'grid',
-		gridTemplateColumns: '14.0rem minmax(30.0rem, 100%)',
-		gridTemplateRows: '1fr',
-		gridTemplateAreas: `
+const useStyles = createUseStyles(
+	{
+		// TODO: Add media query for desktop vs mobile
+		root: {
+			display: 'grid',
+			gridTemplateColumns: '14.0rem minmax(30.0rem, 100%)',
+			gridTemplateRows: '1fr',
+			gridTemplateAreas: `
 			"nav content"
 		`,
-		height: '100%',
-	},
+			height: '100%',
+		},
 
-	content: {
-		gridArea: 'content',
-		maxHeight: '100vh',
-		overflowY: 'auto',
-		padding: `0 ${Space.wide}`,
-	},
+		content: {
+			gridArea: 'content',
+			maxHeight: '100vh',
+			overflowY: 'auto',
+			padding: `0 ${Space.wide}`,
+		},
 
-	nav: {
-		gridArea: 'nav',
-	},
+		nav: {
+			gridArea: 'nav',
+		},
 
-	container: {
-		display: 'flex',
-		flexDirection: 'column',
-		height: '100%',
-		margin: 'auto',
-		maxWidth: '1000px',
+		container: {
+			display: 'flex',
+			flexDirection: 'column',
+			height: '100%',
+			margin: 'auto',
+			maxWidth: '1000px',
+		},
 	},
-});
+	{ name: 'LayoutApplication' }
+);
 
 function Application({ children }: Props): ReactElement<Props> {
 	const classes = useStyles();

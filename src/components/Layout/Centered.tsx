@@ -5,15 +5,18 @@ type Props = {
 	children: ReactNode;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		alignItems: 'center',
-		display: 'flex',
-		flexDirection: 'column',
-		height: '100%',
-		justifyContent: 'center',
+const useStyles = createUseStyles(
+	{
+		root: {
+			alignItems: 'center',
+			display: 'flex',
+			flexDirection: 'column',
+			height: '100%',
+			justifyContent: 'center',
+		},
 	},
-});
+	{ name: 'LayoutCentered' }
+);
 
 function Centered({ children }: Props): ReactElement<Props> {
 	const classes = useStyles();

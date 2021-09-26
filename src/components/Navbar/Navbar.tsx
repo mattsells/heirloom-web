@@ -14,19 +14,22 @@ import { NAVBAR_ITEMS } from './config';
 import Block from './Block';
 import Link from './Link';
 
-const useStyles = createUseStyles({
-	root: {
-		backgroundColor: Mint.regular,
-		boxShadow: Shadow.right,
-		display: 'flex',
-		flexDirection: 'column',
-		height: '100%',
-	},
+const useStyles = createUseStyles(
+	{
+		root: {
+			backgroundColor: Mint.regular,
+			boxShadow: Shadow.right,
+			display: 'flex',
+			flexDirection: 'column',
+			height: '100%',
+		},
 
-	features: {
-		flex: 1,
+		features: {
+			flex: 1,
+		},
 	},
-});
+	{ name: 'Navbar' }
+);
 
 function Navbar(): ReactElement {
 	const classes = useStyles();

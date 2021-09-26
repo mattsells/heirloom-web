@@ -14,16 +14,19 @@ export type Props = HTMLProps<HTMLInputElement> & {
 	touched?: boolean;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		'&:not(:last-child)': {
-			marginBottom: Space.thick,
+const useStyles = createUseStyles(
+	{
+		root: {
+			'&:not(:last-child)': {
+				marginBottom: Space.thick,
+			},
+		},
+		input: {
+			marginBottom: Space.narrow,
 		},
 	},
-	input: {
-		marginBottom: Space.narrow,
-	},
-});
+	{ name: 'InputGroup' }
+);
 
 function InputGroup({
 	error,

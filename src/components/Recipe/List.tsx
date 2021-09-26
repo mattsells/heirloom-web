@@ -18,32 +18,35 @@ type Props = {
 	recipes: Recipe[];
 };
 
-const useStyles = createUseStyles({
-	root: {
-		display: 'grid',
-		gap: Space.regular,
-		// TODO: Change grid size for media queries
-		gridTemplateColumns: 'repeat(5, 1fr)',
-	},
+const useStyles = createUseStyles(
+	{
+		root: {
+			display: 'grid',
+			gap: Space.regular,
+			// TODO: Change grid size for media queries
+			gridTemplateColumns: 'repeat(5, 1fr)',
+		},
 
-	add: {
-		alignItems: 'center',
-		color: Forest.light,
-		display: 'flex',
-		flexDirection: 'column',
-		height: '100%',
-		justifyContent: 'center',
+		add: {
+			alignItems: 'center',
+			color: Forest.light,
+			display: 'flex',
+			flexDirection: 'column',
+			height: '100%',
+			justifyContent: 'center',
 
-		'& > svg': {
-			fontSize: Size.giant,
-			marginBottom: Space.thin,
+			'& > svg': {
+				fontSize: Size.giant,
+				marginBottom: Space.thin,
+			},
+		},
+
+		addText: {
+			fontSize: Size.regular,
 		},
 	},
-
-	addText: {
-		fontSize: Size.regular,
-	},
-});
+	{ name: 'RecipeList' }
+);
 
 function List({
 	isLoading,

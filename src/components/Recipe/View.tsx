@@ -17,26 +17,29 @@ type Props = {
 	recipe: Recipe;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		height: '100%',
-	},
+const useStyles = createUseStyles(
+	{
+		root: {
+			height: '100%',
+		},
 
-	list: {
-		fontSize: Size.regular,
-		paddingLeft: Space.wide,
+		list: {
+			fontSize: Size.regular,
+			paddingLeft: Space.wide,
 
-		'& li': {
-			'&:not(:last-child)': {
-				marginBottom: Space.thin,
+			'& li': {
+				'&:not(:last-child)': {
+					marginBottom: Space.thin,
+				},
 			},
 		},
-	},
 
-	section: {
-		marginBottom: Space.wide,
+		section: {
+			marginBottom: Space.wide,
+		},
 	},
-});
+	{ name: 'RecipeView' }
+);
 
 function View({ isLoading, recipe }: Props): ReactElement<Props> {
 	const classes = useStyles();

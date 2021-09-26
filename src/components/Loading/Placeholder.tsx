@@ -12,24 +12,27 @@ type Props = {
 	text?: string;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		alignItems: 'center',
-		display: 'flex',
-		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'center',
-	},
+const useStyles = createUseStyles(
+	{
+		root: {
+			alignItems: 'center',
+			display: 'flex',
+			flex: 1,
+			flexDirection: 'column',
+			justifyContent: 'center',
+		},
 
-	spinner: {
-		marginBottom: Space.thick,
-	},
+		spinner: {
+			marginBottom: Space.thick,
+		},
 
-	text: {
-		color: Tangerine.regular,
-		fontSize: Size.large,
+		text: {
+			color: Tangerine.regular,
+			fontSize: Size.large,
+		},
 	},
-});
+	{ name: 'Placeholder' }
+);
 
 function Placeholder({ text }: Props): ReactElement<Props> {
 	const classes = useStyles();

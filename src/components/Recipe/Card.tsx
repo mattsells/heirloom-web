@@ -12,45 +12,48 @@ type Props = {
 	recipe: Recipe;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		borderRadius: Radius.narrow,
-		boxShadow: Shadow.lightest,
-		display: 'block',
-		overflow: 'hidden',
-		transform: 'scale(0.98)',
-		transition: `transform ${Speed.regular} linear, box-shadow ${Speed.regular} linear`,
+const useStyles = createUseStyles(
+	{
+		root: {
+			borderRadius: Radius.narrow,
+			boxShadow: Shadow.lightest,
+			display: 'block',
+			overflow: 'hidden',
+			transform: 'scale(0.98)',
+			transition: `transform ${Speed.regular} linear, box-shadow ${Speed.regular} linear`,
 
-		'&:hover': {
-			boxShadow: Shadow.light,
-			transform: 'scale(1.0)',
+			'&:hover': {
+				boxShadow: Shadow.light,
+				transform: 'scale(1.0)',
+			},
+		},
+
+		content: {
+			// FIXME: Get correct URL from server
+			backgroundImage: (recipe: Recipe) =>
+				`url(http://localhost:3000${recipe.coverImageUrl})`,
+			backgroundSize: 'cover',
+			backgroundPosition: 'center center',
+			backgroundRepeat: 'no-repeat',
+			height: '100%',
+		},
+
+		name: {
+			fontSize: Size.regular,
+			color: Slate.dark,
+		},
+
+		veil: {
+			alignItems: 'flex-end',
+			// TODO: Move RGB color to variable (tangerine regular)
+			backgroundColor: `rgba(255, 255, 255, 0.5)`,
+			display: 'flex',
+			height: '100%',
+			padding: Space.regular,
 		},
 	},
-
-	content: {
-		// FIXME: Get correct URL from server
-		backgroundImage: (recipe: Recipe) =>
-			`url(http://localhost:3000${recipe.coverImageUrl})`,
-		backgroundSize: 'cover',
-		backgroundPosition: 'center center',
-		backgroundRepeat: 'no-repeat',
-		height: '100%',
-	},
-
-	name: {
-		fontSize: Size.regular,
-		color: Slate.dark,
-	},
-
-	veil: {
-		alignItems: 'flex-end',
-		// TODO: Move RGB color to variable (tangerine regular)
-		backgroundColor: `rgba(255, 255, 255, 0.5)`,
-		display: 'flex',
-		height: '100%',
-		padding: Space.regular,
-	},
-});
+	{ name: 'RecipeCard' }
+);
 
 function Card({ recipe }: Props): ReactElement<Props> {
 	const classes = useStyles(recipe as any);

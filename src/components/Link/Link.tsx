@@ -11,17 +11,20 @@ type Props = {
 	to: string;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		color: Sea.regular,
-		textDecoration: 'none',
-		transition: `color linear ${Speed.fast}`,
+const useStyles = createUseStyles(
+	{
+		root: {
+			color: Sea.regular,
+			textDecoration: 'none',
+			transition: `color linear ${Speed.fast}`,
 
-		'&:hover': {
-			color: Sea.dark,
+			'&:hover': {
+				color: Sea.dark,
+			},
 		},
 	},
-});
+	{ name: 'Link' }
+);
 
 function Body({ children, onClick, to }: Props): ReactElement<Props> {
 	const classes = useStyles();

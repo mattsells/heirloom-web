@@ -6,20 +6,23 @@ type Props = {
 	ratio: number;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		paddingTop: ({ ratio }: Props) => `${ratio * 100}%`,
-		position: 'relative',
-	},
+const useStyles = createUseStyles(
+	{
+		root: {
+			paddingTop: ({ ratio }: Props) => `${ratio * 100}%`,
+			position: 'relative',
+		},
 
-	pane: {
-		position: 'absolute',
-		bottom: 0,
-		left: 0,
-		right: 0,
-		top: 0,
+		pane: {
+			position: 'absolute',
+			bottom: 0,
+			left: 0,
+			right: 0,
+			top: 0,
+		},
 	},
-});
+	{ name: 'FrameRatio' }
+);
 
 function Square({ children, ...props }: Props): ReactElement<Props> {
 	const classes = useStyles(props as any);

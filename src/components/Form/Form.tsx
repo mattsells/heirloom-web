@@ -5,11 +5,14 @@ import { Space } from '@/variables/space';
 
 type Props = HTMLProps<HTMLFormElement>;
 
-const useStyles = createUseStyles({
-	root: {
-		marginBottom: Space.regular,
+const useStyles = createUseStyles(
+	{
+		root: {
+			marginBottom: Space.regular,
+		},
 	},
-});
+	{ name: 'Form' }
+);
 
 function Form(props: Props): ReactElement<Props> {
 	const classes = useStyles();

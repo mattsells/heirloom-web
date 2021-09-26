@@ -14,39 +14,42 @@ type Props = {
 	to: string;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		backgroundColor: (isActive) => (isActive ? Forest.regular : Forest.light),
-		height: '100%',
-		lineHeight: '1',
-		transition: `background-color linear ${Speed.fast}`,
+const useStyles = createUseStyles(
+	{
+		root: {
+			backgroundColor: (isActive) => (isActive ? Forest.regular : Forest.light),
+			height: '100%',
+			lineHeight: '1',
+			transition: `background-color linear ${Speed.fast}`,
 
-		'&:hover': {
-			backgroundColor: Forest.dark,
+			'&:hover': {
+				backgroundColor: Forest.dark,
+			},
+
+			'&:not(:last-of-type)': {
+				borderBottom: `${Width.thin} ${Pattern.solid} ${Mint.dark}`,
+			},
 		},
 
-		'&:not(:last-of-type)': {
-			borderBottom: `${Width.thin} ${Pattern.solid} ${Mint.dark}`,
+		icon: {
+			fontSize: '4.2rem',
+		},
+
+		label: {
+			fontSize: Size.small,
+		},
+
+		link: {
+			alignItems: 'center',
+			color: Shade.lightGray,
+			display: 'flex',
+			flexDirection: 'column',
+			padding: Space.regular,
+			textDecoration: 'none',
 		},
 	},
-
-	icon: {
-		fontSize: '4.2rem',
-	},
-
-	label: {
-		fontSize: Size.small,
-	},
-
-	link: {
-		alignItems: 'center',
-		color: Shade.lightGray,
-		display: 'flex',
-		flexDirection: 'column',
-		padding: Space.regular,
-		textDecoration: 'none',
-	},
-});
+	{ name: 'NavbarLink' }
+);
 
 function Link({ icon, label, to }: Props): ReactElement {
 	const isActive = !!useRouteMatch({ path: to });

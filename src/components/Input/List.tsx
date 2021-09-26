@@ -18,14 +18,17 @@ export type Props = {
 	values: string[];
 };
 
-const useStyles = createUseStyles({
-	root: {},
+const useStyles = createUseStyles(
+	{
+		root: {},
 
-	item: {
-		fontSize: Size.regular,
-		marginBottom: Space.thin,
+		item: {
+			fontSize: Size.regular,
+			marginBottom: Space.thin,
+		},
 	},
-});
+	{ name: 'InputList' }
+);
 
 function List({
 	error,

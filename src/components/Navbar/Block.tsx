@@ -12,39 +12,42 @@ type Props = {
 	onClick?: VoidFunction;
 };
 
-const useStyles = createUseStyles({
-	root: {
-		color: Slate.regular,
-		height: '100%',
-		lineHeight: '1',
-		transition: `all linear ${Speed.fast}`,
+const useStyles = createUseStyles(
+	{
+		root: {
+			color: Slate.regular,
+			height: '100%',
+			lineHeight: '1',
+			transition: `all linear ${Speed.fast}`,
 
-		'&:hover': {
-			backgroundColor: Mint.dark,
-			color: Shade.lightGray,
+			'&:hover': {
+				backgroundColor: Mint.dark,
+				color: Shade.lightGray,
+			},
+		},
+
+		icon: {
+			fontSize: '4.2rem',
+		},
+
+		label: {
+			fontSize: Size.small,
+		},
+
+		content: {
+			alignItems: 'center',
+			background: 'none',
+			border: 'none',
+			color: 'inherit',
+			display: 'flex',
+			flexDirection: 'column',
+			padding: Space.regular,
+			textDecoration: 'none',
+			width: '100%',
 		},
 	},
-
-	icon: {
-		fontSize: '4.2rem',
-	},
-
-	label: {
-		fontSize: Size.small,
-	},
-
-	content: {
-		alignItems: 'center',
-		background: 'none',
-		border: 'none',
-		color: 'inherit',
-		display: 'flex',
-		flexDirection: 'column',
-		padding: Space.regular,
-		textDecoration: 'none',
-		width: '100%',
-	},
-});
+	{ name: 'NavbarBlock' }
+);
 
 function Block({ icon, label, onClick }: Props): ReactElement {
 	const classes = useStyles();
