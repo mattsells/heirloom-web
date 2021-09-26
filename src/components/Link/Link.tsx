@@ -8,7 +8,7 @@ import { Speed } from '@/variables/transitions';
 type Props = {
 	children?: ReactNode;
 	onClick?: VoidFunction;
-	to?: string;
+	to: string;
 };
 
 const useStyles = createUseStyles({
