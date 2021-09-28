@@ -37,6 +37,8 @@ function useActiveAccount(): UseActiveAccount {
 			const activeAccountId = localStorage.getItem(STORAGE_ACTIVE_ACCOUNT_ID);
 
 			try {
+				// Get all accountUsers for this user, which will return a list
+				// of all the accounts the user has access to
 				const accountUsers = await api.get<AccountUser[]>(
 					routes.accountUsers.index,
 					{
@@ -54,12 +56,13 @@ function useActiveAccount(): UseActiveAccount {
 							accountUser.account.id === parseInt(activeAccountId, 10)
 					);
 
+					// If an account is not found then the stored ID is invalid
 					if (!activeAccountUser) {
 						localStorage.removeItem(STORAGE_ACTIVE_ACCOUNT_ID);
 					}
 				}
 
-				// If active account does not exist, set as own accouont
+				// If active account does not exist, set as own account
 				if (!activeAccountUser) {
 					activeAccountUser = accountUsers.data.find(
 						(accountUser) => accountUser.role === 'owner'
