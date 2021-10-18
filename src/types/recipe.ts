@@ -2,7 +2,7 @@ import { Story } from './story';
 
 export type Recipe = {
 	id: number;
-	accoundId: number;
+	accountId: number;
 	coverImageUrl: string;
 	directions: string[];
 	ingredients: string[];

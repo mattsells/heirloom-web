@@ -8,6 +8,9 @@ const routes = {
 		index: 'recipes',
 		show: 'recipes/:id',
 	},
+	stories: {
+		index: 'stories',
+	},
 	users: {
 		show: 'users/:id',
 		signIn: 'users/sign_in',

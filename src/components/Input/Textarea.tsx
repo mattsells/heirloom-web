@@ -5,7 +5,7 @@ import { Family, Shade, Size, Slate, Tangerine, Width } from '@/variables';
 
 type Props = HTMLProps<HTMLTextAreaElement> & {
 	error?: string;
-	onChange?: FormEventHandler<HTMLInputElement>;
+	onChange?: FormEventHandler<HTMLTextAreaElement>;
 };
 
 const useStyles = createUseStyles(

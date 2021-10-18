@@ -1,14 +1,18 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
+import { BiPlusMedical } from 'react-icons/bi';
 import { createUseStyles } from 'react-jss';
 import { useTranslation } from 'react-i18next';
 
+import * as Button from '@/components/Button';
 import Breadcrumbs, { BreadcrumbsPath } from '@/components/Breadcrumbs';
 import * as Loading from '@/components/Loading';
+import * as Modal from '@/components/Modal';
 import * as Panel from '@/components/Panel';
 import * as Text from '@/components/Text';
+import * as Story from '@/components/Story';
 import routes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
-import { Size, Space } from '@/variables';
+import { Forest, Size, Space } from '@/variables';
 
 import Cover from './Cover';
 
@@ -21,6 +25,31 @@ const useStyles = createUseStyles(
 	{
 		root: {
 			height: '100%',
+		},
+
+		artifacts: {
+			display: 'grid',
+			gap: Space.wide,
+			gridTemplateColumns: 'repeat(8, 1fr)',
+			margin: `${Space.wide} 0`,
+		},
+
+		addArtifact: {
+			alignItems: 'center',
+			color: Forest.light,
+			display: 'flex',
+			flexDirection: 'column',
+			height: '100%',
+			justifyContent: 'center',
+
+			'& > svg': {
+				fontSize: Size.large,
+				marginBottom: Space.thin,
+			},
+		},
+
+		addArtifactText: {
+			fontSize: Size.small,
 		},
 
 		list: {
@@ -45,6 +74,8 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 	const classes = useStyles();
 	const { t } = useTranslation();
 
+	const [isArtifactModalOpen, setIsArtifactModalOpen] = useState(false);
+
 	if (isLoading) {
 		return <Loading.Placeholder text={t('recipe.loading')} />;
 	}
@@ -65,6 +96,17 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 			<Breadcrumbs path={path} />
 
 			<Cover recipe={recipe} />
+
+			<div className={classes.artifacts}>
+				<Button.Square onClick={() => setIsArtifactModalOpen(true)}>
+					<div className={classes.addArtifact}>
+						<BiPlusMedical />
+						<span className={classes.addArtifactText}>
+							{t('recipe.add-artifact')}
+						</span>
+					</div>
+				</Button.Square>
+			</div>
 
 			<div className={classes.section}>
 				<Panel.Frame>
@@ -93,6 +135,19 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 					</Panel.Content>
 				</Panel.Frame>
 			</div>
+
+			<Modal.Modal
+				onDismiss={() => setIsArtifactModalOpen(false)}
+				isVisible={isArtifactModalOpen}
+			>
+				<Modal.Content>
+					<Story.Form
+						onSuccess={() => setIsArtifactModalOpen(false)}
+						recipe={recipe}
+						storyType="artifact"
+					/>
+				</Modal.Content>
+			</Modal.Modal>
 		</div>
 	);
 }
