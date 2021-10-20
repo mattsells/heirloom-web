@@ -57,7 +57,6 @@ const useStyles = createUseStyles(
 
 function Card({ recipe }: Props): ReactElement<Props> {
 	const classes = useStyles(recipe as any);
-	const imageUrl = `http://localhost:3000${recipe.coverImageUrl}`;
 
 	// TODO: Create routing util to create the "to" prop
 	return (

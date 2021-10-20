@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react';
 import { BiPlusMedical } from 'react-icons/bi';
 import { createUseStyles } from 'react-jss';
 import { useTranslation } from 'react-i18next';
+import { SRLWrapper } from 'simple-react-lightbox';
 
 import * as Button from '@/components/Button';
 import Breadcrumbs, { BreadcrumbsPath } from '@/components/Breadcrumbs';
@@ -10,6 +11,7 @@ import * as Modal from '@/components/Modal';
 import * as Panel from '@/components/Panel';
 import * as Text from '@/components/Text';
 import * as Story from '@/components/Story';
+import { LIGHTBOX_OPTIONS } from '@/config/lightbox';
 import routes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
 import { Forest, Size, Space } from '@/variables';
@@ -98,6 +100,16 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 			<Cover recipe={recipe} />
 
 			<div className={classes.artifacts}>
+				<SRLWrapper options={LIGHTBOX_OPTIONS}>
+					{recipe.stories.map((story) => (
+						<Story.Card
+							key={story.id}
+							onClick={(story) => console.log(story)}
+							story={story}
+						/>
+					))}
+				</SRLWrapper>
+
 				<Button.Square onClick={() => setIsArtifactModalOpen(true)}>
 					<div className={classes.addArtifact}>
 						<BiPlusMedical />

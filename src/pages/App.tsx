@@ -4,6 +4,7 @@ import { Suspense, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import SimpleReactLightbox from 'simple-react-lightbox';
 
 import ApiContext from '@/context/api';
 import { HttpClient } from '@/lib/http';
@@ -60,7 +61,9 @@ export default function AppProvider() {
 		<QueryClientProvider client={queryClient}>
 			<BrowserRouter>
 				<ApiContext.Provider value={api}>
-					<App />
+					<SimpleReactLightbox>
+						<App />
+					</SimpleReactLightbox>
 				</ApiContext.Provider>
 			</BrowserRouter>
 		</QueryClientProvider>
