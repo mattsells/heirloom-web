@@ -30,6 +30,8 @@
 	"recipe": {
 		"add-artifact": "Add Artifact",
 		"add-cover-image": "Click to Add Cover Image",
+		"add-direction": "Add Direction",
+		"add-memory": "Add Memory",
 		"directions": "Directions",
 		"ingredients": "Ingredients",
 		"loading": "Getting your recipe",
@@ -55,8 +57,11 @@
 	"story": {
 		"add": "Add Story",
 		"add-artifact": "Add Artifact",
+		"artifacts": "Artifacts",
 		"created-artifact": "Artifact has been added",
 		"description": "Description",
+		"directions": "Directions",
+		"memories": "Memories",
 		"name": "Name"
 	}
 }

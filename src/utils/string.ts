@@ -17,3 +17,7 @@ export function randomId(length = 10): string {
 
 	return string;
 }
+
+export function combine(...args: string[]): string {
+	return args.join(' ');
+}

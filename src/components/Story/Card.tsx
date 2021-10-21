@@ -6,7 +6,6 @@ import { Story } from '@/types/story';
 import { Radius, Shadow, Speed } from '@/variables';
 
 type Props = {
-	onClick: (story: Story) => void;
 	story: Story;
 };
 
@@ -36,7 +35,7 @@ const useStyles = createUseStyles(
 	{ name: 'StoryCard' }
 );
 
-function Card({ onClick, story }: Props): ReactElement<Props> {
+function Card({ story }: Props): ReactElement<Props> {
 	const classes = useStyles(story as any);
 
 	return (

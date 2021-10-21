@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useMemo, useState } from 'react';
 import { BiPlusMedical } from 'react-icons/bi';
 import { createUseStyles } from 'react-jss';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import * as Story from '@/components/Story';
 import { LIGHTBOX_OPTIONS } from '@/config/lightbox';
 import routes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
+import { combine } from '@/utils/string';
 import { Forest, Size, Space } from '@/variables';
 
 import Cover from './Cover';
@@ -50,7 +51,7 @@ const useStyles = createUseStyles(
 			},
 		},
 
-		addArtifactText: {
+		addStoryText: {
 			fontSize: Size.small,
 		},
 
@@ -68,6 +69,29 @@ const useStyles = createUseStyles(
 		section: {
 			marginBottom: Space.wide,
 		},
+
+		directionsWrapper: {
+			display: 'flex',
+			margin: `0 -${Space.regular}`,
+
+			'& > *': {
+				margin: `0 ${Space.regular}`,
+			},
+		},
+
+		directions: {
+			display: 'flex',
+			flexDirection: 'column',
+			minWidth: '120px',
+		},
+
+		directionCard: {
+			marginBottom: Space.regular,
+		},
+
+		grow: {
+			flexGrow: 1,
+		},
 	},
 	{ name: 'RecipeView' }
 );
@@ -77,6 +101,20 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 	const { t } = useTranslation();
 
 	const [isArtifactModalOpen, setIsArtifactModalOpen] = useState(false);
+	const [isDirectionModalOpen, setIsDirectionModalOpen] = useState(false);
+	const [isMemoryModalOpen, setIsMemoryModalOpen] = useState(false);
+
+	const artifacts = useMemo(() => {
+		return recipe?.stories.filter((story) => story.storyType === 'artifact');
+	}, [recipe]);
+
+	const directions = useMemo(() => {
+		return recipe?.stories.filter((story) => story.storyType === 'direction');
+	}, [recipe]);
+
+	const memories = useMemo(() => {
+		return recipe?.stories.filter((story) => story.storyType === 'memory');
+	}, [recipe]);
 
 	if (isLoading) {
 		return <Loading.Placeholder text={t('recipe.loading')} />;
@@ -99,26 +137,26 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 
 			<Cover recipe={recipe} />
 
-			<div className={classes.artifacts}>
-				<SRLWrapper options={LIGHTBOX_OPTIONS}>
-					{recipe.stories.map((story) => (
-						<Story.Card
-							key={story.id}
-							onClick={(story) => console.log(story)}
-							story={story}
-						/>
-					))}
-				</SRLWrapper>
+			{!!artifacts.length && (
+				<Text.Header as="h2">{t('story.artifacts')}</Text.Header>
+			)}
 
-				<Button.Square onClick={() => setIsArtifactModalOpen(true)}>
-					<div className={classes.addArtifact}>
-						<BiPlusMedical />
-						<span className={classes.addArtifactText}>
-							{t('recipe.add-artifact')}
-						</span>
-					</div>
-				</Button.Square>
-			</div>
+			<SRLWrapper options={LIGHTBOX_OPTIONS}>
+				<div className={classes.artifacts}>
+					{artifacts.map((story) => (
+						<Story.Card key={story.id} story={story} />
+					))}
+
+					<Button.Square onClick={() => setIsArtifactModalOpen(true)}>
+						<div className={classes.addArtifact}>
+							<BiPlusMedical />
+							<span className={classes.addStoryText}>
+								{t('recipe.add-artifact')}
+							</span>
+						</div>
+					</Button.Square>
+				</div>
+			</SRLWrapper>
 
 			<div className={classes.section}>
 				<Panel.Frame>
@@ -134,19 +172,61 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 				</Panel.Frame>
 			</div>
 
-			<div className={classes.section}>
-				<Panel.Frame>
-					<Panel.Content>
-						<Text.Header as="h2">{t('recipe.directions')}</Text.Header>
+			<div className={classes.directionsWrapper}>
+				<div className={combine(classes.section, classes.grow)}>
+					<Panel.Frame>
+						<Panel.Content>
+							<Text.Header as="h2">{t('recipe.directions')}</Text.Header>
 
-						<ol className={classes.list}>
-							{recipe.directions.map((ingredient: string, index: number) => (
-								<li key={index}>{ingredient}</li>
-							))}
-						</ol>
-					</Panel.Content>
-				</Panel.Frame>
+							<ol className={classes.list}>
+								{recipe.directions.map((ingredient: string, index: number) => (
+									<li key={index}>{ingredient}</li>
+								))}
+							</ol>
+						</Panel.Content>
+					</Panel.Frame>
+				</div>
+
+				<div className={classes.directions}>
+					<SRLWrapper options={LIGHTBOX_OPTIONS}>
+						{directions.map((story) => (
+							<div className={classes.directionCard} key={story.id}>
+								<Story.Card story={story} />
+							</div>
+						))}
+					</SRLWrapper>
+
+					<Button.Square onClick={() => setIsDirectionModalOpen(true)}>
+						<div className={classes.addArtifact}>
+							<BiPlusMedical />
+							<span className={classes.addStoryText}>
+								{t('recipe.add-direction')}
+							</span>
+						</div>
+					</Button.Square>
+				</div>
 			</div>
+
+			{!!memories.length && (
+				<Text.Header as="h2">{t('story.memories')}</Text.Header>
+			)}
+
+			<SRLWrapper options={LIGHTBOX_OPTIONS}>
+				<div className={classes.artifacts}>
+					{memories.map((story) => (
+						<Story.Card key={story.id} story={story} />
+					))}
+
+					<Button.Square onClick={() => setIsMemoryModalOpen(true)}>
+						<div className={classes.addArtifact}>
+							<BiPlusMedical />
+							<span className={classes.addStoryText}>
+								{t('recipe.add-memory')}
+							</span>
+						</div>
+					</Button.Square>
+				</div>
+			</SRLWrapper>
 
 			<Modal.Modal
 				onDismiss={() => setIsArtifactModalOpen(false)}
@@ -157,6 +237,32 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 						onSuccess={() => setIsArtifactModalOpen(false)}
 						recipe={recipe}
 						storyType="artifact"
+					/>
+				</Modal.Content>
+			</Modal.Modal>
+
+			<Modal.Modal
+				onDismiss={() => setIsDirectionModalOpen(false)}
+				isVisible={isDirectionModalOpen}
+			>
+				<Modal.Content>
+					<Story.Form
+						onSuccess={() => setIsDirectionModalOpen(false)}
+						recipe={recipe}
+						storyType="direction"
+					/>
+				</Modal.Content>
+			</Modal.Modal>
+
+			<Modal.Modal
+				onDismiss={() => setIsMemoryModalOpen(false)}
+				isVisible={isMemoryModalOpen}
+			>
+				<Modal.Content>
+					<Story.Form
+						onSuccess={() => setIsMemoryModalOpen(false)}
+						recipe={recipe}
+						storyType="memory"
 					/>
 				</Modal.Content>
 			</Modal.Modal>
