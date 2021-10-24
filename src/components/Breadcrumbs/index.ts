@@ -1,2 +1,3 @@
 export { default } from './Breadcrumbs';
-export type { BreadcrumbsPath } from './Breadcrumbs';
+export { trail } from './Trail';
+export type { BreadcrumbsPath } from './Trail';

@@ -40,6 +40,7 @@
 	"recipes": {
 		"add": "Add Recipe",
 		"created": "Recipe added!",
+		"label": "Recipes",
 		"loading": "Getting your recipes",
 		"title": "My Recipes"
 	},

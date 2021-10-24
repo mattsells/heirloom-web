@@ -6,15 +6,10 @@ import Link from '@/components/Link';
 import * as Text from '@/components/Text';
 import { Size, Slate, Space } from '@/variables';
 
-type Path = {
-	label: string;
-	path?: string;
-};
-
-export type BreadcrumbsPath = Path[];
+import Trail, { BreadcrumbsPath } from './Trail';
 
 type Props = {
-	path: BreadcrumbsPath;
+	path: BreadcrumbsPath | Trail;
 };
 
 const useStyles = createUseStyles(
@@ -40,7 +35,9 @@ const useStyles = createUseStyles(
 function Breadcrumbs({ path }: Props): ReactElement<Props> {
 	const classes = useStyles();
 
-	const links = path.map((link, index) => {
+	const breadcrumbPath = path instanceof Trail ? path.paths : path;
+
+	const links = breadcrumbPath.map((link, index) => {
 		return (
 			<Fragment key={index}>
 				<span>
@@ -51,7 +48,7 @@ function Breadcrumbs({ path }: Props): ReactElement<Props> {
 					)}
 				</span>
 
-				{index < path.length - 1 && (
+				{index < breadcrumbPath.length - 1 && (
 					<span className={classes.caret}>
 						<BsCaretRightFill />
 					</span>

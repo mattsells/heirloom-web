@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { SRLWrapper } from 'simple-react-lightbox';
 
 import * as Button from '@/components/Button';
-import Breadcrumbs, { BreadcrumbsPath } from '@/components/Breadcrumbs';
+import Breadcrumbs, { trail } from '@/components/Breadcrumbs';
 import * as Loading from '@/components/Loading';
 import * as Modal from '@/components/Modal';
 import * as Panel from '@/components/Panel';
@@ -120,20 +120,13 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 		return <Loading.Placeholder text={t('recipe.loading')} />;
 	}
 
-	// TODO: Maybe update this component to be more automated?
-	const path: BreadcrumbsPath = [
-		{
-			label: 'Recipes',
-			path: routes.recipes,
-		},
-		{
-			label: recipe.name,
-		},
-	];
+	const breadcrumbs = trail()
+		.drop(t('recipes.label'), routes.recipes)
+		.drop(recipe.name);
 
 	return (
 		<div className={classes.root}>
-			<Breadcrumbs path={path} />
+			<Breadcrumbs path={breadcrumbs} />
 
 			<Cover recipe={recipe} />
 
