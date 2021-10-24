@@ -1,5 +1,5 @@
 import { Formik, FieldArray } from 'formik';
-import { ReactElement, useContext } from 'react';
+import { ReactElement } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
@@ -13,7 +13,7 @@ import Form from '@/components/Form';
 import * as Input from '@/components/Input';
 import * as InputGroup from '@/components/InputGroup';
 import ListGroup from '@/components/ListGroup';
-import ApiContext from '@/context/api';
+import { useHttpClient } from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import webroutes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
@@ -39,7 +39,7 @@ const RecipeSchema = Yup.object().shape({
 
 function RecipeForm({ recipe }: Props): ReactElement<Props> {
 	const { account } = useActiveAccount();
-	const client = useContext(ApiContext);
+	const http = useHttpClient();
 	const history = useHistory();
 	const queryClient = useQueryClient();
 	const { t } = useTranslation();
@@ -50,7 +50,7 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 			validationSchema={RecipeSchema}
 			onSubmit={async (fields) => {
 				try {
-					const { data: recipe } = await client.create<Recipe>(
+					const { data: recipe } = await http.create<Recipe>(
 						apiRoutes.recipes.index,
 						createRecipeBody({ ...fields, accountId: account.id })
 					);

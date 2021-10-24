@@ -1,8 +1,8 @@
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import shallow from 'zustand/shallow';
 
 import routes from '@/api/routes';
-import ApiContext from '@/context/api';
+import { useHttpClient } from '@/context/api';
 import { useAccountStore } from '@/stores/accounts';
 import { Account, AccountUser, AccountUserRole } from '@/types/account';
 import { User } from '@/types/user';
@@ -28,7 +28,7 @@ function useActiveAccount(): UseActiveAccount {
 		shallow
 	);
 
-	const api = useContext(ApiContext);
+	const http = useHttpClient();
 
 	const activateUserAccount = useCallback(
 		async (user: User) => {
@@ -39,7 +39,7 @@ function useActiveAccount(): UseActiveAccount {
 			try {
 				// Get all accountUsers for this user, which will return a list
 				// of all the accounts the user has access to
-				const accountUsers = await api.get<AccountUser[]>(
+				const accountUsers = await http.get<AccountUser[]>(
 					routes.accountUsers.index,
 					{
 						extended: true,
@@ -83,7 +83,7 @@ function useActiveAccount(): UseActiveAccount {
 				// TODO: What should happen if there is an error here?
 			}
 		},
-		[api, setAccountUser, setState]
+		[http, setAccountUser, setState]
 	);
 
 	return {

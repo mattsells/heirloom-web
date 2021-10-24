@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { Redirect, useHistory } from 'react-router';
@@ -14,7 +13,7 @@ import * as Layout from '@/components/Layout';
 import Link from '@/components/Link';
 import * as Panel from '@/components/Panel';
 import * as Text from '@/components/Text';
-import ApiContext from '@/context/api';
+import { useHttpClient } from '@/context/api';
 import useSession from '@/hooks/useSession';
 import webRoutes from '@/router/routes';
 import { User } from '@/types/user';
@@ -36,7 +35,7 @@ const RegistrationSchema = Yup.object().shape({
 });
 
 function Registration() {
-	const client = useContext(ApiContext);
+	const http = useHttpClient();
 	const history = useHistory();
 	const { isAuthenticated, setSession } = useSession();
 	const { t } = useTranslation();
@@ -56,7 +55,7 @@ function Registration() {
 							validationSchema={RegistrationSchema}
 							onSubmit={async ({ email, password, passwordConfirmation }) => {
 								try {
-									const { data: user, headers } = await client.create<User>(
+									const { data: user, headers } = await http.create<User>(
 										apiRoutes.users.signUp,
 										createRegistrationBody(
 											email,

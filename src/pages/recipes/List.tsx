@@ -1,16 +1,16 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 
 import * as Modal from '@/components/Modal';
 import * as Recipe from '@/components/Recipe';
 import * as Text from '@/components/Text';
-import { ApiContext } from '@/context';
+import { useHttpClient } from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import { Recipe as RecipeType } from '@/types/recipe';
 
 function Recipes() {
-	const api = useContext(ApiContext);
+	const http = useHttpClient();
 	const { account } = useActiveAccount();
 	const { t } = useTranslation();
 
@@ -20,7 +20,7 @@ function Recipes() {
 	const { data, isLoading } = useQuery(
 		'recipes',
 		() =>
-			api.get<RecipeType[]>('recipes', { filters: { account: account.id } }),
+			http.get<RecipeType[]>('recipes', { filters: { account: account.id } }),
 		{
 			enabled: !!account,
 		}

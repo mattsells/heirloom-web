@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { ReactElement, useContext } from 'react';
+import { ReactElement } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { createUseStyles } from 'react-jss';
@@ -12,7 +12,7 @@ import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
 import * as Input from '@/components/Input';
 import * as InputGroup from '@/components/InputGroup';
-import ApiContext from '@/context/api';
+import { useHttpClient } from '@/context/api';
 import { Recipe } from '@/types/recipe';
 import { Story, StoryType } from '@/types/story';
 
@@ -50,7 +50,7 @@ function RecipeForm({
 	recipe,
 	storyType,
 }: Props): ReactElement<Props> {
-	const client = useContext(ApiContext);
+	const http = useHttpClient();
 	const queryClient = useQueryClient();
 	const { t } = useTranslation();
 
@@ -62,7 +62,7 @@ function RecipeForm({
 			validationSchema={StorySchema}
 			onSubmit={async (fields) => {
 				try {
-					const { data: story } = await client.create<Story>(
+					const { data: story } = await http.create<Story>(
 						apiRoutes.stories.index,
 						createStoryBody({
 							...fields,

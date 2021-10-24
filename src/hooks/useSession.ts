@@ -1,10 +1,10 @@
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { useHistory } from 'react-router';
 import shallow from 'zustand/shallow';
 
 import apiRoutes from '@/api/routes';
-import ApiContext from '@/context/api';
+import { useHttpClient } from '@/context/api';
 import HttpError from '@/lib/http/HttpError';
 import webRoutes from '@/router/routes';
 import { useSessionStore } from '@/stores/session';
@@ -26,7 +26,7 @@ const STORAGE_AUTH_TOKEN_KEY = 'auth-token';
 const STORAGE_USER_ID_KEY = 'user-id';
 
 function useSession(): UseSession {
-	const api = useContext(ApiContext);
+	const http = useHttpClient();
 	const { activateUserAccount } = useActiveAccount();
 	const history = useHistory();
 
@@ -41,13 +41,13 @@ function useSession(): UseSession {
 	);
 
 	const handleClearSession = useCallback(() => {
-		api.clearToken();
+		http.clearToken();
 
 		localStorage.removeItem(STORAGE_AUTH_TOKEN_KEY);
 		localStorage.removeItem(STORAGE_USER_ID_KEY);
 
 		setUser(null);
-	}, [api, setUser]);
+	}, [http, setUser]);
 
 	const handleActivateUser = useCallback(
 		(user: User) => {
@@ -59,19 +59,19 @@ function useSession(): UseSession {
 
 	const handleSetSession = useCallback(
 		(user: User, authToken: string) => {
-			api.setToken(authToken);
+			http.setToken(authToken);
 
 			localStorage.setItem(STORAGE_AUTH_TOKEN_KEY, authToken);
 			localStorage.setItem(STORAGE_USER_ID_KEY, user.id);
 
 			handleActivateUser(user);
 		},
-		[api, handleActivateUser]
+		[http, handleActivateUser]
 	);
 
 	const handleSignOut = useCallback(async () => {
 		try {
-			await api.get(apiRoutes.users.signOut);
+			await http.get(apiRoutes.users.signOut);
 			handleClearSession();
 			history.push(webRoutes.login);
 		} catch (err) {
@@ -79,7 +79,7 @@ function useSession(): UseSession {
 				toast.error(err.message);
 			}
 		}
-	}, [api, handleClearSession, history]);
+	}, [http, handleClearSession, history]);
 
 	const checkForLocalUserData = useCallback(async () => {
 		setState('initializing');
@@ -93,9 +93,9 @@ function useSession(): UseSession {
 			setState('done');
 		} else {
 			try {
-				api.setToken(authToken);
+				http.setToken(authToken);
 
-				const response = await api.get<User>(`users/${userId}`);
+				const response = await http.get<User>(`users/${userId}`);
 
 				handleActivateUser(response.data);
 				setState('done');
@@ -106,7 +106,7 @@ function useSession(): UseSession {
 				setState('done');
 			}
 		}
-	}, [api, handleActivateUser, handleClearSession, setState]);
+	}, [http, handleActivateUser, handleClearSession, setState]);
 
 	return {
 		checkForLocalUserData,
