@@ -5,6 +5,7 @@ const routes = {
 	login: '/login',
 	recipes: '/recipes',
 	recipe: '/recipes/:id',
+	recipeEdit: '/recipes/:id/edit',
 	registration: '/join',
 };
 

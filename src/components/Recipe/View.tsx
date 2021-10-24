@@ -128,7 +128,7 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 		<div className={classes.root}>
 			<Breadcrumbs path={breadcrumbs} />
 
-			<Cover recipe={recipe} />
+			<Cover onClickEdit={() => console.log('click')} recipe={recipe} />
 
 			{!!artifacts.length && (
 				<Text.Header as="h2">{t('story.artifacts')}</Text.Header>
