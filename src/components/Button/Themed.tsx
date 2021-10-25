@@ -16,11 +16,13 @@ function getTheme(theme: Theme) {
 			return {
 				backgroundColor: Shade.offwhite,
 				border: Shade.lightGray,
-				color: Slate.light,
+				color: Slate.regular,
+				opacity: 0.8,
 
 				'&:not(:disabled)': {
 					'&:hover': {
 						backgroundColor: Shade.lightGray,
+						opacity: 0.9,
 					},
 				},
 			};
@@ -37,7 +39,7 @@ const useStyles = createUseStyles(
 			cursor: 'pointer',
 			fontSize: Size.regular,
 			padding: `${Space.thin} ${Space.extraWide}`,
-			transition: `background-color linear ${Speed.fast}`,
+			transition: `all linear ${Speed.fast}`,
 
 			'&:disabled': {
 				cursor: 'default',

@@ -36,13 +36,16 @@
 		"edit": "Edit",
 		"ingredients": "Ingredients",
 		"loading": "Getting your recipe",
-		"name": "Name"
+		"name": "Name",
+		"updated": "Recipe saved!"
 	},
 	"recipes": {
 		"add": "Add Recipe",
+		"edit": "Edit Recipe",
 		"created": "Recipe added!",
 		"label": "Recipes",
 		"loading": "Getting your recipes",
+		"save": "Save Recipe",
 		"title": "My Recipes"
 	},
 	"registration": {

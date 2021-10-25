@@ -2,7 +2,7 @@
 
 import { parseFileData } from '@/utils/file';
 
-export type CreateRecipeBodyParams = {
+export type RecipeBodyParams = {
 	accountId: number;
 	coverImage: string;
 	directions: string[];
@@ -10,10 +10,10 @@ export type CreateRecipeBodyParams = {
 	name: string;
 };
 
-export function createRecipeBody({
+export function recipeBody({
 	coverImage,
 	...fields
-}: CreateRecipeBodyParams): object {
+}: RecipeBodyParams): object {
 	return {
 		recipe: {
 			coverImage: parseFileData(coverImage),

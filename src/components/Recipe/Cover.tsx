@@ -30,7 +30,7 @@ const useStyles = createUseStyles(
 		level: {
 			alignItems: 'center',
 			display: 'flex',
-			padding: Space.narrow,
+			padding: `${Space.none} ${Space.wide}`,
 			width: '100%',
 		},
 

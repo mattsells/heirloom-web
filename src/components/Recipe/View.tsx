@@ -18,6 +18,7 @@ import { combine } from '@/utils/string';
 import { Forest, Size, Space } from '@/variables';
 
 import Cover from './Cover';
+import Form from './Form';
 
 type Props = {
 	isLoading: boolean;
@@ -103,6 +104,7 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 	const [isArtifactModalOpen, setIsArtifactModalOpen] = useState(false);
 	const [isDirectionModalOpen, setIsDirectionModalOpen] = useState(false);
 	const [isMemoryModalOpen, setIsMemoryModalOpen] = useState(false);
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
 	const artifacts = useMemo(() => {
 		return recipe?.stories.filter((story) => story.storyType === 'artifact');
@@ -120,6 +122,8 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 		return <Loading.Placeholder text={t('recipe.loading')} />;
 	}
 
+	console.log('recupe', recipe);
+
 	const breadcrumbs = trail()
 		.drop(t('recipes.label'), routes.recipes)
 		.drop(recipe.name);
@@ -128,7 +132,7 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 		<div className={classes.root}>
 			<Breadcrumbs path={breadcrumbs} />
 
-			<Cover onClickEdit={() => console.log('click')} recipe={recipe} />
+			<Cover onClickEdit={() => setIsEditModalOpen(true)} recipe={recipe} />
 
 			{!!artifacts.length && (
 				<Text.Header as="h2">{t('story.artifacts')}</Text.Header>
@@ -222,8 +226,8 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 			</SRLWrapper>
 
 			<Modal.Modal
-				onDismiss={() => setIsArtifactModalOpen(false)}
 				isVisible={isArtifactModalOpen}
+				onDismiss={() => setIsArtifactModalOpen(false)}
 			>
 				<Modal.Content>
 					<Story.Form
@@ -235,8 +239,8 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 			</Modal.Modal>
 
 			<Modal.Modal
-				onDismiss={() => setIsDirectionModalOpen(false)}
 				isVisible={isDirectionModalOpen}
+				onDismiss={() => setIsDirectionModalOpen(false)}
 			>
 				<Modal.Content>
 					<Story.Form
@@ -248,8 +252,8 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 			</Modal.Modal>
 
 			<Modal.Modal
-				onDismiss={() => setIsMemoryModalOpen(false)}
 				isVisible={isMemoryModalOpen}
+				onDismiss={() => setIsMemoryModalOpen(false)}
 			>
 				<Modal.Content>
 					<Story.Form
@@ -257,6 +261,16 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 						recipe={recipe}
 						storyType="memory"
 					/>
+				</Modal.Content>
+			</Modal.Modal>
+
+			<Modal.Modal
+				isVisible={isEditModalOpen}
+				onDismiss={() => setIsEditModalOpen(false)}
+			>
+				<Modal.Content>
+					<Text.Header as="h2">{t('recipes.edit')}</Text.Header>
+					<Form onSuccess={() => setIsEditModalOpen(false)} recipe={recipe} />
 				</Modal.Content>
 			</Modal.Modal>
 		</div>

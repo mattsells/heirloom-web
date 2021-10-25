@@ -7,7 +7,7 @@ import { useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 
 import apiRoutes from '@/api/routes';
-import { createRecipeBody, CreateRecipeBodyParams } from '@/api/utils/recipes';
+import { recipeBody, RecipeBodyParams } from '@/api/utils/recipes';
 import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
 import * as Input from '@/components/Input';
@@ -24,7 +24,7 @@ type Props = {
 	onSuccess?: (recipe: Recipe) => void;
 };
 
-type FormValues = Omit<CreateRecipeBodyParams, 'accountId'>;
+type FormValues = Omit<RecipeBodyParams, 'accountId'>;
 
 const formValues: FormValues = {
 	coverImage: '',
@@ -37,28 +37,69 @@ const RecipeSchema = Yup.object().shape({
 	name: Yup.string().required(),
 });
 
-function RecipeForm({ recipe }: Props): ReactElement<Props> {
+function imageData(recipe: Recipe) {
+	if (!recipe.coverImageUrl || !recipe.coverImageData) {
+		return '';
+	}
+
+	return JSON.stringify({
+		data: recipe.coverImageData,
+		url: recipe.coverImageUrl,
+	});
+}
+
+function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 	const { account } = useActiveAccount();
 	const http = useHttpClient();
 	const history = useHistory();
 	const queryClient = useQueryClient();
 	const { t } = useTranslation();
 
+	const initialValues = {
+		...formValues,
+		...(recipe && {
+			directions: recipe.directions,
+			ingredients: recipe.ingredients,
+			name: recipe.name,
+			coverImage: imageData(recipe),
+		}),
+	};
+
 	return (
 		<Formik
-			initialValues={formValues}
+			initialValues={initialValues}
 			validationSchema={RecipeSchema}
 			onSubmit={async (fields) => {
 				try {
-					const { data: recipe } = await http.create<Recipe>(
-						apiRoutes.recipes.index,
-						createRecipeBody({ ...fields, accountId: account.id })
-					);
+					if (recipe) {
+						const path = route(apiRoutes.recipes.show, { id: recipe.id });
 
-					toast.success(t('recipes.created'));
-					queryClient.invalidateQueries('recipes');
+						const { data } = await http.update<Recipe>(
+							path,
+							recipeBody({ ...fields, accountId: account.id })
+						);
 
-					history.push(route(webroutes.recipe, { id: recipe.id }));
+						toast.success(t('recipe.updated'));
+
+						// TODO: Update data directly rather than re-pull
+						queryClient.invalidateQueries('recipes');
+						// FIXME: This isn't working
+						queryClient.invalidateQueries(['recipe', recipe.id]);
+
+						if (onSuccess) {
+							onSuccess(data);
+						}
+					} else {
+						const { data: recipe } = await http.create<Recipe>(
+							apiRoutes.recipes.index,
+							recipeBody({ ...fields, accountId: account.id })
+						);
+
+						toast.success(t('recipes.created'));
+						queryClient.invalidateQueries('recipes');
+
+						history.push(route(webroutes.recipe, { id: recipe.id }));
+					}
 				} catch (err) {
 					// TODO: Add error handling
 				}
@@ -124,7 +165,9 @@ function RecipeForm({ recipe }: Props): ReactElement<Props> {
 							)}
 						/>
 
-						<Submit disabled={isSubmitting}>{t('recipes.add')}</Submit>
+						<Submit disabled={isSubmitting}>
+							{t(recipe ? 'recipes.save' : 'recipes.add')}
+						</Submit>
 					</Form>
 				);
 			}}
