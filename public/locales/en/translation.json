@@ -32,6 +32,8 @@
 		"add-cover-image": "Click to Add Cover Image",
 		"add-direction": "Add Direction",
 		"add-memory": "Add Memory",
+		"destroy": "Delete Recipe",
+		"destroyed": "Recipe deleted!",
 		"directions": "Directions",
 		"edit": "Edit",
 		"ingredients": "Ingredients",

@@ -122,8 +122,6 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 		return <Loading.Placeholder text={t('recipe.loading')} />;
 	}
 
-	console.log('recupe', recipe);
-
 	const breadcrumbs = trail()
 		.drop(t('recipes.label'), routes.recipes)
 		.drop(recipe.name);

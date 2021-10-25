@@ -3,15 +3,16 @@ import { ReactElement } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 
 import apiRoutes from '@/api/routes';
 import { recipeBody, RecipeBodyParams } from '@/api/utils/recipes';
-import { Submit } from '@/components/Button';
+import * as Button from '@/components/Button';
 import Form from '@/components/Form';
 import * as Input from '@/components/Input';
 import * as InputGroup from '@/components/InputGroup';
+import * as Level from '@/components/Level';
 import ListGroup from '@/components/ListGroup';
 import { useHttpClient } from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
@@ -65,6 +66,19 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 		}),
 	};
 
+	const recipePath = recipe
+		? route(apiRoutes.recipes.show, { id: recipe.id })
+		: '';
+
+	const destroyRecipe = useMutation(() => http.destroy(recipePath), {
+		onSuccess: () => {
+			toast.success(t('recipe.destroyed'));
+			// FIXME: This isn't working
+			queryClient.invalidateQueries('recipes');
+			history.push(webroutes.recipes);
+		},
+	});
+
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -72,10 +86,8 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 			onSubmit={async (fields) => {
 				try {
 					if (recipe) {
-						const path = route(apiRoutes.recipes.show, { id: recipe.id });
-
 						const { data } = await http.update<Recipe>(
-							path,
+							recipePath,
 							recipeBody({ ...fields, accountId: account.id })
 						);
 
@@ -83,7 +95,6 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 
 						// TODO: Update data directly rather than re-pull
 						queryClient.invalidateQueries('recipes');
-						// FIXME: This isn't working
 						queryClient.invalidateQueries(['recipe', recipe.id]);
 
 						if (onSuccess) {
@@ -165,9 +176,24 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 							)}
 						/>
 
-						<Submit disabled={isSubmitting}>
-							{t(recipe ? 'recipes.save' : 'recipes.add')}
-						</Submit>
+						<Level.Base arrangement="split">
+							<Level.Item>
+								<Button.Submit disabled={isSubmitting}>
+									{t(recipe ? 'recipes.save' : 'recipes.add')}
+								</Button.Submit>
+							</Level.Item>
+
+							{recipe && (
+								<Level.Item>
+									<Button.Themed
+										theme="destructive"
+										onClick={() => destroyRecipe.mutate()}
+									>
+										{t('recipe.destroy')}
+									</Button.Themed>
+								</Level.Item>
+							)}
+						</Level.Base>
 					</Form>
 				);
 			}}

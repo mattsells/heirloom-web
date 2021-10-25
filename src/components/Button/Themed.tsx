@@ -1,7 +1,15 @@
 import { HTMLProps, ReactElement } from 'react';
 import { createUseStyles } from 'react-jss';
 
-import { Radius, Shade, Size, Slate, Space, Speed } from '@/variables';
+import {
+	Radius,
+	Shade,
+	Size,
+	Slate,
+	Space,
+	Speed,
+	Tangerine,
+} from '@/variables';
 
 type Theme = 'primary' | 'secondary' | 'destructive' | 'light';
 
@@ -23,6 +31,19 @@ function getTheme(theme: Theme) {
 					'&:hover': {
 						backgroundColor: Shade.lightGray,
 						opacity: 0.9,
+					},
+				},
+			};
+
+		case 'destructive':
+			return {
+				backgroundColor: Tangerine.dark,
+				border: 'none',
+				color: Shade.offwhite,
+
+				'&:not(:disabled)': {
+					'&:hover': {
+						backgroundColor: Tangerine.darkest,
 					},
 				},
 			};

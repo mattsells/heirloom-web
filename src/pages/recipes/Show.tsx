@@ -10,9 +10,10 @@ import { route } from '@/utils/routing';
 
 function Show() {
 	const http = useHttpClient();
-	const { id } = useParams<IDParams>();
+	const params = useParams<IDParams>();
 
-	// TODO: Create something to make these requests
+	const id = parseInt(params.id, 10);
+
 	const { data, isLoading } = useQuery(['recipe', id], () =>
 		http.get<RecipeType>(route(routes.recipes.show, { id, extended: true }))
 	);
