@@ -73,8 +73,8 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 	const destroyRecipe = useMutation(() => http.destroy(recipePath), {
 		onSuccess: () => {
 			toast.success(t('recipe.destroyed'));
-			// FIXME: This isn't working
-			queryClient.invalidateQueries('recipes');
+			// FIXME: Do this via inavalidateQueries rather than refetch
+			queryClient.refetchQueries('recipes');
 			history.push(webroutes.recipes);
 		},
 	});

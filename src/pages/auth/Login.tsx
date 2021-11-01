@@ -36,7 +36,7 @@ function Login() {
 	const { t } = useTranslation();
 
 	if (isAuthenticated) {
-		return <Redirect to={webRoutes.home} />;
+		return <Redirect to={webRoutes.recipes} />;
 	}
 
 	return (
@@ -57,7 +57,7 @@ function Login() {
 
 									toast.success(t('authentication.loginSuccess'));
 									setSession(user, headers.Authorization);
-									history.push(webRoutes.home);
+									history.push(webRoutes.recipes);
 								} catch (err) {
 									if (err instanceof HttpError) {
 										if (err.unauthorized) {

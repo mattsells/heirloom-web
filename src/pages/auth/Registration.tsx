@@ -41,7 +41,7 @@ function Registration() {
 	const { t } = useTranslation();
 
 	if (isAuthenticated) {
-		return <Redirect to={webRoutes.home} />;
+		return <Redirect to={webRoutes.recipes} />;
 	}
 
 	return (
@@ -66,7 +66,7 @@ function Registration() {
 
 									toast.success(t('authentication.loginSuccess'));
 									setSession(user, headers.Authorization);
-									history.push(webRoutes.home);
+									history.push(webRoutes.recipes);
 								} catch (err) {
 									// TODO: Check if message is available otherwise show default
 									if (err instanceof HttpError) {
