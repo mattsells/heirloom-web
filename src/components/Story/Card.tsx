@@ -39,13 +39,9 @@ function Card({ story }: Props): ReactElement<Props> {
 	const classes = useStyles(story as any);
 
 	return (
-		<a className={classes.root} href={`http://localhost:3000${story.imageUrl}`}>
+		<a className={classes.root} href={story.imageUrl}>
 			<Frame.Square>
-				<img
-					alt={story.name}
-					className={classes.image}
-					src={`http://localhost:3000${story.imageUrl}`}
-				/>
+				<img alt={story.name} className={classes.image} src={story.imageUrl} />
 			</Frame.Square>
 		</a>
 	);

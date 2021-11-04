@@ -45,7 +45,7 @@ describe('<Image />', () => {
 		render(<Image {...props} value={JSON.stringify(imageData)} />);
 
 		expect(screen.getByTestId('image-input')).toHaveStyle({
-			backgroundImage: `url(http://localhost:3000/test/upload)`,
+			backgroundImage: `url(/test/upload)`,
 		});
 	});
 });

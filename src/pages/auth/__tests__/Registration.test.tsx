@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 
-import { ApiContext } from '@/context';
+import ApiContext from '@/context/api';
 
 import Registration from '../Registration';
 

@@ -87,8 +87,7 @@ function Image({
 	...props
 }: Props): ReactElement {
 	const imageUrl = useMemo(() => {
-		const url = parseFileUrl(props.value as string);
-		return url ? `http://localhost:3000${url}` : null;
+		return parseFileUrl(props.value as string);
 	}, [props.value]);
 
 	const id = useRef(randomId());
@@ -103,10 +102,13 @@ function Image({
 			form.append('file', file);
 
 			// TODO: Update api to take form data and specific upload endpoint
-			const response = await fetch('http://localhost:3000/upload', {
-				method: 'POST',
-				body: form,
-			});
+			const response = await fetch(
+				`${process.env.REACT_APP_API_SCHEME}://${process.env.REACT_APP_API_HOST}/upload`,
+				{
+					method: 'POST',
+					body: form,
+				}
+			);
 
 			const body = (await response.json()) as FileUploadResponse;
 

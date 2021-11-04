@@ -18,8 +18,7 @@ const useStyles = createUseStyles(
 		cover: {
 			alignItems: 'flex-end',
 			// TODO: Get correct URL for image
-			backgroundImage: ({ recipe }: Props) =>
-				`url(http://localhost:3000${recipe.coverImageUrl})`,
+			backgroundImage: ({ recipe }: Props) => `url(${recipe.coverImageUrl})`,
 			backgroundSize: 'cover',
 			backgroundPosition: 'center center',
 			backgroundRepeat: 'no-repeat',
