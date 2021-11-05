@@ -58,6 +58,7 @@ function Navbar(): ReactElement {
 						isVisible={isSettingsVisible}
 						offsetX={5}
 						offsetY={-5}
+						onDismiss={() => setIsSettingsVisible(false)}
 						placement="right"
 					>
 						<Block

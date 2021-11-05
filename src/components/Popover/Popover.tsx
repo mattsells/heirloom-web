@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ReactElement, ReactNode, useState } from 'react';
 import { usePopper } from 'react-popper';
 
@@ -9,6 +9,7 @@ type Props = {
 	isVisible: boolean;
 	offsetX?: number;
 	offsetY?: number;
+	onDismiss?: VoidFunction;
 	// TODO: Get correct typing for this
 	placement?: string;
 };
@@ -18,10 +19,13 @@ function Popover({
 	isVisible,
 	offsetX,
 	offsetY,
+	onDismiss,
 	placement = 'bottom',
 }: Props): ReactElement<Props> {
-	const [referenceElement, setReferenceElement] = useState(null);
-	const [popperElement, setPopperElement] = useState(null);
+	const listenerRef = useRef(null);
+	const [referenceElement, setReferenceElement] =
+		useState<HTMLDivElement>(null);
+	const [popperElement, setPopperElement] = useState<HTMLDivElement>(null);
 	const [arrowElement, setArrowElement] = useState(null);
 
 	const { styles, attributes, update } = usePopper(
@@ -42,6 +46,37 @@ function Popover({
 			update();
 		}
 	}, [isVisible, update]);
+
+	useEffect(() => {
+		if (onDismiss && isVisible && !listenerRef.current) {
+			const listener = (e: any) => {
+				if (
+					!popperElement.contains(e.target) &&
+					!referenceElement.contains(e.target)
+				) {
+					onDismiss();
+				}
+			};
+
+			listenerRef.current = listener;
+			window.document.addEventListener('click', listener);
+		}
+
+		return () => {
+			if (listenerRef.current) {
+				window.document.removeEventListener('click', listenerRef.current);
+				listenerRef.current = null;
+			}
+		};
+	}, [isVisible, onDismiss, popperElement, referenceElement]);
+
+	useEffect(() => {
+		return () => {
+			if (listenerRef.current) {
+				window.document.removeEventListener('click', listenerRef.current);
+			}
+		};
+	}, []);
 
 	return (
 		<>
