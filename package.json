@@ -16,8 +16,6 @@
 		"@types/react-dom": "^17.0.0",
 		"@types/react-router-dom": "^5.1.8",
 		"@types/simple-react-lightbox": "^3.6.1",
-		"dotenv": "^10.0.0",
-		"express": "^4.17.1",
 		"formik": "^2.2.9",
 		"i18next": "^20.4.0",
 		"i18next-browser-languagedetector": "^6.1.2",
@@ -41,7 +39,6 @@
 		"zustand": "^3.5.7"
 	},
 	"scripts": {
-		"serve": "node index.js",
 		"start": "PORT=3001 craco start",
 		"build": "craco build",
 		"test": "craco test --env jsdom --collect-coverage",
