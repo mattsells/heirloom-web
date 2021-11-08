@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useInfiniteQuery } from 'react-query';
 
 import * as Modal from '@/components/Modal';
@@ -17,7 +18,7 @@ function Recipes() {
 
 	const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
 
-	const { data, fetchNextPage, hasNextPage, isFetching, isLoading } =
+	const { data, isError, fetchNextPage, hasNextPage, isFetching, isLoading } =
 		useInfiniteQuery(
 			'recipes',
 			({ pageParam }) => {
@@ -32,6 +33,14 @@ function Recipes() {
 				keepPreviousData: true,
 			}
 		);
+
+	const [sentryRef] = useInfiniteScroll({
+		disabled: isError,
+		hasNextPage,
+		loading: isFetching,
+		onLoadMore: fetchNextPage,
+		rootMargin: '0px 0px 200px 0px',
+	});
 
 	const allRecipes = useMemo(() => {
 		if (!data) {
@@ -51,6 +60,8 @@ function Recipes() {
 				onClickAddRecipe={(): void => setIsCreateModalVisible(true)}
 				recipes={allRecipes}
 			/>
+
+			<div ref={sentryRef} />
 
 			<Modal.Modal
 				isVisible={isCreateModalVisible}
