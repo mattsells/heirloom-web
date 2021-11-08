@@ -7,6 +7,7 @@ import * as Recipe from '@/components/Recipe';
 import * as Text from '@/components/Text';
 import { useHttpClient } from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
+import { IndexResponse } from '@/types/global';
 import { Recipe as RecipeType } from '@/types/recipe';
 
 function Recipes() {
@@ -20,7 +21,9 @@ function Recipes() {
 	const { data, isLoading } = useQuery(
 		'recipes',
 		() =>
-			http.get<RecipeType[]>('recipes', { filters: { account: account.id } }),
+			http.get<IndexResponse<{ recipes: RecipeType[] }>>('recipes', {
+				filters: { account: account.id },
+			}),
 		{
 			enabled: !!account,
 		}
@@ -33,7 +36,7 @@ function Recipes() {
 			<Recipe.List
 				isLoading={isLoading}
 				onClickAddRecipe={(): void => setIsCreateModalVisible(true)}
-				recipes={data?.data}
+				recipes={data?.data.recipes}
 			/>
 
 			<Modal.Modal

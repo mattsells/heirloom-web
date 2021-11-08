@@ -39,7 +39,7 @@ function useActiveAccount(): UseActiveAccount {
 			try {
 				// Get all accountUsers for this user, which will return a list
 				// of all the accounts the user has access to
-				const accountUsers = await http.get<AccountUser[]>(
+				const accountUsers = await http.get<{ accountUsers: AccountUser[] }>(
 					routes.accountUsers.index,
 					{
 						extended: true,
@@ -51,7 +51,7 @@ function useActiveAccount(): UseActiveAccount {
 
 				// Attempt to set active account based on stored ID
 				if (activeAccountId) {
-					activeAccountUser = accountUsers.data.find(
+					activeAccountUser = accountUsers.data.accountUsers.find(
 						(accountUser) =>
 							accountUser.account.id === parseInt(activeAccountId, 10)
 					);
@@ -64,7 +64,7 @@ function useActiveAccount(): UseActiveAccount {
 
 				// If active account does not exist, set as own account
 				if (!activeAccountUser) {
-					activeAccountUser = accountUsers.data.find(
+					activeAccountUser = accountUsers.data.accountUsers.find(
 						(accountUser) => accountUser.role === 'owner'
 					);
 				}
