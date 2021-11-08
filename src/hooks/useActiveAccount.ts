@@ -37,6 +37,9 @@ function useActiveAccount(): UseActiveAccount {
 			const activeAccountId = localStorage.getItem(STORAGE_ACTIVE_ACCOUNT_ID);
 
 			try {
+				// TODO: This is paginated so we need to make sure all accounts are available. Might need to limit
+				// total number of accounts or something
+
 				// Get all accountUsers for this user, which will return a list
 				// of all the accounts the user has access to
 				const accountUsers = await http.get<{ accountUsers: AccountUser[] }>(

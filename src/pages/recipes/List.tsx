@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
 import * as Modal from '@/components/Modal';
 import * as Recipe from '@/components/Recipe';
@@ -17,17 +17,30 @@ function Recipes() {
 
 	const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
 
-	// TODO: Create something to make these requests
-	const { data, isLoading } = useQuery(
-		'recipes',
-		() =>
-			http.get<IndexResponse<{ recipes: RecipeType[] }>>('recipes', {
-				filters: { account: account.id },
-			}),
-		{
-			enabled: !!account,
+	const { data, fetchNextPage, hasNextPage, isFetching, isLoading } =
+		useInfiniteQuery(
+			'recipes',
+			({ pageParam }) => {
+				return http.get<IndexResponse<{ recipes: RecipeType[] }>>('recipes', {
+					filters: { account: account.id },
+					page: pageParam,
+				});
+			},
+			{
+				enabled: !!account,
+				getNextPageParam: (lastPage) => lastPage.data.meta.nextPage,
+				keepPreviousData: true,
+			}
+		);
+
+	const allRecipes = useMemo(() => {
+		if (!data) {
+			return [];
 		}
-	);
+		return data.pages.reduce((allPages, page) => {
+			return [...allPages, ...page.data.recipes];
+		}, []);
+	}, [data]);
 
 	return (
 		<>
@@ -36,7 +49,7 @@ function Recipes() {
 			<Recipe.List
 				isLoading={isLoading}
 				onClickAddRecipe={(): void => setIsCreateModalVisible(true)}
-				recipes={data?.data.recipes}
+				recipes={allRecipes}
 			/>
 
 			<Modal.Modal
