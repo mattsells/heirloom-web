@@ -62,15 +62,16 @@ function List({
 
 	return (
 		<div className={classes.root}>
-			{recipes.map((recipe) => (
-				<Card key={recipe.id} recipe={recipe} />
-			))}
 			<Button.Square onClick={onClickAddRecipe}>
 				<div className={classes.add}>
 					<BiPlusMedical />
 					<span className={classes.addText}>{t('recipes.add')}</span>
 				</div>
 			</Button.Square>
+
+			{recipes.map((recipe) => (
+				<Card key={recipe.id} recipe={recipe} />
+			))}
 		</div>
 	);
 }
