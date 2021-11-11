@@ -35,7 +35,9 @@ const formValues: FormValues = {
 };
 
 const RecipeSchema = Yup.object().shape({
-	name: Yup.string().required(),
+	name: Yup.string()
+		.required()
+		.max(256, 'Name is too long (max 256 characters)'),
 });
 
 function imageData(recipe: Recipe) {
@@ -123,7 +125,9 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 				handleChange,
 				handleBlur,
 				handleSubmit,
+				dirty,
 				isSubmitting,
+				isValid,
 			}) => {
 				return (
 					<Form onSubmit={handleSubmit}>
@@ -178,7 +182,7 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 
 						<Level.Base arrangement="split">
 							<Level.Item>
-								<Button.Submit disabled={isSubmitting}>
+								<Button.Submit disabled={isSubmitting || !isValid || !dirty}>
 									{t(recipe ? 'recipes.save' : 'recipes.add')}
 								</Button.Submit>
 							</Level.Item>

@@ -27,7 +27,10 @@ const formValues = {
 
 // TODO: Add translations
 const RegistrationSchema = Yup.object().shape({
-	email: Yup.string().email('Not a valid email').required(),
+	email: Yup.string()
+		.email('Not a valid email')
+		.required()
+		.max(256, 'Email is too long (max 256 characters)'),
 	password: Yup.string().required(),
 	passwordConfirmation: Yup.string()
 		.oneOf([Yup.ref('password'), null], 'Passwords must match')
