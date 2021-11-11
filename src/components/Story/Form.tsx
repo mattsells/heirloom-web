@@ -38,6 +38,9 @@ const StorySchema = Yup.object().shape({
 	name: Yup.string()
 		.required()
 		.max(256, 'Name is too long (max 256 characters)'),
+	description: Yup.string()
+		.required()
+		.max(10000, 'Description is too long (max 10000 characters)'),
 });
 
 const useStyles = createUseStyles({
