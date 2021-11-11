@@ -60,7 +60,7 @@ function Login() {
 									history.push(webRoutes.recipes);
 								} catch (err) {
 									if (err instanceof HttpError) {
-										if (err.unauthorized) {
+										if (err.isUnauthorized) {
 											toast.error(t('authentication.passwordIncorrect'));
 										} else {
 											toast.error(t('authentication.loginFailure'));

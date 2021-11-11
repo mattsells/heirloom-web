@@ -7,6 +7,9 @@ import { useHttpClient } from '@/context/api';
 import { IDParams } from '@/types/global';
 import { Recipe as RecipeType } from '@/types/recipe';
 import { route } from '@/utils/routing';
+import HttpResponse from '@/lib/http/HttpResponse';
+import HttpError from '@/lib/http/HttpError';
+import NotFound from '@/pages/NotFound';
 
 function Show() {
 	const http = useHttpClient();
@@ -14,9 +17,16 @@ function Show() {
 
 	const id = parseInt(params.id, 10);
 
-	const { data, isLoading } = useQuery(['recipe', id], () =>
+	const { data, error, isError, isLoading } = useQuery<
+		HttpResponse<RecipeType>,
+		HttpError
+	>(['recipe', id], () =>
 		http.get<RecipeType>(route(routes.recipes.show, { id, extended: true }))
 	);
+
+	if (isError && error.isNotFound) {
+		return <NotFound />;
+	}
 
 	return <Recipe.View isLoading={isLoading} recipe={data?.data} />;
 }
