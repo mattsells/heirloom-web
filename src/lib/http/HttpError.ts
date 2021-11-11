@@ -6,8 +6,12 @@ class HttpError extends Error {
 		this.status = status;
 	}
 
-	get unauthorized() {
+	get isUnauthorized() {
 		return this.status === 401;
+	}
+
+	get isNotFound() {
+		return this.status === 404;
 	}
 }
 
