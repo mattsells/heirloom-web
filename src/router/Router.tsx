@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import * as Layout from '@/components/Layout';
 import * as Path from '@/components/Route';
@@ -17,6 +17,9 @@ function Router() {
 				<Switch>
 					<Path.Protected path={routes.recipe} component={Recipes.Show} />
 					<Path.Protected path={routes.recipes} component={Recipes.List} />
+					<Path.Protected exact path="/">
+						<Redirect to={routes.recipes} />
+					</Path.Protected>
 
 					{/* Default to 404 only while logged in */}
 					<Path.Protected path="/" component={NotFound} />
