@@ -1,6 +1,6 @@
 import '@/styles/app.css';
 
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -12,6 +12,7 @@ import useActiveAccount from '@/hooks/useActiveAccount';
 import useSession from '@/hooks/useSession';
 import Router from '@/router';
 import { Size } from '@/variables/fonts';
+import Loading from '@/pages/Loading';
 
 // Client for server state
 const queryClient = new QueryClient({
@@ -30,18 +31,25 @@ const api = new HttpClient();
 function App() {
 	const { isLoading: isLoadingAccount } = useActiveAccount();
 	const { checkForLocalUserData, isLoading: isLoadingSession } = useSession();
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	// On app load retrieve stored user information if available
 	useEffect(() => {
 		checkForLocalUserData();
 	}, [checkForLocalUserData]);
 
-	if (isLoadingSession || isLoadingAccount) {
-		return <h1>LOADING USER DATA</h1>;
+	useEffect(() => {
+		setTimeout(() => {
+			setIsLoaded(true);
+		}, 1000);
+	}, []);
+
+	if (isLoadingSession || isLoadingAccount || !isLoaded) {
+		return <Loading />;
 	}
 
 	return (
-		<Suspense fallback="LOADING LANGUAGE DATA">
+		<Suspense fallback={<Loading />}>
 			<Toaster
 				position="top-right"
 				toastOptions={{
