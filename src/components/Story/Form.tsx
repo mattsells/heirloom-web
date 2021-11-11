@@ -35,7 +35,9 @@ const formValues: FormValues = {
 };
 
 const StorySchema = Yup.object().shape({
-	name: Yup.string().required(),
+	name: Yup.string()
+		.required()
+		.max(256, 'Name is too long (max 256 characters)'),
 });
 
 const useStyles = createUseStyles({
@@ -85,10 +87,12 @@ function RecipeForm({
 				values,
 				errors,
 				touched,
+				dirty,
 				handleChange,
 				handleBlur,
 				handleSubmit,
 				isSubmitting,
+				isValid,
 			}) => {
 				return (
 					<Form onSubmit={handleSubmit}>
@@ -122,7 +126,9 @@ function RecipeForm({
 							value={values.description}
 						/>
 
-						<Submit disabled={isSubmitting}>{t('story.add')}</Submit>
+						<Submit disabled={isSubmitting || !isValid || !dirty}>
+							{t('story.add')}
+						</Submit>
 					</Form>
 				);
 			}}
