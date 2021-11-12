@@ -4,13 +4,12 @@ import { createUseStyles } from 'react-jss';
 
 import * as Frame from '@/components/Frame';
 import { FileUploadResponse } from '@/types/file';
+import { generateInputEvent, parseFileUrl } from '@/utils/file';
 import { randomId } from '@/utils/string';
 import { Pattern, Radius, Width } from '@/variables/borders';
 import { Forest, Shade } from '@/variables/colors';
 import { Size } from '@/variables/fonts';
 import { Space } from '@/variables/space';
-
-import { generateInputEvent, parseFileUrl } from '@/utils/file';
 
 export type Props = HTMLProps<HTMLInputElement> & {
 	frame?: 'square';

@@ -1,11 +1,11 @@
-import { useRef, HTMLProps, ReactElement } from 'react';
+import { HTMLProps, ReactElement,useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import * as Input from '@/components/Input';
 import Label from '@/components/Label';
 import { Error } from '@/components/Text';
-import { Space } from '@/variables/space';
 import { randomId } from '@/utils/string';
+import { Space } from '@/variables/space';
 
 export type Props = HTMLProps<HTMLInputElement> & {
 	error?: string;

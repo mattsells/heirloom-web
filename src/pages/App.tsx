@@ -2,17 +2,17 @@ import '@/styles/app.css';
 
 import { Suspense, useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter } from 'react-router-dom';
 import SimpleReactLightbox from 'simple-react-lightbox';
 
 import ApiContext from '@/context/api';
-import { HttpClient } from '@/lib/http';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import useSession from '@/hooks/useSession';
+import { HttpClient } from '@/lib/http';
+import Loading from '@/pages/Loading';
 import Router from '@/router';
 import { Size } from '@/variables/fonts';
-import Loading from '@/pages/Loading';
 
 // Client for server state
 const queryClient = new QueryClient({

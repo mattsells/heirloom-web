@@ -2,10 +2,10 @@ import { ReactElement, ReactNode } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import { Size } from '@/variables/fonts';
+import { Space } from '@/variables/space';
 
 import Text from './Text';
 import Textarea from './Textarea';
-import { Space } from '@/variables/space';
 
 export type ListType = 'bullet' | 'number';
 export type InputType = 'input' | 'textarea';

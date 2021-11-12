@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BiPlusMedical } from 'react-icons/bi';
 import { createUseStyles } from 'react-jss';
-import { useTranslation } from 'react-i18next';
 
 import * as Button from '@/components/Button';
 import * as Loading from '@/components/Loading';

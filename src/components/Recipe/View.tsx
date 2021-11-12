@@ -1,16 +1,16 @@
 import { ReactElement, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BiPlusMedical } from 'react-icons/bi';
 import { createUseStyles } from 'react-jss';
-import { useTranslation } from 'react-i18next';
 import { SRLWrapper } from 'simple-react-lightbox';
 
-import * as Button from '@/components/Button';
 import Breadcrumbs, { trail } from '@/components/Breadcrumbs';
+import * as Button from '@/components/Button';
 import * as Loading from '@/components/Loading';
 import * as Modal from '@/components/Modal';
 import * as Panel from '@/components/Panel';
-import * as Text from '@/components/Text';
 import * as Story from '@/components/Story';
+import * as Text from '@/components/Text';
 import { LIGHTBOX_OPTIONS } from '@/config/lightbox';
 import routes from '@/router/routes';
 import { Recipe } from '@/types/recipe';

@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
-import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import { Redirect, useHistory } from 'react-router';
 import * as Yup from 'yup';
 
@@ -15,9 +15,9 @@ import * as Panel from '@/components/Panel';
 import * as Text from '@/components/Text';
 import { useHttpClient } from '@/context/api';
 import useSession from '@/hooks/useSession';
+import HttpError from '@/lib/http/HttpError';
 import webRoutes from '@/router/routes';
 import { User } from '@/types/user';
-import HttpError from '@/lib/http/HttpError';
 
 const formValues = {
 	email: '',
