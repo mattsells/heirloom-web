@@ -6,7 +6,9 @@ export type Story = {
 	accountId: number;
 	contentType: ContentType;
 	description: string;
-	imageUrl: string;
+	imageUrlSmall: string;
+	imageUrlMedium: string;
+	imageUrlLarge: string;
 	name: string;
 	storyType: StoryType;
 	videoUrl: string;

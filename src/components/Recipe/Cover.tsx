@@ -18,7 +18,8 @@ const useStyles = createUseStyles(
 		cover: {
 			alignItems: 'flex-end',
 			// TODO: Get correct URL for image
-			backgroundImage: ({ recipe }: Props) => `url(${recipe.coverImageUrl})`,
+			backgroundImage: ({ recipe }: Props) =>
+				`url(${recipe.coverImageUrlLarge})`,
 			backgroundSize: 'cover',
 			backgroundPosition: 'center center',
 			backgroundRepeat: 'no-repeat',
@@ -56,7 +57,7 @@ function Cover({ onClickEdit, recipe }: Props): ReactElement<Props> {
 		</div>
 	);
 
-	if (!recipe.coverImageUrl) {
+	if (!recipe.coverImageUrlLarge) {
 		return title;
 	}
 

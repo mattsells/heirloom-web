@@ -41,13 +41,13 @@ const RecipeSchema = Yup.object().shape({
 });
 
 function imageData(recipe: Recipe) {
-	if (!recipe.coverImageUrl || !recipe.coverImageData) {
+	if (!recipe.coverImageUrlMedium || !recipe.coverImageData) {
 		return '';
 	}
 
 	return JSON.stringify({
 		data: recipe.coverImageData,
-		url: recipe.coverImageUrl,
+		url: recipe.coverImageUrlMedium,
 	});
 }
 

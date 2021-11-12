@@ -4,7 +4,9 @@ export type Recipe = {
 	id: number;
 	accountId: number;
 	coverImageData: object;
-	coverImageUrl: string;
+	coverImageUrlSmall: string;
+	coverImageUrlMedium: string;
+	coverImageUrlLarge: string;
 	directions: string[];
 	ingredients: string[];
 	name: string;
