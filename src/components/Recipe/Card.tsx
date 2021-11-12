@@ -3,10 +3,10 @@ import { createUseStyles } from 'react-jss';
 import { Link } from 'react-router-dom';
 
 import * as Frame from '@/components/Frame';
+import { routes } from '@/router';
 import { Recipe } from '@/types/recipe';
 import { route } from '@/utils/routing';
-import { Radius, Slate, Size, Shadow, Space, Speed } from '@/variables';
-import { routes } from '@/router';
+import { Radius, Shadow, Size, Slate, Space, Speed } from '@/variables';
 
 type Props = {
 	recipe: Recipe;

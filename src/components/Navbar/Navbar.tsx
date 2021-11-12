@@ -1,7 +1,7 @@
 import { ReactElement, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BsGearWideConnected } from 'react-icons/bs';
 import { createUseStyles } from 'react-jss';
-import { useTranslation } from 'react-i18next';
 
 import * as Panel from '@/components/Panel';
 import Popover from '@/components/Popover';
@@ -10,8 +10,8 @@ import useSession from '@/hooks/useSession';
 import { Mint } from '@/variables/colors';
 import { Shadow } from '@/variables/shadows';
 
-import { NAVBAR_ITEMS } from './config';
 import Block from './Block';
+import { NAVBAR_ITEMS } from './config';
 import Link from './Link';
 
 const useStyles = createUseStyles(

@@ -43,13 +43,22 @@
 		"start": "PORT=3001 craco start",
 		"build": "craco build",
 		"test": "craco test --env jsdom --collect-coverage",
-		"clean": "prettier --write ."
+		"clean": "prettier --write .",
+		"lint": "eslint .",
+		"lint:fix": "yarn lint --fix"
 	},
 	"eslintConfig": {
 		"extends": [
 			"react-app",
 			"react-app/jest"
-		]
+		],
+		"plugins": [
+			"simple-import-sort"
+		],
+		"rules": {
+			"simple-import-sort/imports": "error",
+			"simple-import-sort/exports": "error"
+		}
 	},
 	"browserslist": {
 		"production": [
@@ -65,6 +74,7 @@
 	},
 	"devDependencies": {
 		"@testing-library/react-hooks": "^7.0.1",
+		"eslint-plugin-simple-import-sort": "^7.0.0",
 		"prettier": "2.3.2",
 		"ts-jest": "^27.0.4"
 	}

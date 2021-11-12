@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import { createUseStyles } from 'react-jss';
 import { useTranslation } from 'react-i18next';
+import { createUseStyles } from 'react-jss';
 
 import { Tangerine } from '@/variables/colors';
 import { Size } from '@/variables/fonts';

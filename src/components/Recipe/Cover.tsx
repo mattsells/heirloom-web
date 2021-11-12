@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createUseStyles } from 'react-jss';
 
 import * as Button from '@/components/Button';
@@ -6,7 +7,6 @@ import * as Frame from '@/components/Frame';
 import * as Text from '@/components/Text';
 import { Recipe } from '@/types/recipe';
 import { Space } from '@/variables';
-import { useTranslation } from 'react-i18next';
 
 type Props = {
 	onClickEdit: VoidFunction;

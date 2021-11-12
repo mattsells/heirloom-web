@@ -1,7 +1,7 @@
+import '@/i18n';
+
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-
-import '@/i18n';
 
 import App from '@/pages/App';
 

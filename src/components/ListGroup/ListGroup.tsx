@@ -1,11 +1,11 @@
-import { useRef, ReactElement } from 'react';
+import { ReactElement,useRef } from 'react';
 import { createUseStyles } from 'react-jss';
 
 import List, { InputType, ListType } from '@/components/Input/List';
 import Label from '@/components/Label';
 import { Error } from '@/components/Text';
-import { Space } from '@/variables/space';
 import { randomId } from '@/utils/string';
+import { Space } from '@/variables/space';
 
 // TODO: Update TS for events
 export type Props = {

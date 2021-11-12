@@ -1,8 +1,8 @@
 import { FormEventHandler, HTMLProps, ReactElement } from 'react';
 import { createUseStyles } from 'react-jss';
 
-import { Shade, Slate, Tangerine } from '@/variables/colors';
 import { Width } from '@/variables/borders';
+import { Shade, Slate, Tangerine } from '@/variables/colors';
 import { Size } from '@/variables/fonts';
 
 type Props = HTMLProps<HTMLInputElement> & {
