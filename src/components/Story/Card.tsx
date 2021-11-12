@@ -39,9 +39,13 @@ function Card({ story }: Props): ReactElement<Props> {
 	const classes = useStyles(story as any);
 
 	return (
-		<a className={classes.root} href={story.imageUrl}>
+		<a className={classes.root} href={story.imageUrlMedium}>
 			<Frame.Square>
-				<img alt={story.name} className={classes.image} src={story.imageUrl} />
+				<img
+					alt={story.name}
+					className={classes.image}
+					src={story.imageUrlMedium}
+				/>
 			</Frame.Square>
 		</a>
 	);

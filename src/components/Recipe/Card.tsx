@@ -29,8 +29,7 @@ const useStyles = createUseStyles(
 		},
 
 		content: {
-			// FIXME: Get correct URL from server
-			backgroundImage: (recipe: Recipe) => `url(${recipe.coverImageUrl})`,
+			backgroundImage: (recipe: Recipe) => `url(${recipe.coverImageUrlSmall})`,
 			backgroundSize: 'cover',
 			backgroundPosition: 'center center',
 			backgroundRepeat: 'no-repeat',
