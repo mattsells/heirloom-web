@@ -21,3 +21,7 @@ export function randomId(length = 10): string {
 export function combine(...args: string[]): string {
 	return args.join(' ');
 }
+
+export function toSnakeCase(string: string): string {
+	return string.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+}

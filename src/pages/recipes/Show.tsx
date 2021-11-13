@@ -1,7 +1,6 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 
-import routes from '@/api/routes';
 import * as Recipe from '@/components/Recipe';
 import { useHttpClient } from '@/context/api';
 import HttpError from '@/lib/http/HttpError';
@@ -9,7 +8,6 @@ import HttpResponse from '@/lib/http/HttpResponse';
 import NotFound from '@/pages/NotFound';
 import { IDParams } from '@/types/global';
 import { Recipe as RecipeType } from '@/types/recipe';
-import { route } from '@/utils/routing';
 
 function Show() {
 	const http = useHttpClient();
@@ -21,7 +19,7 @@ function Show() {
 		HttpResponse<RecipeType>,
 		HttpError
 	>(['recipe', id], () =>
-		http.get<RecipeType>(route(routes.recipes.show, { id, extended: true }))
+		http.get<RecipeType>('recipe', { params: { id, extended: true } })
 	);
 
 	if (isError && error.isNotFound) {

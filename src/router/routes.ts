@@ -1,12 +1,15 @@
 // Routing for application router
 
-const routes = {
-	home: '/me',
-	login: '/login',
-	recipes: '/recipes',
-	recipe: '/recipes/:id',
-	recipeEdit: '/recipes/:id/edit',
-	registration: '/join',
-};
+import RouteDirectory from '@/lib/http/RouteDirectory';
+
+const routes = new RouteDirectory();
+
+routes.add('default', '/');
+routes.add('home', '/');
+routes.add('login');
+routes.add('recipes');
+routes.add('recipe', '/recipe/:id');
+routes.add('recipe.edit', '/recipe/:id/edit');
+routes.add('registration', '/join');
 
 export default routes;

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import SimpleReactLightbox from 'simple-react-lightbox';
 
+import routes from '@/api/routes';
 import ApiContext from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
 import useSession from '@/hooks/useSession';
@@ -26,7 +27,7 @@ const queryClient = new QueryClient({
 });
 
 // Create a new client instance and add to context
-const api = new HttpClient();
+const api = new HttpClient(routes);
 
 function App() {
 	const { isLoading: isLoadingAccount } = useActiveAccount();

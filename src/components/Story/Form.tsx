@@ -6,7 +6,6 @@ import { createUseStyles } from 'react-jss';
 import { useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 
-import apiRoutes from '@/api/routes';
 import { createStoryBody, CreateStoryBodyParams } from '@/api/utils/stories';
 import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
@@ -67,15 +66,14 @@ function RecipeForm({
 			validationSchema={StorySchema}
 			onSubmit={async (fields) => {
 				try {
-					const { data: story } = await http.create<Story>(
-						apiRoutes.stories.index,
-						createStoryBody({
+					const { data: story } = await http.create<Story>('stories', {
+						body: createStoryBody({
 							...fields,
 							accountId: recipe.accountId,
 							recipeIds: [recipe.id],
 							storyType,
-						})
-					);
+						}),
+					});
 
 					toast.success(t('story.created-artifact'));
 					queryClient.invalidateQueries(['recipe', recipe.id]);

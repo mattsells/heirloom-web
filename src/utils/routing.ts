@@ -1,10 +1,8 @@
 import qs from 'qs';
 
-interface RouteParams {
-	[key: string]: boolean | number | string | RouteParams;
-}
+import { RouteParams } from '@/types/api';
 
-export function route(path: string, params: RouteParams = {}): string {
+export function buildParams(path: string, params: RouteParams = {}): string {
 	for (const [key, value] of Object.entries(params)) {
 		const keyMark = `:${key}`;
 
@@ -17,6 +15,10 @@ export function route(path: string, params: RouteParams = {}): string {
 	const query = qs.stringify(params);
 
 	return path + (query ? `?${query}` : '');
+}
+
+export function cleanPath(path: string): string {
+	return path.replace(/^\/+|\/+$/g, '');
 }
 
 function normalize(value: boolean | number | string | object): string {

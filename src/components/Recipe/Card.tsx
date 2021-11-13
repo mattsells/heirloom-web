@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import * as Frame from '@/components/Frame';
 import { routes } from '@/router';
 import { Recipe } from '@/types/recipe';
-import { route } from '@/utils/routing';
 import { Radius, Shadow, Size, Slate, Space, Speed } from '@/variables';
 
 type Props = {
@@ -56,9 +55,8 @@ const useStyles = createUseStyles(
 function Card({ recipe }: Props): ReactElement<Props> {
 	const classes = useStyles(recipe as any);
 
-	// TODO: Create routing util to create the "to" prop
 	return (
-		<Link className={classes.root} to={route(routes.recipe, { id: recipe.id })}>
+		<Link className={classes.root} to={routes.get('recipe', { id: recipe.id })}>
 			<Frame.Square>
 				<div className={classes.content}>
 					<div className={classes.veil}>

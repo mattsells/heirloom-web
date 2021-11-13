@@ -3,10 +3,9 @@ import toast from 'react-hot-toast';
 import { useHistory } from 'react-router';
 import shallow from 'zustand/shallow';
 
-import apiRoutes from '@/api/routes';
 import { useHttpClient } from '@/context/api';
 import HttpError from '@/lib/http/HttpError';
-import webRoutes from '@/router/routes';
+import routes from '@/router/routes';
 import { useSessionStore } from '@/stores/session';
 import { User } from '@/types/user';
 
@@ -71,9 +70,9 @@ function useSession(): UseSession {
 
 	const handleSignOut = useCallback(async () => {
 		try {
-			await http.get(apiRoutes.users.signOut);
+			await http.get('users.signOut');
 			handleClearSession();
-			history.push(webRoutes.login);
+			history.push(routes.get('login'));
 		} catch (err) {
 			if (err instanceof HttpError) {
 				toast.error(err.message);
@@ -95,7 +94,9 @@ function useSession(): UseSession {
 			try {
 				http.setToken(authToken);
 
-				const response = await http.get<User>(`users/${userId}`);
+				const response = await http.get<User>('user', {
+					params: { id: userId },
+				});
 
 				handleActivateUser(response.data);
 				setState('done');

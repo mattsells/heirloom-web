@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Redirect, useHistory } from 'react-router';
 import * as Yup from 'yup';
 
-import apiRoutes from '@/api/routes';
 import { createRegistrationBody } from '@/api/utils/authentication';
 import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
@@ -16,7 +15,7 @@ import * as Text from '@/components/Text';
 import { useHttpClient } from '@/context/api';
 import useSession from '@/hooks/useSession';
 import HttpError from '@/lib/http/HttpError';
-import webRoutes from '@/router/routes';
+import routes from '@/router/routes';
 import { User } from '@/types/user';
 
 const formValues = {
@@ -44,7 +43,7 @@ function Registration() {
 	const { t } = useTranslation();
 
 	if (isAuthenticated) {
-		return <Redirect to={webRoutes.recipes} />;
+		return <Redirect to={routes.get('recipes')} />;
 	}
 
 	return (
@@ -59,17 +58,19 @@ function Registration() {
 							onSubmit={async ({ email, password, passwordConfirmation }) => {
 								try {
 									const { data: user, headers } = await http.create<User>(
-										apiRoutes.users.signUp,
-										createRegistrationBody(
-											email,
-											password,
-											passwordConfirmation
-										)
+										'users.signUp',
+										{
+											body: createRegistrationBody(
+												email,
+												password,
+												passwordConfirmation
+											),
+										}
 									);
 
 									toast.success(t('authentication.loginSuccess'));
 									setSession(user, headers.Authorization);
-									history.push(webRoutes.recipes);
+									history.push(routes.get('recipes'));
 								} catch (err) {
 									// TODO: Check if message is available otherwise show default
 									if (err instanceof HttpError) {
@@ -129,7 +130,7 @@ function Registration() {
 
 						<Text.Body>
 							{t('registration.have-account-1')}{' '}
-							<Link to={webRoutes.login}>
+							<Link to={routes.get('login')}>
 								{t('registration.have-account-2')}
 							</Link>{' '}
 							{t('registration.have-account-3')}
