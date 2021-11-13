@@ -66,10 +66,6 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 		}),
 	};
 
-	// const recipePath = recipe
-	// 	? route(apiRoutes.recipes.show, { id: recipe.id })
-	// 	: '';
-
 	const destroyRecipe = useMutation(
 		() => http.destroy('recipe', { params: { id: recipe.id } }),
 		{
