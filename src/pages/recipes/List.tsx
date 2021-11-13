@@ -23,8 +23,10 @@ function Recipes() {
 			'recipes',
 			({ pageParam }) => {
 				return http.get<IndexResponse<{ recipes: RecipeType[] }>>('recipes', {
-					filters: { account: account.id },
-					page: pageParam,
+					params: {
+						filters: { account: account.id },
+						page: pageParam,
+					},
 				});
 			},
 			{

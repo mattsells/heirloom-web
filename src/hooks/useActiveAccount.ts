@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import shallow from 'zustand/shallow';
 
-import routes from '@/api/routes';
 import { useHttpClient } from '@/context/api';
 import { useAccountStore } from '@/stores/accounts';
 import { Account, AccountUser, AccountUserRole } from '@/types/account';
@@ -43,10 +42,12 @@ function useActiveAccount(): UseActiveAccount {
 				// Get all accountUsers for this user, which will return a list
 				// of all the accounts the user has access to
 				const accountUsers = await http.get<{ accountUsers: AccountUser[] }>(
-					routes.accountUsers.index,
+					'accountUsers',
 					{
-						extended: true,
-						filters: { user: user.id },
+						params: {
+							extended: true,
+							filters: { user: user.id },
+						},
 					}
 				);
 

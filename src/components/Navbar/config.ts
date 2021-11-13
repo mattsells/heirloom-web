@@ -12,6 +12,6 @@ export const NAVBAR_ITEMS = [
 	{
 		icon: GiSecretBook,
 		label: 'Recipes',
-		to: routes.recipes,
+		to: routes.get('recipes'),
 	},
 ];

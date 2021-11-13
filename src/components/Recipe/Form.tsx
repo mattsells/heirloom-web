@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import * as Yup from 'yup';
 
-import apiRoutes from '@/api/routes';
 import { recipeBody, RecipeBodyParams } from '@/api/utils/recipes';
 import * as Button from '@/components/Button';
 import Form from '@/components/Form';
@@ -16,9 +15,8 @@ import * as Level from '@/components/Level';
 import ListGroup from '@/components/ListGroup';
 import { useHttpClient } from '@/context/api';
 import useActiveAccount from '@/hooks/useActiveAccount';
-import webroutes from '@/router/routes';
+import routes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
-import { route } from '@/utils/routing';
 
 type Props = {
 	recipe?: Recipe;
@@ -68,18 +66,21 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 		}),
 	};
 
-	const recipePath = recipe
-		? route(apiRoutes.recipes.show, { id: recipe.id })
-		: '';
+	// const recipePath = recipe
+	// 	? route(apiRoutes.recipes.show, { id: recipe.id })
+	// 	: '';
 
-	const destroyRecipe = useMutation(() => http.destroy(recipePath), {
-		onSuccess: () => {
-			toast.success(t('recipe.destroyed'));
-			// FIXME: Do this via inavalidateQueries rather than refetch
-			queryClient.refetchQueries('recipes');
-			history.push(webroutes.recipes);
-		},
-	});
+	const destroyRecipe = useMutation(
+		() => http.destroy('recipe', { params: { id: recipe.id } }),
+		{
+			onSuccess: () => {
+				toast.success(t('recipe.destroyed'));
+				// FIXME: Do this via inavalidateQueries rather than refetch
+				queryClient.refetchQueries('recipes');
+				history.push(routes.get('recipes'));
+			},
+		}
+	);
 
 	return (
 		<Formik
@@ -88,10 +89,10 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 			onSubmit={async (fields) => {
 				try {
 					if (recipe) {
-						const { data } = await http.update<Recipe>(
-							recipePath,
-							recipeBody({ ...fields, accountId: account.id })
-						);
+						const { data } = await http.update<Recipe>('recipe', {
+							params: { id: recipe.id },
+							body: recipeBody({ ...fields, accountId: account.id }),
+						});
 
 						toast.success(t('recipe.updated'));
 
@@ -103,15 +104,14 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 							onSuccess(data);
 						}
 					} else {
-						const { data: recipe } = await http.create<Recipe>(
-							apiRoutes.recipes.index,
-							recipeBody({ ...fields, accountId: account.id })
-						);
+						const { data: recipe } = await http.create<Recipe>('recipes', {
+							body: recipeBody({ ...fields, accountId: account.id }),
+						});
 
 						toast.success(t('recipes.created'));
 						queryClient.invalidateQueries('recipes');
 
-						history.push(route(webroutes.recipe, { id: recipe.id }));
+						history.push(routes.get('recipe', { id: recipe.id }));
 					}
 				} catch (err) {
 					// TODO: Add error handling

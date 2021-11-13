@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Redirect, useHistory } from 'react-router';
 import * as Yup from 'yup';
 
-import apiRoutes from '@/api/routes';
 import { createSessionBody } from '@/api/utils/authentication';
 import { Submit } from '@/components/Button';
 import Form from '@/components/Form';
@@ -16,7 +15,7 @@ import * as Text from '@/components/Text';
 import { useHttpClient } from '@/context/api';
 import useSession from '@/hooks/useSession';
 import HttpError from '@/lib/http/HttpError';
-import webRoutes from '@/router/routes';
+import routes from '@/router/routes';
 import { User } from '@/types/user';
 
 const formValues = {
@@ -36,7 +35,7 @@ function Login() {
 	const { t } = useTranslation();
 
 	if (isAuthenticated) {
-		return <Redirect to={webRoutes.recipes} />;
+		return <Redirect to={routes.get('recipes')} />;
 	}
 
 	return (
@@ -51,13 +50,15 @@ function Login() {
 							onSubmit={async ({ email, password }) => {
 								try {
 									const { data: user, headers } = await http.create<User>(
-										apiRoutes.users.signIn,
-										createSessionBody(email, password)
+										'users.signIn',
+										{
+											body: createSessionBody(email, password),
+										}
 									);
 
 									toast.success(t('authentication.loginSuccess'));
 									setSession(user, headers.Authorization);
-									history.push(webRoutes.recipes);
+									history.push(routes.get('recipes'));
 								} catch (err) {
 									if (err instanceof HttpError) {
 										if (err.isUnauthorized) {
@@ -106,7 +107,7 @@ function Login() {
 
 						<Text.Body>
 							{t('login.need-account-1')}{' '}
-							<Link to={webRoutes.registration}>
+							<Link to={routes.get('registration')}>
 								{t('login.need-account-2')}
 							</Link>{' '}
 							{t('login.need-account-3')}

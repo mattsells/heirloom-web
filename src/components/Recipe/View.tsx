@@ -123,7 +123,7 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 	}
 
 	const breadcrumbs = trail()
-		.drop(t('recipes.label'), routes.recipes)
+		.drop(t('recipes.label'), routes.get('recipes'))
 		.drop(recipe.name);
 
 	return (

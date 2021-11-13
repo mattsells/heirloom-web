@@ -1,4 +1,5 @@
-import qs from 'qs';
+import { RouteParams } from '@/types/api';
+import { buildParams, cleanPath } from '@/utils/routing';
 
 import {
 	DEFAULT_API_HOST,
@@ -7,8 +8,14 @@ import {
 } from './config';
 import HttpError from './HttpError';
 import HttpResponse from './HttpResponse';
+import RouteDirectory from './RouteDirectory';
 
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+
+type RequestConfig = {
+	body?: object | FormData;
+	params?: RouteParams;
+};
 
 class HttpClient {
 	private apiHost: string;
@@ -16,13 +23,16 @@ class HttpClient {
 	private apiScheme: string;
 	private authToken: string;
 	private headers: object;
+	private routes: RouteDirectory;
 
-	constructor() {
+	constructor(routes?: RouteDirectory) {
 		this.apiHost = process.env.REACT_APP_API_HOST || DEFAULT_API_HOST;
 		this.apiPath = process.env.REACT_APP_API_PATH || DEFAULT_API_PATH;
 		this.apiScheme = process.env.REACT_APP_API_SCHEME || DEFAULT_API_SCHEME;
 
 		this.headers = this.createBaseHeaders();
+
+		this.routes = routes || null;
 	}
 
 	clearToken() {
@@ -33,32 +43,38 @@ class HttpClient {
 		this.authToken = token;
 	}
 
-	get<T = {}>(path: string, params?: object) {
-		return this.performRequest<T>('GET', this.addQueryParams(path, params));
+	get<T = {}>(path: string, config?: RequestConfig) {
+		return this.performRequest<T>('GET', path, config.params, config.body);
 	}
 
-	create<T = {}>(path: string, data?: object) {
-		return this.performRequest<T>('POST', path, data);
+	create<T = {}>(path: string, config?: RequestConfig) {
+		return this.performRequest<T>('POST', path, config.params, config.body);
 	}
 
-	update<T = {}>(path: string, data?: object) {
-		return this.performRequest<T>('PATCH', path, data);
+	update<T = {}>(path: string, config?: RequestConfig) {
+		return this.performRequest<T>('PATCH', path, config.params, config.body);
 	}
 
-	replace<T = {}>(path: string, data?: object) {
-		return this.performRequest<T>('PUT', path, data);
+	replace<T = {}>(path: string, config?: RequestConfig) {
+		return this.performRequest<T>('PUT', path, config.params, config.body);
 	}
 
-	destroy(path: string) {
-		return this.performRequest('DELETE', path);
+	destroy(path: string, config?: RequestConfig) {
+		return this.performRequest('DELETE', path, config.params, config.body);
 	}
 
 	private async performRequest<T>(
 		method: HttpMethod,
 		path: string,
-		data?: object
+		params: RouteParams,
+		body: object | FormData
 	): Promise<HttpResponse<T>> {
-		const url = this.buildUrl(path);
+		// Set path from route directory if available
+		if (RouteDirectory.isValidName(path) && this.routes) {
+			path = this.routes.get(path);
+		}
+
+		const url = buildParams(this.buildUrl(path), params || {});
 
 		const response = await fetch(url, {
 			method,
@@ -66,7 +82,9 @@ class HttpClient {
 				...this.headers,
 				...(this.authToken && { Authorization: this.authToken }),
 			},
-			...(data && { body: JSON.stringify(data) }),
+			...(body && {
+				body: body instanceof FormData ? body : JSON.stringify(body),
+			}),
 		});
 
 		// Attempt to parse data from resposne
@@ -109,23 +127,10 @@ class HttpClient {
 			return path;
 		}
 
-		return `${this.apiScheme}://${this.apiHost}/${
-			this.apiPath
-		}/${this.cleanPath(path)}`;
-	}
-
-	private cleanPath(path: string): string {
-		return path.replace(/^\/|\/$/g, '');
-	}
-
-	private addQueryParams(path: string, query?: object): string {
-		if (!query) {
-			return path;
-		}
-
-		const queryString = qs.stringify(query);
-
-		return `${path}?${queryString}`;
+		// TODO: Conditionally add api path
+		return `${this.apiScheme}://${this.apiHost}/${this.apiPath}/${cleanPath(
+			path
+		)}`;
 	}
 }
 
