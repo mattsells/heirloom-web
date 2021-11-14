@@ -4,7 +4,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 
-import Breadcrumbs, { BreadcrumbsPath } from '../Breadcrumbs';
+import Breadcrumbs, { BreadcrumbsPath } from '..';
 
 describe('<Breadcrumbs />', () => {
 	beforeEach(() => {

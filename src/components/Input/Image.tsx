@@ -112,6 +112,7 @@ function Image({
 			const body = (await response.json()) as FileUploadResponse;
 
 			// TODO: Update typing here
+			// TODO: Use form context to send value not as a string
 			// @ts-ignore
 			onChange(generateInputEvent(props.name, body));
 		} else {
@@ -126,7 +127,7 @@ function Image({
 			data-testid="image-input"
 			htmlFor={id.current}
 		>
-			<div className={classes.add}>
+			<div className={classes.add} data-testid="input-image-display">
 				<BsImageFill />
 				<span className={classes.addText}>{text}</span>
 			</div>
