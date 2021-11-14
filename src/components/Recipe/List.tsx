@@ -62,10 +62,12 @@ function List({
 
 	return (
 		<div className={classes.root}>
-			<Button.Square onClick={onClickAddRecipe}>
+			<Button.Square id="add-recipe-tile" onClick={onClickAddRecipe}>
 				<div className={classes.add}>
 					<BiPlusMedical />
-					<span className={classes.addText}>{t('recipes.add')}</span>
+					<label className={classes.addText} htmlFor="add-recipe-tile">
+						{t('recipes.add')}
+					</label>
 				</div>
 			</Button.Square>
 
