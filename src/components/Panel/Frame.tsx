@@ -1,9 +1,5 @@
+import classnames from 'classnames';
 import { ReactElement, ReactNode } from 'react';
-import { createUseStyles } from 'react-jss';
-
-import { Radius } from '@/variables/borders';
-import { Shade } from '@/variables/colors';
-import { Shadow } from '@/variables/shadows';
 
 type Size = 'auto' | 'regular';
 
@@ -26,29 +22,22 @@ function parseSize(size: Size = 'auto'): string {
 	}
 }
 
-const useStyles = createUseStyles(
-	{
-		root: (props: Partial<Props>) => ({
-			backgroundColor: Shade.offwhite,
-			borderRadius: Radius.regular,
-			minWidth: parseSize(props.size),
-			...(props.isFloating && {
-				boxShadow: Shadow.regular,
-			}),
-			...(props.isFlex && {
-				display: 'flex',
-				flex: 1,
-				flexDirection: 'column',
-			}),
-		}),
-	},
-	{ name: 'PanelFrame' }
-);
+function Frame({
+	children,
+	isFlex,
+	isFloating,
+	size,
+}: Props): ReactElement<Props> {
+	const classes = classnames('bg-gray-50 rounded-xl', {
+		'flex flex-col flex-grow': isFlex,
+		'shadow-lg': isFloating,
+	});
 
-function Frame({ children, ...props }: Props): ReactElement<Props> {
-	const classes = useStyles(props as any);
-
-	return <div className={classes.root}>{children}</div>;
+	return (
+		<div className={classes} style={{ minWidth: parseSize(size) }}>
+			{children}
+		</div>
+	);
 }
 
 export default Frame;
