@@ -16,6 +16,7 @@
 		"@types/react-dom": "^17.0.0",
 		"@types/react-router-dom": "^5.1.8",
 		"@types/simple-react-lightbox": "^3.6.1",
+		"classnames": "^2.3.1",
 		"formik": "^2.2.9",
 		"i18next": "^20.4.0",
 		"i18next-browser-languagedetector": "^6.1.2",
@@ -75,9 +76,12 @@
 	"devDependencies": {
 		"@mswjs/data": "^0.7.1",
 		"@testing-library/react-hooks": "^7.0.1",
+		"autoprefixer": "^9",
 		"eslint-plugin-simple-import-sort": "^7.0.0",
 		"msw": "^0.35.0",
+		"postcss": "^7",
 		"prettier": "2.3.2",
+		"tailwindcss": "npm:@tailwindcss/postcss7-compat",
 		"ts-jest": "^27.0.4"
 	}
 }
