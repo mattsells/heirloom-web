@@ -185,12 +185,9 @@ function RecipeForm({ onSuccess, recipe }: Props): ReactElement<Props> {
 
 							{recipe && (
 								<Level.Item>
-									<Button.Themed
-										theme="destructive"
-										onClick={() => destroyRecipe.mutate()}
-									>
+									<Button.Destructive onClick={() => destroyRecipe.mutate()}>
 										{t('recipe.destroy')}
-									</Button.Themed>
+									</Button.Destructive>
 								</Level.Item>
 							)}
 						</Level.Base>

@@ -51,9 +51,7 @@ function Cover({ onClickEdit, recipe }: Props): ReactElement<Props> {
 				<Text.Header>{recipe.name}</Text.Header>
 			</div>
 
-			<Button.Themed onClick={onClickEdit} theme="light">
-				{t('recipe.edit')}
-			</Button.Themed>
+			<Button.Light onClick={onClickEdit}>{t('recipe.edit')}</Button.Light>
 		</div>
 	);
 
