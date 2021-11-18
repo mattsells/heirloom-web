@@ -1,9 +1,4 @@
-import { createElement, ReactElement } from 'react';
-import { createUseStyles } from 'react-jss';
-
-import { Slate, Tangerine } from '@/variables/colors';
-import { Size } from '@/variables/fonts';
-import { Space } from '@/variables/space';
+import { ReactElement } from 'react';
 
 type HeaderStyle = 'h1' | 'h2' | 'h3';
 
@@ -12,32 +7,17 @@ type Props = {
 	children?: string;
 };
 
-const useStyles = createUseStyles(
-	{
-		root: (as: HeaderStyle) => ({
-			...(as === 'h1' && {
-				color: Tangerine.light,
-				fontSize: Size.giant,
-				marginBottom: Space.regular,
-			}),
-			...(as === 'h2' && {
-				color: Slate.dark,
-				fontSize: Size.large,
-				marginBottom: Space.thin,
-			}),
-			...(as === 'h3' && {
-				color: Slate.darkest,
-				fontSize: Size.regular,
-			}),
-		}),
-	},
-	{ name: 'TextHeader' }
-);
-
 function Header({ children, as = 'h1' }: Props): ReactElement<Props> {
-	const classes = useStyles(as);
+	switch (as) {
+		case 'h1':
+			return <h1 className="text-yellow-600 text-4xl mb-2">{children}</h1>;
 
-	return createElement(as, { as, className: classes.root }, children);
+		case 'h2':
+			return <h2 className="text-gray-600 text-2xl mb-1">{children}</h2>;
+
+		case 'h3':
+			return <h3 className="text-gray-700 text-base">{children}</h3>;
+	}
 }
 
 export default Header;

@@ -1,35 +1,14 @@
 import { ReactElement, ReactNode } from 'react';
-import { createUseStyles } from 'react-jss';
 
 type Props = {
 	children: ReactNode;
 	ratio: number;
 };
 
-const useStyles = createUseStyles(
-	{
-		root: {
-			paddingTop: ({ ratio }: Props) => `${ratio * 100}%`,
-			position: 'relative',
-		},
-
-		pane: {
-			position: 'absolute',
-			bottom: 0,
-			left: 0,
-			right: 0,
-			top: 0,
-		},
-	},
-	{ name: 'FrameRatio' }
-);
-
-function Square({ children, ...props }: Props): ReactElement<Props> {
-	const classes = useStyles(props as any);
-
+function Square({ children, ratio }: Props): ReactElement<Props> {
 	return (
-		<div className={classes.root}>
-			<div className={classes.pane}>{children}</div>
+		<div className="relative" style={{ paddingTop: `${ratio * 100}%` }}>
+			<div className="absolute top-0 right-0 bottom-0 left-0">{children}</div>
 		</div>
 	);
 }
