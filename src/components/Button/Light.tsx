@@ -1,19 +1,19 @@
 import classnames from 'classnames';
-import { HTMLProps, ReactElement } from 'react';
+import { ReactElement } from 'react';
 
-type Props = HTMLProps<HTMLButtonElement> & {
-	children?: string;
-};
+import { ButtonProps } from './types';
 
-function Destructive(props: Props): ReactElement<Props> {
+function Destructive(props: ButtonProps): ReactElement<ButtonProps> {
 	return (
 		<button
 			className={classnames(
 				'bg-gray-50',
-				'border-none',
+				'border-gray-100',
 				'disabled:opacity-50',
 				'duration-75',
+				'ease-linear',
 				'hover:text-red-600',
+				'opacity-80',
 				'px-4',
 				'py-1',
 				'rounded-md',
@@ -23,7 +23,6 @@ function Destructive(props: Props): ReactElement<Props> {
 				'transition-all'
 			)}
 			{...props}
-			type="button"
 		/>
 	);
 }

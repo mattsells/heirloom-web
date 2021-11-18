@@ -3,16 +3,16 @@ import { ReactElement } from 'react';
 
 import { ButtonProps } from './types';
 
-function Destructive(props: ButtonProps): ReactElement<ButtonProps> {
+function Primary(props: ButtonProps): ReactElement<ButtonProps> {
 	return (
 		<button
 			className={classnames(
-				'bg-red-500',
+				'bg-green-400',
 				'border-none',
 				'disabled:opacity-50',
 				'duration-75',
 				'ease-linear',
-				'hover:bg-red-600',
+				'hover:bg-green-500',
 				'px-4',
 				'py-1',
 				'rounded-md',
@@ -25,4 +25,4 @@ function Destructive(props: ButtonProps): ReactElement<ButtonProps> {
 	);
 }
 
-export default Destructive;
+export default Primary;

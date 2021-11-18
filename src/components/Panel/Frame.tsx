@@ -28,13 +28,13 @@ function Frame({
 	isFloating,
 	size,
 }: Props): ReactElement<Props> {
-	const classes = classnames('bg-gray-50 rounded-xl', {
+	const classes = classnames('bg-gray-50', 'rounded-xl', 'w-full', {
 		'flex flex-col flex-grow': isFlex,
 		'shadow-lg': isFloating,
 	});
 
 	return (
-		<div className={classes} style={{ minWidth: parseSize(size) }}>
+		<div className={classes} style={{ maxWidth: parseSize(size) }}>
 			{children}
 		</div>
 	);

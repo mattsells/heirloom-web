@@ -1,49 +1,10 @@
-import { HTMLProps, ReactElement } from 'react';
-import { createUseStyles } from 'react-jss';
+import { ReactElement } from 'react';
 
-import { Radius } from '@/variables/borders';
-import { Forest, Shade } from '@/variables/colors';
-import { Size } from '@/variables/fonts';
-import { Space } from '@/variables/space';
-import { Speed } from '@/variables/transitions';
+import Primary from './Primary';
+import { ButtonProps } from './types';
 
-type Props = HTMLProps<HTMLButtonElement> & {
-	children?: string;
-};
-
-const useStyles = createUseStyles(
-	{
-		root: {
-			backgroundColor: Forest.light,
-			border: 'none',
-			borderRadius: Radius.tight,
-			cursor: 'pointer',
-			color: Shade.white,
-			fontSize: Size.regular,
-			padding: `${Space.thin} ${Space.extraWide}`,
-			transition: `background-color linear ${Speed.fast}`,
-
-			'&:disabled': {
-				cursor: 'default',
-				opacity: 0.5,
-			},
-
-			'&:not(:disabled)': {
-				'&:hover': {
-					backgroundColor: Forest.regular,
-				},
-			},
-		},
-	},
-	{
-		name: 'ButtonSubmit',
-	}
-);
-
-function Submit(props: Props): ReactElement<Props> {
-	const classes = useStyles();
-
-	return <button className={classes.root} {...props} type="submit" />;
+function Submit(props: ButtonProps): ReactElement<ButtonProps> {
+	return <Primary {...props} type="submit" />;
 }
 
 export default Submit;
