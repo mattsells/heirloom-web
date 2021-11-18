@@ -1,10 +1,8 @@
 import { Fragment, ReactElement } from 'react';
 import { BsCaretRightFill } from 'react-icons/bs';
-import { createUseStyles } from 'react-jss';
 
 import Link from '@/components/Link';
 import * as Text from '@/components/Text';
-import { Size, Slate, Space } from '@/variables';
 
 import Trail, { BreadcrumbsPath } from './Trail';
 
@@ -12,29 +10,7 @@ type Props = {
 	path: BreadcrumbsPath | Trail;
 };
 
-const useStyles = createUseStyles(
-	{
-		root: {
-			alignItems: 'center',
-			display: 'flex',
-			fontSize: Size.regular,
-		},
-
-		caret: {
-			alignItems: 'center',
-			color: Slate.regular,
-			display: 'inline-flex',
-			padding: `0 ${Space.regular}`,
-		},
-	},
-	{
-		name: 'Breadcrumbs',
-	}
-);
-
 function Breadcrumbs({ path }: Props): ReactElement<Props> {
-	const classes = useStyles();
-
 	const breadcrumbPath = path instanceof Trail ? path.paths : path;
 
 	const links = breadcrumbPath.map((link, index) => {
@@ -49,7 +25,7 @@ function Breadcrumbs({ path }: Props): ReactElement<Props> {
 				</span>
 
 				{index < breadcrumbPath.length - 1 && (
-					<span className={classes.caret}>
+					<span className="inline-flex text-gray-600 px-2">
 						<BsCaretRightFill />
 					</span>
 				)}
@@ -57,7 +33,7 @@ function Breadcrumbs({ path }: Props): ReactElement<Props> {
 		);
 	});
 
-	return <div className={classes.root}>{links}</div>;
+	return <div className="flex flex-row items-center text-base">{links}</div>;
 }
 
 export default Breadcrumbs;

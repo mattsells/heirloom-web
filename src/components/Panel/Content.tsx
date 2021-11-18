@@ -5,7 +5,7 @@ type Props = {
 };
 
 function Content({ children }: Props): ReactElement<Props> {
-	return <div className="p-6">{children}</div>;
+	return <div className="p-7">{children}</div>;
 }
 
 export default Content;
