@@ -10,7 +10,7 @@ type Props = {
 function Header({ children, as = 'h1' }: Props): ReactElement<Props> {
 	switch (as) {
 		case 'h1':
-			return <h1 className="text-yellow-600 text-4xl mb-2">{children}</h1>;
+			return <h1 className="text-green-400 text-4xl mb-2">{children}</h1>;
 
 		case 'h2':
 			return <h2 className="text-gray-600 text-2xl mb-1">{children}</h2>;

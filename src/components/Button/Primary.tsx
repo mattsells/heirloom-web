@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { ReactElement } from 'react';
 
 import { ButtonProps } from './types';
@@ -6,7 +6,7 @@ import { ButtonProps } from './types';
 function Primary(props: ButtonProps): ReactElement<ButtonProps> {
 	return (
 		<button
-			className={classnames(
+			className={classNames(
 				'bg-green-400',
 				'border-none',
 				'disabled:opacity-50',

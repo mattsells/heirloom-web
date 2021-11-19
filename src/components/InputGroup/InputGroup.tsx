@@ -1,11 +1,9 @@
-import { HTMLProps, ReactElement,useRef } from 'react';
-import { createUseStyles } from 'react-jss';
+import { HTMLProps, ReactElement, useRef } from 'react';
 
 import * as Input from '@/components/Input';
 import Label from '@/components/Label';
 import { Error } from '@/components/Text';
 import { randomId } from '@/utils/string';
-import { Space } from '@/variables/space';
 
 export type Props = HTMLProps<HTMLInputElement> & {
 	error?: string;
@@ -14,20 +12,6 @@ export type Props = HTMLProps<HTMLInputElement> & {
 	touched?: boolean;
 };
 
-const useStyles = createUseStyles(
-	{
-		root: {
-			'&:not(:last-child)': {
-				marginBottom: Space.thick,
-			},
-		},
-		input: {
-			marginBottom: Space.narrow,
-		},
-	},
-	{ name: 'InputGroup' }
-);
-
 function InputGroup({
 	error,
 	label,
@@ -35,19 +19,17 @@ function InputGroup({
 	touched,
 	...props
 }: Props): ReactElement<Props> {
-	const classes = useStyles(props as any);
-
 	const id = useRef(randomId());
 
 	const errorMessage = touched && error;
 
 	return (
-		<div className={classes.root}>
+		<div className="mb-4 last:mb-0">
 			<Label error={errorMessage} htmlFor={id.current}>
 				{label}
 			</Label>
 
-			<div className={classes.input}>
+			<div className="mb-1">
 				<Input.Text
 					error={errorMessage}
 					id={id.current}
