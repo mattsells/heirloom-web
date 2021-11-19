@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { ReactElement } from 'react';
 
 import * as Frame from '@/components/Frame';
@@ -11,7 +11,7 @@ function Square({
 }: ButtonProps): ReactElement<ButtonProps> {
 	return (
 		<button
-			className={classnames(
+			className={classNames(
 				'bg-white',
 				'border-2',
 				'border-dashed',
@@ -21,6 +21,7 @@ function Square({
 				'hover:bg-gray-50',
 				'hover:scale-100',
 				'hover:shadow-lg',
+				'rounded-lg',
 				'scale-95',
 				'shadow-md',
 				'text-white',

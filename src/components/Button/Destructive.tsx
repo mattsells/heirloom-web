@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { ReactElement } from 'react';
 
 import { ButtonProps } from './types';
@@ -6,7 +6,7 @@ import { ButtonProps } from './types';
 function Destructive(props: ButtonProps): ReactElement<ButtonProps> {
 	return (
 		<button
-			className={classnames(
+			className={classNames(
 				'bg-red-500',
 				'border-none',
 				'disabled:opacity-50',

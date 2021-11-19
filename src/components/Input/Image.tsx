@@ -1,81 +1,17 @@
+import classNames from 'classnames';
 import { ChangeEvent, HTMLProps, ReactElement, useMemo, useRef } from 'react';
 import { BsImageFill } from 'react-icons/bs';
-import { createUseStyles } from 'react-jss';
 
 import * as Frame from '@/components/Frame';
 import { FileUploadResponse } from '@/types/file';
 import { generateInputEvent, parseFileUrl } from '@/utils/file';
 import { randomId } from '@/utils/string';
-import { Pattern, Radius, Width } from '@/variables/borders';
-import { Forest, Shade } from '@/variables/colors';
-import { Size } from '@/variables/fonts';
-import { Space } from '@/variables/space';
 
 export type Props = HTMLProps<HTMLInputElement> & {
 	frame?: 'square';
 	originalUrl?: string;
 	text: string;
 };
-
-const useStyles = createUseStyles(
-	{
-		// @ts-ignore
-		root: ({ frame, imageUrl }) => ({
-			alignItems: 'center',
-			backgroundColor: Shade.white,
-			borderRadius: Radius.narrow,
-			display: 'flex',
-			color: Shade.white,
-			cursor: 'pointer',
-			fontSize: Size.regular,
-			justifyContent: 'center',
-			marginBottom: Space.thick,
-			minHeight: '25rem',
-			width: '100%',
-
-			...(frame === 'square' && {
-				height: '100%',
-				minHeight: 'none',
-			}),
-
-			...(imageUrl && {
-				backgroundImage: `url(${imageUrl})`,
-				backgroundSize: 'cover',
-				backgroundPosition: 'center center',
-				backgroundRepeat: 'no-repeat',
-				border: 'none',
-			}),
-
-			...(!imageUrl && {
-				border: `${Width.thick} ${Pattern.dashed} ${Forest.regular}`,
-			}),
-		}),
-
-		input: {
-			display: 'none',
-		},
-
-		add: {
-			alignItems: 'center',
-			color: Forest.light,
-			// @ts-ignore
-			display: ({ imageUrl }) => (imageUrl ? 'none' : 'flex'),
-			flexDirection: 'column',
-			height: '100%',
-			justifyContent: 'center',
-
-			'& > svg': {
-				fontSize: Size.giant,
-				marginBottom: Space.thin,
-			},
-		},
-
-		addText: {
-			fontSize: Size.regular,
-		},
-	},
-	{ name: 'InputImage' }
-);
 
 // TODO: Create hook for upload functionality
 function Image({
@@ -90,7 +26,6 @@ function Image({
 	}, [props.value]);
 
 	const id = useRef(randomId());
-	const classes = useStyles({ frame, imageUrl } as any);
 
 	const handleSelectFile = async (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files[0];
@@ -123,18 +58,55 @@ function Image({
 
 	const input = (
 		<label
-			className={classes.root}
+			className={classNames(
+				'bg-white',
+				'cursor-pointer',
+				'flex',
+				'h-full',
+				'items-center',
+				'justify-center',
+				'mb-6',
+				'rounded-sm',
+				'text-base',
+				'text-white',
+				'w-full',
+				{
+					'border-dashed border-4 border-green-200': !imageUrl,
+					'bg-center bg-cover bg-no-repeat border-none': imageUrl,
+				}
+			)}
 			data-testid="image-input"
 			htmlFor={id.current}
+			style={{
+				minHeight: '25vh',
+				...(imageUrl && {
+					backgroundImage: `url(${imageUrl})`,
+				}),
+			}}
 		>
-			<div className={classes.add} data-testid="input-image-display">
-				<BsImageFill />
-				<span className={classes.addText}>{text}</span>
+			<div
+				className={classNames(
+					'items-center',
+					'text-green-400',
+					'h-full',
+					'justify-center',
+					'flex-col',
+					{
+						hidden: imageUrl,
+						flex: !imageUrl,
+					}
+				)}
+				data-testid="input-image-display"
+			>
+				<div className="mb-2 text-4xl">
+					<BsImageFill />
+				</div>
+				<span className="text-base">{text}</span>
 			</div>
 
 			<input
 				accept="image/*"
-				className={classes.input}
+				className="hidden"
 				data-testid="file-input"
 				id={id.current}
 				onChange={handleSelectFile}

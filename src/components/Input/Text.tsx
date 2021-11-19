@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { FormEventHandler, HTMLProps, ReactElement } from 'react';
 
 type Props = HTMLProps<HTMLInputElement> & {
@@ -9,7 +9,7 @@ type Props = HTMLProps<HTMLInputElement> & {
 function Text({ type = 'text', error, ...props }: Props): ReactElement<Props> {
 	return (
 		<input
-			className={classnames(
+			className={classNames(
 				'bg-white',
 				'border-2',
 				'border-gray-100',

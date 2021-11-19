@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { ReactElement, ReactNode } from 'react';
 
 type Size = 'auto' | 'regular';
@@ -28,7 +28,7 @@ function Frame({
 	isFloating,
 	size,
 }: Props): ReactElement<Props> {
-	const classes = classnames('bg-gray-50', 'rounded-xl', 'w-full', {
+	const classes = classNames('bg-gray-50', 'rounded-xl', 'w-full', {
 		'flex flex-col flex-grow': isFlex,
 		'shadow-lg': isFloating,
 	});

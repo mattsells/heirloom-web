@@ -1,8 +1,4 @@
 import { ReactElement, ReactNode } from 'react';
-import { createUseStyles } from 'react-jss';
-
-import { Size } from '@/variables/fonts';
-import { Space } from '@/variables/space';
 
 import Text from './Text';
 import Textarea from './Textarea';
@@ -21,18 +17,6 @@ export type Props = {
 	values: string[];
 };
 
-const useStyles = createUseStyles(
-	{
-		root: {},
-
-		item: {
-			fontSize: Size.regular,
-			marginBottom: Space.thin,
-		},
-	},
-	{ name: 'InputList' }
-);
-
 function List({
 	error,
 	inputType = 'input',
@@ -41,8 +25,6 @@ function List({
 	values,
 	...props
 }: Props): ReactElement<Props> {
-	const classes = useStyles();
-
 	const allItems = [...values, ''];
 
 	const InputComponent = inputType === 'input' ? Text : Textarea;
@@ -50,7 +32,7 @@ function List({
 	return (
 		<ListWrapper type={listType}>
 			{allItems.map((item, index) => (
-				<li className={classes.item} key={index}>
+				<li className="text-base mb-2" key={index}>
 					<InputComponent
 						error={error}
 						key={index}
