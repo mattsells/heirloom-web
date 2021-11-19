@@ -1,11 +1,9 @@
-import { ReactElement,useRef } from 'react';
-import { createUseStyles } from 'react-jss';
+import { ReactElement, useRef } from 'react';
 
 import List, { InputType, ListType } from '@/components/Input/List';
 import Label from '@/components/Label';
 import { Error } from '@/components/Text';
 import { randomId } from '@/utils/string';
-import { Space } from '@/variables/space';
 
 // TODO: Update TS for events
 export type Props = {
@@ -20,49 +18,27 @@ export type Props = {
 	values: string[];
 };
 
-const useStyles = createUseStyles(
-	{
-		root: {
-			'&:not(:last-child)': {
-				marginBottom: Space.thick,
-			},
-		},
-
-		input: {
-			marginBottom: Space.narrow,
-			paddingLeft: Space.wide,
-		},
-
-		error: {
-			paddingLeft: Space.thick,
-		},
-	},
-	{ name: 'ListGroup' }
-);
-
 function ListGroup({
 	error,
 	label,
 	touched,
 	...props
 }: Props): ReactElement<Props> {
-	const classes = useStyles(props as any);
-
 	const id = useRef(randomId());
 
 	const errorMessage = touched && error;
 
 	return (
-		<div className={classes.root}>
+		<div className="mb-4 last:mb-0">
 			<Label error={errorMessage} htmlFor={id.current}>
 				{label}
 			</Label>
 
-			<div className={classes.input}>
+			<div className="mb-2 pl-4">
 				<List error={errorMessage} {...props} />
 			</div>
 
-			<div className={classes.error}>
+			<div className="pl-3">
 				{errorMessage && <Error>{errorMessage}</Error>}
 			</div>
 		</div>

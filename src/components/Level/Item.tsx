@@ -3,7 +3,7 @@ import { ReactElement, ReactNode } from 'react';
 
 type Props = {
 	children?: ReactNode;
-	isFull?: number;
+	isFull?: boolean;
 };
 
 function Item({ isFull, ...props }: Props): ReactElement<Props> {
