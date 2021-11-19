@@ -4,6 +4,7 @@ import { ReactElement } from 'react';
 import { ButtonProps } from './types';
 
 function Primary(props: ButtonProps): ReactElement<ButtonProps> {
+	// TODO: Move shared styles to import
 	return (
 		<button
 			className={classNames(

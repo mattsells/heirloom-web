@@ -1,84 +1,68 @@
+import classNames from 'classnames';
 import { ReactElement, ReactNode } from 'react';
 import { GrFormClose } from 'react-icons/gr';
-import { createUseStyles } from 'react-jss';
 
+import * as Level from '@/components/Level';
 import * as Panel from '@/components/Panel';
 import Portal from '@/components/Portal';
-import { Size } from '@/variables/fonts';
-import { Space } from '@/variables/space';
+import * as Text from '@/components/Text';
 
 type Props = {
 	children: ReactNode;
 	isVisible: boolean;
 	onDismiss: VoidFunction;
+	title?: string;
 };
-
-const useStyles = createUseStyles(
-	{
-		root: {
-			display: 'flex',
-			maxHeight: '100%',
-			maxWidth: '800px',
-			width: '100%',
-		},
-
-		backdrop: {
-			alignItems: 'center',
-			backgroundColor: 'rgba(0, 0, 0, 0.3)',
-			bottom: 0,
-			display: 'flex',
-			justifyContent: 'center',
-			left: 0,
-			padding: Space.extraWide,
-			position: 'fixed',
-			right: 0,
-			top: 0,
-		},
-
-		header: {
-			display: 'flex',
-			justifyContent: 'flex-end',
-			padding: `${Space.regular} ${Space.regular} ${Space.none} ${Space.regular}`,
-		},
-
-		button: {
-			background: 'none',
-			border: 'none',
-			cursor: 'pointer',
-			fontSize: Size.giant,
-			padding: Space.narrow,
-		},
-
-		content: {
-			overflowY: 'auto',
-		},
-	},
-	{
-		name: 'Modal',
-	}
-);
 
 // TODO: Close modal when clicking out of bounds
 // TODO: Animate modal in/out
-function Modal({ children, isVisible, onDismiss }: Props): ReactElement<Props> {
-	const classes = useStyles();
-
+function Modal({
+	children,
+	isVisible,
+	onDismiss,
+	title,
+}: Props): ReactElement<Props> {
 	if (!isVisible) {
 		return null;
 	}
 
 	return (
 		<Portal>
-			<div className={classes.backdrop}>
-				<div className={classes.root}>
+			<div
+				className={classNames(
+					'flex',
+					'items-center',
+					'justify-center',
+					'p-14',
+					'fixed',
+					'top-0',
+					'right-0',
+					'bottom-0',
+					'left-0'
+				)}
+				style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
+			>
+				<div className="flex w-full" style={{ maxWidth: '800px' }}>
 					<Panel.Frame isFlex isFloating>
-						<div className={classes.header}>
-							<button className={classes.button} onClick={onDismiss}>
-								<GrFormClose />
-							</button>
+						<div className="p-6 pb-2">
+							<Level.Base arrangement={title ? 'split' : 'end'}>
+								{title && (
+									<Level.Item>
+										<Text.Header as="h2">{title}</Text.Header>
+									</Level.Item>
+								)}
+								<Level.Item>
+									<button
+										className="bg-none border-none p-1 text-4xl rounded-full bg-gray-100 hover:bg-gray-200"
+										onClick={onDismiss}
+									>
+										<GrFormClose />
+									</button>
+								</Level.Item>
+							</Level.Base>
 						</div>
 
-						<div className={classes.content}>{children}</div>
+						<div className="overflow-y-auto">{children}</div>
 					</Panel.Frame>
 				</div>
 			</div>

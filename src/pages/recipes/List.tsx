@@ -68,9 +68,9 @@ function Recipes() {
 			<Modal.Modal
 				isVisible={isCreateModalVisible}
 				onDismiss={(): void => setIsCreateModalVisible(false)}
+				title={t('recipes.add')}
 			>
 				<Modal.Content>
-					<Text.Header as="h2">{t('recipes.add')}</Text.Header>
 					<Recipe.Form />
 				</Modal.Content>
 			</Modal.Modal>

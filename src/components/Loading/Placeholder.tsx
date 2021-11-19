@@ -1,10 +1,5 @@
 import { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { createUseStyles } from 'react-jss';
-
-import { Tangerine } from '@/variables/colors';
-import { Size } from '@/variables/fonts';
-import { Space } from '@/variables/space';
 
 import Spinner from './Spinner';
 
@@ -12,41 +7,18 @@ type Props = {
 	text?: string;
 };
 
-const useStyles = createUseStyles(
-	{
-		root: {
-			alignItems: 'center',
-			display: 'flex',
-			flex: 1,
-			flexDirection: 'column',
-			justifyContent: 'center',
-		},
-
-		spinner: {
-			marginBottom: Space.thick,
-		},
-
-		text: {
-			color: Tangerine.regular,
-			fontSize: Size.large,
-		},
-	},
-	{ name: 'Placeholder' }
-);
-
 function Placeholder({ text }: Props): ReactElement<Props> {
-	const classes = useStyles();
 	const { t } = useTranslation();
 
 	const displayText = text || t('global.loading');
 
 	return (
-		<div className={classes.root}>
-			<div className={classes.spinner}>
+		<div className="flex flex-col flex-grow items-center justify-center">
+			<div className="mb-4">
 				<Spinner />
 			</div>
 
-			<span className={classes.text}>{displayText}</span>
+			<span className="text-lg text-red-300">{displayText}</span>
 		</div>
 	);
 }
