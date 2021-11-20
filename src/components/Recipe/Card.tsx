@@ -1,66 +1,39 @@
+import classNames from 'classnames';
 import { ReactElement } from 'react';
-import { createUseStyles } from 'react-jss';
 import { Link } from 'react-router-dom';
 
 import * as Frame from '@/components/Frame';
 import { routes } from '@/router';
 import { Recipe } from '@/types/recipe';
-import { Radius, Shadow, Size, Slate, Space, Speed } from '@/variables';
 
 type Props = {
 	recipe: Recipe;
 };
 
-const useStyles = createUseStyles(
-	{
-		root: {
-			borderRadius: Radius.narrow,
-			boxShadow: Shadow.lightest,
-			display: 'block',
-			overflow: 'hidden',
-			transform: 'scale(0.98)',
-			transition: `transform ${Speed.regular} linear, box-shadow ${Speed.regular} linear`,
-
-			'&:hover': {
-				boxShadow: Shadow.light,
-				transform: 'scale(1.0)',
-			},
-		},
-
-		content: {
-			backgroundImage: (recipe: Recipe) => `url(${recipe.coverImageUrlSmall})`,
-			backgroundSize: 'cover',
-			backgroundPosition: 'center center',
-			backgroundRepeat: 'no-repeat',
-			height: '100%',
-		},
-
-		name: {
-			fontSize: Size.regular,
-			color: Slate.dark,
-		},
-
-		veil: {
-			alignItems: 'flex-end',
-			// TODO: Move RGB color to variable (tangerine regular)
-			backgroundColor: `rgba(255, 255, 255, 0.5)`,
-			display: 'flex',
-			height: '100%',
-			padding: Space.regular,
-		},
-	},
-	{ name: 'RecipeCard' }
-);
-
 function Card({ recipe }: Props): ReactElement<Props> {
-	const classes = useStyles(recipe as any);
-
 	return (
-		<Link className={classes.root} to={routes.get('recipe', { id: recipe.id })}>
+		<Link
+			className={classNames(
+				'rounded',
+				'shadow',
+				'block',
+				'overflow-hidden',
+				'transform',
+				'scale-95',
+				'hover:scale-100',
+				'transition-all',
+				'duration-100',
+				'ease-linear'
+			)}
+			to={routes.get('recipe', { id: recipe.id })}
+		>
 			<Frame.Square>
-				<div className={classes.content}>
-					<div className={classes.veil}>
-						<h4 className={classes.name}>{recipe.name}</h4>
+				<div
+					className="bg-cover bg-center bg-no-repeat h-full"
+					style={{ backgroundImage: `url(${recipe.coverImageUrlSmall})` }}
+				>
+					<div className="flex items-end h-full p-2">
+						<h4 className="text-base text-gray-500">{recipe.name}</h4>
 					</div>
 				</div>
 			</Frame.Square>
