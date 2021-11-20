@@ -18,10 +18,20 @@ a, button {
 	cursor: pointer;
 }
 
+.application {
+	display: grid;
+	grid-template-columns: 14rem minmax(30rem, 100%);
+	grid-template-rows: 1fr;
+	grid-template-areas: "nav content";
+	height: 100%;
+}
 
-/*
-body text color - gray-500
-error text-red-500
+.application-content {
+	grid-area: 'content';
+	max-height: 100vh;
+	overflow-y: auto;
+}
 
-loading background bg-green-200
-*/
+.application-nav {
+	grid-area: 'nav';
+}
