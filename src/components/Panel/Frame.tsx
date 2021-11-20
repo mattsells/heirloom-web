@@ -30,7 +30,7 @@ function Frame({
 }: Props): ReactElement<Props> {
 	const classes = classNames('bg-gray-50', 'rounded-xl', 'w-full', {
 		'flex flex-col flex-grow': isFlex,
-		'shadow-lg': isFloating,
+		'shadow-xl': isFloating,
 	});
 
 	return (
