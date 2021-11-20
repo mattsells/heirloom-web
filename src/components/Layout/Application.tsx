@@ -1,59 +1,25 @@
 import { ReactElement, ReactNode } from 'react';
-import { createUseStyles } from 'react-jss';
 
 import Navbar from '@/components/Navbar';
-import { Space } from '@/variables/space';
 
 type Props = {
 	children: ReactNode;
 };
 
-const useStyles = createUseStyles(
-	{
-		// TODO: Add media query for desktop vs mobile
-		root: {
-			display: 'grid',
-			gridTemplateColumns: '14.0rem minmax(30.0rem, 100%)',
-			gridTemplateRows: '1fr',
-			gridTemplateAreas: `
-			"nav content"
-		`,
-			height: '100%',
-		},
-
-		content: {
-			gridArea: 'content',
-			maxHeight: '100vh',
-			overflowY: 'auto',
-			padding: `0 ${Space.wide}`,
-		},
-
-		nav: {
-			gridArea: 'nav',
-		},
-
-		container: {
-			display: 'flex',
-			flexDirection: 'column',
-			height: '100%',
-			margin: 'auto',
-			maxWidth: '1000px',
-		},
-	},
-	{ name: 'LayoutApplication' }
-);
-
 function Application({ children }: Props): ReactElement<Props> {
-	const classes = useStyles();
-
 	return (
-		<div className={classes.root}>
-			<div className={classes.nav}>
+		<div className="application">
+			<div className="application-nav">
 				<Navbar />
 			</div>
 
-			<div className={classes.content}>
-				<div className={classes.container}>{children}</div>
+			<div className="application-content px-4">
+				<div
+					className="flex flex-col h-full m-auto"
+					style={{ maxWidth: '1000px' }}
+				>
+					{children}
+				</div>
 			</div>
 		</div>
 	);
