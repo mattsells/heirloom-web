@@ -1,7 +1,6 @@
 import { ReactElement, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiPlusMedical } from 'react-icons/bi';
-import { createUseStyles } from 'react-jss';
 import { SRLWrapper } from 'simple-react-lightbox';
 
 import Breadcrumbs, { trail } from '@/components/Breadcrumbs';
@@ -14,8 +13,6 @@ import * as Text from '@/components/Text';
 import { LIGHTBOX_OPTIONS } from '@/config/lightbox';
 import routes from '@/router/routes';
 import { Recipe } from '@/types/recipe';
-import { combine } from '@/utils/string';
-import { Forest, Size, Space } from '@/variables';
 
 import Cover from './Cover';
 import Form from './Form';
@@ -25,80 +22,7 @@ type Props = {
 	recipe: Recipe;
 };
 
-const useStyles = createUseStyles(
-	{
-		root: {
-			height: '100%',
-		},
-
-		artifacts: {
-			display: 'grid',
-			gap: Space.wide,
-			gridTemplateColumns: 'repeat(8, 1fr)',
-			margin: `${Space.wide} 0`,
-		},
-
-		addArtifact: {
-			alignItems: 'center',
-			color: Forest.light,
-			display: 'flex',
-			flexDirection: 'column',
-			height: '100%',
-			justifyContent: 'center',
-
-			'& > svg': {
-				fontSize: Size.large,
-				marginBottom: Space.thin,
-			},
-		},
-
-		addStoryText: {
-			fontSize: Size.small,
-		},
-
-		list: {
-			fontSize: Size.regular,
-			paddingLeft: Space.wide,
-
-			'& li': {
-				'&:not(:last-child)': {
-					marginBottom: Space.thin,
-				},
-			},
-		},
-
-		section: {
-			marginBottom: Space.wide,
-		},
-
-		directionsWrapper: {
-			display: 'flex',
-			margin: `0 -${Space.regular}`,
-
-			'& > *': {
-				margin: `0 ${Space.regular}`,
-			},
-		},
-
-		directions: {
-			display: 'flex',
-			flexDirection: 'column',
-			minWidth: '120px',
-		},
-
-		directionCard: {
-			marginBottom: Space.regular,
-		},
-
-		grow: {
-			flexGrow: 1,
-		},
-	},
-	{ name: 'RecipeView' }
-);
-
 function View({ isLoading, recipe }: Props): ReactElement<Props> {
-	const classes = useStyles();
 	const { t } = useTranslation();
 
 	const [isArtifactModalOpen, setIsArtifactModalOpen] = useState(false);
@@ -127,7 +51,7 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 		.drop(recipe.name);
 
 	return (
-		<div className={classes.root}>
+		<div className="h-full">
 			<Breadcrumbs path={breadcrumbs} />
 
 			<Cover onClickEdit={() => setIsEditModalOpen(true)} recipe={recipe} />
@@ -137,28 +61,28 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 			)}
 
 			<SRLWrapper options={LIGHTBOX_OPTIONS}>
-				<div className={classes.artifacts}>
+				<div className="grid grid-cols-8 gap-4 my-2">
 					{artifacts.map((story) => (
 						<Story.Card key={story.id} story={story} />
 					))}
 
 					<Button.Square onClick={() => setIsArtifactModalOpen(true)}>
-						<div className={classes.addArtifact}>
-							<BiPlusMedical />
-							<span className={classes.addStoryText}>
-								{t('recipe.add-artifact')}
-							</span>
+						<div className="flex flex-col items-center justify-center h-full text-green-400 p-2">
+							<div className="text-lg mb-1">
+								<BiPlusMedical />
+							</div>
+							<span className="text-sm">{t('recipe.add-artifact')}</span>
 						</div>
 					</Button.Square>
 				</div>
 			</SRLWrapper>
 
-			<div className={classes.section}>
+			<div className="mb-4">
 				<Panel.Frame>
 					<Panel.Content>
 						<Text.Header as="h2">{t('recipe.ingredients')}</Text.Header>
 
-						<ul className={classes.list}>
+						<ul className="text-base list-disc list-inside">
 							{recipe.ingredients.map((ingredient: string, index: number) => (
 								<li key={index}>{ingredient}</li>
 							))}
@@ -167,13 +91,13 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 				</Panel.Frame>
 			</div>
 
-			<div className={classes.directionsWrapper}>
-				<div className={combine(classes.section, classes.grow)}>
+			<div className="flex my-2">
+				<div className="flex-grow mb-4">
 					<Panel.Frame>
 						<Panel.Content>
 							<Text.Header as="h2">{t('recipe.directions')}</Text.Header>
 
-							<ol className={classes.list}>
+							<ol className="text-base list-decimal list-inside">
 								{recipe.directions.map((ingredient: string, index: number) => (
 									<li key={index}>{ingredient}</li>
 								))}
@@ -182,21 +106,21 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 					</Panel.Frame>
 				</div>
 
-				<div className={classes.directions}>
+				<div className="flex flex-col" style={{ minWidth: '120px' }}>
 					<SRLWrapper options={LIGHTBOX_OPTIONS}>
 						{directions.map((story) => (
-							<div className={classes.directionCard} key={story.id}>
+							<div className="mb-2" key={story.id}>
 								<Story.Card story={story} />
 							</div>
 						))}
 					</SRLWrapper>
 
 					<Button.Square onClick={() => setIsDirectionModalOpen(true)}>
-						<div className={classes.addArtifact}>
-							<BiPlusMedical />
-							<span className={classes.addStoryText}>
-								{t('recipe.add-direction')}
-							</span>
+						<div className="flex flex-col items-center justify-center h-full text-green-400 p-2">
+							<div className="text-lg mb-1">
+								<BiPlusMedical />
+							</div>
+							<span className="text-sm">{t('recipe.add-direction')}</span>
 						</div>
 					</Button.Square>
 				</div>
@@ -207,17 +131,17 @@ function View({ isLoading, recipe }: Props): ReactElement<Props> {
 			)}
 
 			<SRLWrapper options={LIGHTBOX_OPTIONS}>
-				<div className={classes.artifacts}>
+				<div className="grid grid-cols-8 gap-4 my-2">
 					{memories.map((story) => (
 						<Story.Card key={story.id} story={story} />
 					))}
 
 					<Button.Square onClick={() => setIsMemoryModalOpen(true)}>
-						<div className={classes.addArtifact}>
-							<BiPlusMedical />
-							<span className={classes.addStoryText}>
-								{t('recipe.add-memory')}
-							</span>
+						<div className="flex flex-col items-center justify-center h-full text-green-400 p-2">
+							<div className="text-lg mb-1">
+								<BiPlusMedical />
+							</div>
+							<span className="text-sm">{t('recipe.add-memory')}</span>
 						</div>
 					</Button.Square>
 				</div>
