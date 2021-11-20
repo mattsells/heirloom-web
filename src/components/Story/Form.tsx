@@ -2,7 +2,6 @@ import { Formik } from 'formik';
 import { ReactElement } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { createUseStyles } from 'react-jss';
 import { useQueryClient } from 'react-query';
 import * as Yup from 'yup';
 
