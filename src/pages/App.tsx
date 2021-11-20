@@ -13,7 +13,6 @@ import useSession from '@/hooks/useSession';
 import { HttpClient } from '@/lib/http';
 import Loading from '@/pages/Loading';
 import Router from '@/router';
-import { Size } from '@/variables/fonts';
 
 // Client for server state
 const queryClient = new QueryClient({
@@ -51,14 +50,7 @@ function App() {
 
 	return (
 		<Suspense fallback={<Loading />}>
-			<Toaster
-				position="top-right"
-				toastOptions={{
-					style: {
-						fontSize: Size.regular,
-					},
-				}}
-			/>
+			<Toaster position="top-right" />
 
 			{/* Main app is rendered by the router */}
 			<Router />
