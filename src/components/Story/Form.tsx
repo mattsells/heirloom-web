@@ -42,13 +42,6 @@ const StorySchema = Yup.object().shape({
 		.max(10000, 'Description is too long (max 10000 characters)'),
 });
 
-const useStyles = createUseStyles({
-	image: {
-		margin: 'auto',
-		maxWidth: '350px',
-	},
-});
-
 function RecipeForm({
 	onSuccess,
 	recipe,
@@ -57,8 +50,6 @@ function RecipeForm({
 	const http = useHttpClient();
 	const queryClient = useQueryClient();
 	const { t } = useTranslation();
-
-	const styles = useStyles();
 
 	return (
 		<Formik
@@ -97,7 +88,7 @@ function RecipeForm({
 			}) => {
 				return (
 					<Form onSubmit={handleSubmit}>
-						<div className={styles.image}>
+						<div className="m-auto" style={{ maxWidth: '350px' }}>
 							<Input.Image
 								frame="square"
 								name="image"

@@ -1,7 +1,6 @@
 import { ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsGearWideConnected } from 'react-icons/bs';
-import { createUseStyles } from 'react-jss';
 
 import * as Panel from '@/components/Panel';
 import Popover from '@/components/Popover';
