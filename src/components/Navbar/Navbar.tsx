@@ -7,32 +7,12 @@ import * as Panel from '@/components/Panel';
 import Popover from '@/components/Popover';
 import * as Text from '@/components/Text';
 import useSession from '@/hooks/useSession';
-import { Mint } from '@/variables/colors';
-import { Shadow } from '@/variables/shadows';
 
 import Block from './Block';
 import { NAVBAR_ITEMS } from './config';
 import Link from './Link';
 
-const useStyles = createUseStyles(
-	{
-		root: {
-			backgroundColor: Mint.regular,
-			boxShadow: Shadow.right,
-			display: 'flex',
-			flexDirection: 'column',
-			height: '100%',
-		},
-
-		features: {
-			flex: 1,
-		},
-	},
-	{ name: 'Navbar' }
-);
-
 function Navbar(): ReactElement {
-	const classes = useStyles();
 	const { t } = useTranslation();
 	const { signOut } = useSession();
 
@@ -43,8 +23,8 @@ function Navbar(): ReactElement {
 	};
 
 	return (
-		<div className={classes.root}>
-			<div className={classes.features}>
+		<div className="bg-green-200 shadow-lg flex flex-col h-full">
+			<div className="flex-grow">
 				<ul>
 					{NAVBAR_ITEMS.map(({ icon: Icon, ...props }, index) => (
 						<Link {...props} icon={<Icon />} key={index} />
@@ -58,7 +38,7 @@ function Navbar(): ReactElement {
 						isVisible={isSettingsVisible}
 						offsetX={5}
 						offsetY={-5}
-						onDismiss={() => setIsSettingsVisible(false)}
+						onDismiss={handleClickSettings}
 						placement="right"
 					>
 						<Block
@@ -68,11 +48,11 @@ function Navbar(): ReactElement {
 						/>
 
 						<Panel.Frame isFloating>
-							<Panel.Content>
+							<div className="px-6 py-3">
 								<Text.Link onClick={signOut}>
 									{t('settings.sign-out')}
 								</Text.Link>
-							</Panel.Content>
+							</div>
 						</Panel.Frame>
 					</Popover>
 				</ul>
